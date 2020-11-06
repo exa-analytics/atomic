@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.distance &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.distance</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.algorithms.distance</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Two Body Properties Computations</span>
+<span class="sd">#####################################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numba</span> <span class="k">as</span> <span class="nn">nb</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">nbtgt</span><span class="p">,</span> <span class="n">nbpll</span>
+
+
+<span class="nd">@nb</span><span class="o">.</span><span class="n">vectorize</span><span class="p">([</span><span class="s2">&quot;float64(float64, float64, float64)&quot;</span><span class="p">],</span> <span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">nbtgt</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cartmag</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vectorized operation to compute the magnitude of a three component array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="nd">@nb</span><span class="o">.</span><span class="n">vectorize</span><span class="p">([</span><span class="s2">&quot;float64(float64, float64)&quot;</span><span class="p">],</span> <span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">nbtgt</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">modv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vectorized modulo operation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (array): 1D array</span>
+<span class="sd">        y (array, float): Scalar or 1D array</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        z (array): x modulo y</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="pdist_ortho"><a class="viewcode-back" href="../../../exatomic.algorithms.distance.html#exatomic.algorithms.distance.pdist_ortho">[docs]</a><span class="nd">@nb</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">nbpll</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pdist_ortho</span><span class="p">(</span><span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">uz</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pairwise two body calculation for bodies in an orthorhombic periodic cell.</span>
+
+<span class="sd">    Does return distance vectors.</span>
+
+<span class="sd">    An orthorhombic cell is defined by orthogonal vectors of length a and b</span>
+<span class="sd">    (which define the base) and height vector of length c. All three vectors</span>
+<span class="sd">    intersect at 90° angles. If a = b = c the cell is a simple cubic cell.</span>
+<span class="sd">    This function assumes the unit cell is constant with respect to an external</span>
+<span class="sd">    frame of reference and that the origin of the cell is at (0, 0, 0).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ux (array): In unit cell x array</span>
+<span class="sd">        uy (array): In unit cell y array</span>
+<span class="sd">        uz (array): In unit cell z array</span>
+<span class="sd">        a (float): Unit cell dimension a</span>
+<span class="sd">        b (float): Unit cell dimension b</span>
+<span class="sd">        c (float): Unit cell dimension c index (array): Atom indexes</span>
+<span class="sd">        dmax (float): Maximum distance of interest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">dmax2</span> <span class="o">=</span> <span class="n">dmax</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ux</span><span class="p">)</span>
+    <span class="n">nn</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">jj</span> <span class="o">=</span> <span class="n">ii</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">ii</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># For each atom i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="n">uy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">uz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># For each atom j</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">yj</span> <span class="o">=</span> <span class="n">uy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">zj</span> <span class="o">=</span> <span class="n">uz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dpr</span> <span class="o">=</span> <span class="n">dmax2</span>
+            <span class="n">inck</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">prj</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Check all projections of atom i</span>
+            <span class="c1"># Note that i, j are in the unit cell so we make a 3x3x3 &#39;supercell&#39;</span>
+            <span class="c1"># of i around j</span>
+            <span class="c1"># The index of the projections of i go from 0 to 26 (27 projections)</span>
+            <span class="c1"># The 13th projection is the unit cell itself.</span>
+            <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                        <span class="n">pxi</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">+</span> <span class="n">aa</span><span class="o">*</span><span class="n">a</span>
+                        <span class="n">pyi</span> <span class="o">=</span> <span class="n">yi</span> <span class="o">+</span> <span class="n">bb</span><span class="o">*</span><span class="n">b</span>
+                        <span class="n">pzi</span> <span class="o">=</span> <span class="n">zi</span> <span class="o">+</span> <span class="n">cc</span><span class="o">*</span><span class="n">c</span>
+                        <span class="n">dpx_</span> <span class="o">=</span> <span class="n">pxi</span> <span class="o">-</span> <span class="n">xj</span>
+                        <span class="n">dpy_</span> <span class="o">=</span> <span class="n">pyi</span> <span class="o">-</span> <span class="n">yj</span>
+                        <span class="n">dpz_</span> <span class="o">=</span> <span class="n">pzi</span> <span class="o">-</span> <span class="n">zj</span>
+                        <span class="n">dpr_</span> <span class="o">=</span> <span class="n">dpx_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dpy_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dpz_</span><span class="o">**</span><span class="mi">2</span>
+                        <span class="c1"># The second criteria here enforces that prefer the projection</span>
+                        <span class="c1"># with the largest value (i.e. 0 = [-1, -1, -1] &lt; 13 = [0, 0, 0]</span>
+                        <span class="c1"># &lt; 26 = [1, 1, 1])</span>
+                        <span class="c1"># The system sets a fixed preference for the projected positions rather</span>
+                        <span class="c1"># than having a random choice.</span>
+                        <span class="k">if</span> <span class="n">dpr_</span> <span class="o">&lt;</span> <span class="n">dpr</span><span class="p">:</span>
+                            <span class="n">dx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpx_</span>
+                            <span class="n">dy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpy_</span>
+                            <span class="n">dz</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpz_</span>
+                            <span class="n">dr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dpr_</span><span class="p">)</span>
+                            <span class="n">ii</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">jj</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                            <span class="n">projection</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">prj</span>
+                            <span class="n">dpr</span> <span class="o">=</span> <span class="n">dpr_</span>
+                            <span class="n">inck</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">prj</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">inck</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">dz</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dr</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">ii</span> <span class="o">=</span> <span class="n">ii</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">jj</span> <span class="o">=</span> <span class="n">jj</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">projection</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span> <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">,</span> <span class="n">projection</span></div>
+
+
+<div class="viewcode-block" id="pdist_ortho_nv"><a class="viewcode-back" href="../../../exatomic.algorithms.distance.html#exatomic.algorithms.distance.pdist_ortho_nv">[docs]</a><span class="nd">@nb</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">nbpll</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pdist_ortho_nv</span><span class="p">(</span><span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">uz</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pairwise two body calculation for bodies in an orthorhombic periodic cell.</span>
+
+<span class="sd">    Does not return distance vectors.</span>
+
+<span class="sd">    An orthorhombic cell is defined by orthogonal vectors of length a and b</span>
+<span class="sd">    (which define the base) and height vector of length c. All three vectors</span>
+<span class="sd">    intersect at 90° angles. If a = b = c the cell is a simple cubic cell.</span>
+<span class="sd">    This function assumes the unit cell is constant with respect to an external</span>
+<span class="sd">    frame of reference and that the origin of the cell is at (0, 0, 0).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ux (array): In unit cell x array</span>
+<span class="sd">        uy (array): In unit cell y array</span>
+<span class="sd">        uz (array): In unit cell z array</span>
+<span class="sd">        a (float): Unit cell dimension a</span>
+<span class="sd">        b (float): Unit cell dimension b</span>
+<span class="sd">        c (float): Unit cell dimension c index (array): Atom indexes</span>
+<span class="sd">        dmax (float): Maximum distance of interest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">dmax2</span> <span class="o">=</span> <span class="n">dmax</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ux</span><span class="p">)</span>
+    <span class="n">nn</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">ii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">jj</span> <span class="o">=</span> <span class="n">ii</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">ii</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># For each atom i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="n">uy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">uz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># For each atom j</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">ux</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">yj</span> <span class="o">=</span> <span class="n">uy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">zj</span> <span class="o">=</span> <span class="n">uz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dpr</span> <span class="o">=</span> <span class="n">dmax2</span>
+            <span class="n">inck</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">prj</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Check all projections of atom i</span>
+            <span class="c1"># Note that i, j are in the unit cell so we make a 3x3x3 &#39;supercell&#39;</span>
+            <span class="c1"># of i around j</span>
+            <span class="c1"># The index of the projections of i go from 0 to 26 (27 projections)</span>
+            <span class="c1"># The 13th projection is the unit cell itself.</span>
+            <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+                        <span class="n">pxi</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">+</span> <span class="n">aa</span><span class="o">*</span><span class="n">a</span>
+                        <span class="n">pyi</span> <span class="o">=</span> <span class="n">yi</span> <span class="o">+</span> <span class="n">bb</span><span class="o">*</span><span class="n">b</span>
+                        <span class="n">pzi</span> <span class="o">=</span> <span class="n">zi</span> <span class="o">+</span> <span class="n">cc</span><span class="o">*</span><span class="n">c</span>
+                        <span class="n">dpx_</span> <span class="o">=</span> <span class="n">pxi</span> <span class="o">-</span> <span class="n">xj</span>
+                        <span class="n">dpy_</span> <span class="o">=</span> <span class="n">pyi</span> <span class="o">-</span> <span class="n">yj</span>
+                        <span class="n">dpz_</span> <span class="o">=</span> <span class="n">pzi</span> <span class="o">-</span> <span class="n">zj</span>
+                        <span class="n">dpr_</span> <span class="o">=</span> <span class="n">dpx_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dpy_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dpz_</span><span class="o">**</span><span class="mi">2</span>
+                        <span class="c1"># The second criteria here enforces that prefer the projection</span>
+                        <span class="c1"># with the largest value (i.e. 0 = [-1, -1, -1] &lt; 13 = [0, 0, 0]</span>
+                        <span class="c1"># &lt; 26 = [1, 1, 1])</span>
+                        <span class="c1"># The system sets a fixed preference for the projected positions rather</span>
+                        <span class="c1"># than having a random choice.</span>
+                        <span class="k">if</span> <span class="n">dpr_</span> <span class="o">&lt;</span> <span class="n">dpr</span><span class="p">:</span>
+                            <span class="n">dr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dpr_</span><span class="p">)</span>
+                            <span class="n">ii</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">jj</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                            <span class="n">projection</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">prj</span>
+                            <span class="n">dpr</span> <span class="o">=</span> <span class="n">dpr_</span>
+                            <span class="n">inck</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">prj</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">inck</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dr</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">ii</span> <span class="o">=</span> <span class="n">ii</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">jj</span> <span class="o">=</span> <span class="n">jj</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">projection</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dr</span><span class="p">,</span> <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">,</span> <span class="n">projection</span></div>
+
+
+<div class="viewcode-block" id="pdist"><a class="viewcode-back" href="../../../exatomic.algorithms.distance.html#exatomic.algorithms.distance.pdist">[docs]</a><span class="nd">@nb</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">nbpll</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pdist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pairwise distance computation for points in cartesian space.</span>
+
+<span class="sd">    Does return distance vectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dmax2</span> <span class="o">=</span> <span class="n">dmax</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">atom0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">atom1</span> <span class="o">=</span> <span class="n">atom0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+            <span class="n">dx_</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dy_</span> <span class="o">=</span> <span class="n">yi</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dz_</span> <span class="o">=</span> <span class="n">zi</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dr2_</span> <span class="o">=</span> <span class="n">dx_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy_</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dz_</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">if</span> <span class="n">dr2_</span> <span class="o">&lt;</span> <span class="n">dmax2</span><span class="p">:</span>
+                <span class="n">dx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dx_</span>
+                <span class="n">dy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dy_</span>
+                <span class="n">dz</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dz_</span>
+                <span class="n">dr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dr2_</span><span class="p">)</span>
+                <span class="n">atom0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">atom1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">dz</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dr</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">atom0</span> <span class="o">=</span> <span class="n">atom0</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">atom1</span> <span class="o">=</span> <span class="n">atom1</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span> <span class="n">atom0</span><span class="p">,</span> <span class="n">atom1</span></div>
+
+
+<div class="viewcode-block" id="pdist_nv"><a class="viewcode-back" href="../../../exatomic.algorithms.distance.html#exatomic.algorithms.distance.pdist_nv">[docs]</a><span class="nd">@nb</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">nbpll</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pdist_nv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pairwise distance computation for points in cartesian space.</span>
+
+<span class="sd">    Does not return distance vectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dmax2</span> <span class="o">=</span> <span class="n">dmax</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">atom0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">atom1</span> <span class="o">=</span> <span class="n">atom0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+            <span class="n">dr_</span> <span class="o">=</span> <span class="p">(</span><span class="n">xi</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yi</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">zi</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">if</span> <span class="n">dr_</span> <span class="o">&lt;</span> <span class="n">dmax2</span><span class="p">:</span>
+                <span class="n">dr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dr_</span><span class="p">)</span>
+                <span class="n">atom0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">atom1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">dr</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">atom0</span> <span class="o">=</span> <span class="n">atom0</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">atom1</span> <span class="o">=</span> <span class="n">atom1</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dr</span><span class="p">,</span> <span class="n">atom0</span><span class="p">,</span> <span class="n">atom1</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

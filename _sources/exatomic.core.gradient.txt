@@ -1,0 +1,7 @@
+exatomic.core.gradient module
+=============================
+
+.. automodule:: exatomic.core.gradient
+   :members:
+   :undoc-members:
+   :show-inheritance:

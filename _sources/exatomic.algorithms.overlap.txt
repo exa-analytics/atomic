@@ -1,0 +1,7 @@
+exatomic.algorithms.overlap module
+==================================
+
+.. automodule:: exatomic.algorithms.overlap
+   :members:
+   :undoc-members:
+   :show-inheritance:

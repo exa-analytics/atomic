@@ -1,0 +1,7 @@
+exatomic.adf.adf.output module
+==============================
+
+.. automodule:: exatomic.adf.adf.output
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.molecule module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.core.orbital module" href="exatomic.core.orbital.html" />
+    <link rel="prev" title="exatomic.core.matrices module" href="exatomic.core.matrices.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.core.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.core.html">exatomic.core package</a> &raquo;</li>
+        
+      <li>exatomic.core.molecule module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.core.molecule.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.core.molecule">
+<span id="exatomic-core-molecule-module"></span><h1>exatomic.core.molecule module<a class="headerlink" href="#module-exatomic.core.molecule" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="molecule-table">
+<h2>Molecule Table<a class="headerlink" href="#molecule-table" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="exatomic.core.molecule.Molecule">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.core.molecule.</code><code class="sig-name descname">Molecule</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#Molecule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.Molecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.numerical.DataFrame</span></code></p>
+<p>Description of molecules in the atomic universe.</p>
+<dl class="py method">
+<dt id="exatomic.core.molecule.Molecule.classify">
+<code class="sig-name descname">classify</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">classifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#Molecule.classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.Molecule.classify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classify molecules into arbitrary categories.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">molecule</span><span class="o">.</span><span class="n">classify</span><span class="p">((</span><span class="s1">&#39;solute&#39;</span><span class="p">,</span> <span class="s1">&#39;Na&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;solvent&#39;</span><span class="p">,</span> <span class="s1">&#39;H(2)O(1)&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>classifiers</strong> – Any number of tuples of the form (‘label’, ‘identifier’, exact) (see below)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A classifier has 3 parts, “label”, e.g. “solvent”, “identifier”, e.g.
+“H(2)O(1)”, and exact (true or false). If exact is false (default),
+classification is greedy and (in this example) molecules with formulas
+“H(1)O(1)”, “H(3)O(1)”, etc. would get classified as “solvent”. If,
+instead, exact were set to true, those molecules would remain
+unclassified.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Classifiers are applied in the order passed; where identifiers overlap,
+the latter classification is used.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_nearest_molecules()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.molecule.Molecule.get_atom_count">
+<code class="sig-name descname">get_atom_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#Molecule.get_atom_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.Molecule.get_atom_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the number of atoms per molecule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.molecule.Molecule.get_formula">
+<code class="sig-name descname">get_formula</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">as_map</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#Molecule.get_formula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.Molecule.get_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the string representation of the molecule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.core.molecule.compute_molecule">
+<code class="sig-prename descclassname">exatomic.core.molecule.</code><code class="sig-name descname">compute_molecule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#compute_molecule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.compute_molecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster atoms into molecules and create the <code class="xref py py-class docutils literal notranslate"><span class="pre">Molecule</span></code>
+table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>universe</strong> – Atomic universe</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>molecule</em> – Molecule table</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function modifies the universe’s atom (<code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code>)
+table in place!</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.core.molecule.compute_molecule_count">
+<code class="sig-prename descclassname">exatomic.core.molecule.</code><code class="sig-name descname">compute_molecule_count</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#compute_molecule_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.compute_molecule_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.core.molecule.compute_molecule_com">
+<code class="sig-prename descclassname">exatomic.core.molecule.</code><code class="sig-name descname">compute_molecule_com</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/molecule.html#compute_molecule_com"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.molecule.compute_molecule_com" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute molecules’ centers of mass.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.core.orbital.html" class="btn btn-neutral float-right" title="exatomic.core.orbital module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.core.matrices.html" class="btn btn-neutral float-left" title="exatomic.core.matrices module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

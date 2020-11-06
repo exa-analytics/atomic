@@ -1,0 +1,7 @@
+exatomic.core.matrices module
+=============================
+
+.. automodule:: exatomic.core.matrices
+   :members:
+   :undoc-members:
+   :show-inheritance:

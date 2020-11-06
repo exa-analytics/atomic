@@ -1,0 +1,7 @@
+exatomic.formula module
+=======================
+
+.. automodule:: exatomic.formula
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+exatomic.algorithms.delocalization module
+=========================================
+
+.. automodule:: exatomic.algorithms.delocalization
+   :members:
+   :undoc-members:
+   :show-inheritance:

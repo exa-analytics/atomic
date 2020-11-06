@@ -1,0 +1,7 @@
+exatomic.core.atom module
+=========================
+
+.. automodule:: exatomic.core.atom
+   :members:
+   :undoc-members:
+   :show-inheritance:

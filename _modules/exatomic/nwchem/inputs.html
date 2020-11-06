@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.nwchem.inputs &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.nwchem.inputs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.nwchem.inputs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Input Generator and Parser</span>
+<span class="sd">#############################</span>
+<span class="sd">Every attempt is made to follow the Documentation on the</span>
+<span class="sd">NWChem `website`_ with a general theme of the input Generator</span>
+<span class="sd">accepting keyword arguments mirroring the keywords accepted by</span>
+<span class="sd">NWChem and values corresponding to the parameters in a calculation.</span>
+
+<span class="sd">.. _website: http://www.nwchem-sw.org/index.php/Release66:NWChem_Documentation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># &quot;&quot;&quot;</span>
+<span class="c1"># Due to the complexity of the NWChem program and the innumerable</span>
+<span class="c1"># permutations of input file formats, this is in no way meant to be</span>
+<span class="c1"># an exhaustive wrapper of NWChem input files. Alternatively,</span>
+<span class="c1"># valid key words are handled according to the types of the</span>
+<span class="c1"># arguments being passed to it. If the argument is a string, it should</span>
+<span class="c1"># be formatted how you want with new line breaks (see default argument</span>
+<span class="c1"># for geomopts). Multiple options for the same keyword are handled as</span>
+<span class="c1"># lists of tuples (example: basis=[(&#39;C&#39;, &#39;3-21G&#39;), (&#39;H&#39;, &#39;6-31G**&#39;)]).</span>
+<span class="c1"># Similarly, convergence criteria may be specified with convergence =</span>
+<span class="c1"># [&#39;nolevelshifting&#39;, &#39;ncydp 30&#39;, &#39;damp 70&#39;]. The closer your string</span>
+<span class="c1"># formatting is to what NWChem expects, the less likely it is that you</span>
+<span class="c1"># will obtain syntax errors in the written input file.</span>
+<span class="c1"># &quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="c1">#import pandas as pd</span>
+<span class="c1">#import numpy as np</span>
+<span class="kn">from</span> <span class="nn">.editor</span> <span class="kn">import</span> <span class="n">Editor</span>
+<span class="c1">#from exa.util.units import Length as L</span>
+<span class="c1">#from exatomic import Universe</span>
+
+
+<span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;echo</span>
+<span class="s2">start {{name}}</span>
+<span class="s2">title {{title}}</span>
+<span class="s2">charge {{charge}}</span>
+
+<span class="s2">{{memory}}</span>
+
+<span class="s2">geometry {{geomopts}}</span>
+<span class="s2">{{atom}}</span>
+<span class="s2">end</span>
+
+<span class="s2">basis {{basisopts}}</span>
+<span class="s2">{{basis}}</span>
+<span class="s2">end</span>
+
+<span class="s2">{{set}}</span>
+<span class="si">{extras}</span><span class="s2"></span>
+<span class="si">{calc}</span><span class="s2">{{prop}}</span>
+<span class="s2">{{task}}&quot;&quot;&quot;</span>
+
+
+<span class="n">_calcscf</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;scf</span>
+<span class="s2"> nopen </span><span class="si">{mult}</span><span class="s2"></span>
+<span class="s2"> maxiter </span><span class="si">{iterations}</span><span class="s2"></span>
+<span class="s2">end&quot;&quot;&quot;</span>
+
+<span class="n">_calcdft</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;dft</span>
+<span class="s2"> direct</span>
+<span class="s2"> mult </span><span class="si">{mult}</span><span class="s2"></span>
+<span class="s2"> xc </span><span class="si">{xc}</span><span class="s2"></span>
+<span class="s2"> iterations </span><span class="si">{iterations}</span><span class="s2"></span>
+<span class="s2"> tolerances </span><span class="si">{tolerances}</span><span class="s2"></span>
+<span class="si">{grid}</span><span class="s2"></span>
+<span class="si">{convergence}</span><span class="s2"></span>
+<span class="s2"> </span><span class="si">{dft_other}</span><span class="s2"></span>
+<span class="s2"> </span><span class="si">{restart}</span><span class="s2"></span>
+<span class="s2">end&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="Input"><a class="viewcode-back" href="../../../exatomic.nwchem.inputs.html#exatomic.nwchem.inputs.Input">[docs]</a><span class="k">class</span> <span class="nc">Input</span><span class="p">(</span><span class="n">Editor</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Input.from_universe"><a class="viewcode-back" href="../../../exatomic.nwchem.inputs.html#exatomic.nwchem.inputs.Input.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;scf&#39;</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">charge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">geomopts</span><span class="o">=</span><span class="s1">&#39;units bohr</span><span class="se">\n</span><span class="s1">symmetry c1&#39;</span><span class="p">,</span>
+                      <span class="n">basisopts</span><span class="o">=</span><span class="s1">&#39;spherical&#39;</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;* library 6-31G&#39;</span><span class="p">,</span>
+                      <span class="n">mult</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">xc</span><span class="o">=</span><span class="s1">&#39;b3lyp&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                      <span class="n">convergence</span><span class="o">=</span><span class="s1">&#39;nolevelshifting&#39;</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="s1">&#39; nbofile 2&#39;</span><span class="p">,</span>
+                      <span class="n">relativistic</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tddft</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ecp</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tasks</span><span class="o">=</span><span class="s1">&#39;property&#39;</span><span class="p">,</span>
+                      <span class="n">dft_other</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="s1">&#39;xfine&#39;</span><span class="p">,</span> <span class="n">tolerances</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">_calcdft</span> <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s1">&#39;dft&#39;</span> <span class="k">else</span> <span class="n">_calcscf</span>
+        <span class="n">extras</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">extradict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">arg</span><span class="p">,</span> <span class="n">extra</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;ecp&#39;</span><span class="p">,</span> <span class="n">ecp</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;property&#39;</span><span class="p">,</span> <span class="n">prop</span><span class="p">),</span>
+                           <span class="p">(</span><span class="s1">&#39;relativistic&#39;</span><span class="p">,</span> <span class="n">relativistic</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;tddft&#39;</span><span class="p">,</span> <span class="n">tddft</span><span class="p">)]:</span>
+            <span class="k">if</span> <span class="n">extra</span><span class="p">:</span>
+                <span class="n">extras</span> <span class="o">+=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">arg</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+                <span class="n">extradict</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">extra</span><span class="p">)</span>
+        <span class="n">fl</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">,</span> <span class="n">extras</span><span class="o">=</span><span class="n">extras</span><span class="p">))</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]]</span>
+        <span class="n">keys</span> <span class="o">+=</span> <span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_calcscf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]]</span>
+        <span class="n">keys</span> <span class="o">+=</span> <span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_calcdft</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]]</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;atom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">to_xyz</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span> <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;charge&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">charge</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;geomopts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;geomopts&#39;</span><span class="p">,</span> <span class="n">geomopts</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;basisopts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;basisopts&#39;</span><span class="p">,</span> <span class="n">basisopts</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;basis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;basis&#39;</span><span class="p">,</span> <span class="n">basis</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s1">&#39;dft&#39;</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mult</span>
+        <span class="k">elif</span> <span class="n">mult</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mult</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> uhf&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mult</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;xc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xc</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iterations</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;tolerances&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tolerances</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;convergence&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;convergence&#39;</span><span class="p">,</span> <span class="n">convergence</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;grid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;grid&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dft_other&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;dft_other&#39;</span><span class="p">,</span> <span class="n">dft_other</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;memory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">memory</span>
+        <span class="k">if</span> <span class="n">sets</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle_arg</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="n">sets</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">task &#39;</span><span class="o">+</span><span class="n">task</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;task &#39;</span><span class="o">+</span><span class="n">task</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">tasks</span>
+        <span class="c1">#extras = {&#39;ecp&#39;: _handle_arg(&#39;ecp&#39;, ecp),</span>
+        <span class="c1">#          &#39;tddft&#39;: _handle_arg(&#39;tddft&#39;, tddft),</span>
+        <span class="c1">#          &#39;property&#39;: _handle_arg(&#39;property&#39;, prop),</span>
+        <span class="c1">#          &#39;relativistic&#39;: _handle_arg(&#39;relativistic&#39;, relativistic)}</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">extradict</span><span class="p">)</span>
+    <span class="c1">#### TASK AND EXTRAS</span>
+
+        <span class="c1">#kwargs[&#39;prop&#39;] = &#39;\n\nproperty\n nbofile 2\nend&#39;</span>
+        <span class="c1">#kwargs[&#39;task&#39;] = &#39;property&#39;</span>
+        <span class="c1">#kwargs[&#39;calc&#39;] = calc</span>
+        <span class="c1">#if options is not None:</span>
+        <span class="c1">#    for opt, info in options.items():</span>
+        <span class="c1">#        if opt in extras:</span>
+        <span class="c1">#            _handle_info(opt, info, extras)</span>
+        <span class="c1">#        elif kind == &#39;scf&#39; and opt == &#39;mult&#39;:</span>
+        <span class="c1">#            kwargs[&#39;mult&#39;] = str(int(info) - 1) + &#39;\n uhf&#39; if int(info) &gt; 1 else info</span>
+        <span class="c1">#        else:</span>
+        <span class="c1">#            _handle_info(opt, info, kwargs)</span>
+        <span class="c1">#extras = [&#39;\n&#39; + key + &#39;\n&#39; + val for key, val in extras.items() if val]</span>
+        <span class="c1">#kwargs[&#39;extras&#39;] = &#39;\n&#39;.join([extra + &#39;\nend&#39; for extra in extras])</span>
+        <span class="n">fl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fl</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fl</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fl</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Input</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_handle_arg</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+    <span class="n">type1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;basis&#39;</span><span class="p">:</span> <span class="s1">&#39;library&#39;</span><span class="p">,</span> <span class="s1">&#39;ecp&#39;</span><span class="p">:</span> <span class="s1">&#39;library&#39;</span><span class="p">}</span>
+    <span class="n">type2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;convergence&#39;</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;grid&#39;</span><span class="p">]</span>
+    <span class="n">type3</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ecp&#39;</span><span class="p">,</span> <span class="s1">&#39;property&#39;</span><span class="p">,</span> <span class="s1">&#39;tddft&#39;</span><span class="p">,</span> <span class="s1">&#39;relativistic&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">type3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">type1</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ret</span><span class="p">,</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">type1</span><span class="p">[</span><span class="n">opt</span><span class="p">],</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ret</span><span class="p">,</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">type1</span><span class="p">[</span><span class="n">opt</span><span class="p">],</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">type3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">type2</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ret</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ret</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">type3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">info</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> keyword not handled correctly with value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">info</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="tuning_inputs"><a class="viewcode-back" href="../../../exatomic.nwchem.inputs.html#exatomic.nwchem.inputs.tuning_inputs">[docs]</a><span class="k">def</span> <span class="nf">tuning_inputs</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">mult</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">gammas</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span>
+                  <span class="n">route</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">link0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">writedir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provided a universe, generate input files for functional tuning.</span>
+<span class="sd">    Includes input keywords for orbital visualization within exatomic.</span>
+<span class="sd">    Assumes you will copy restart checkpoint files to have the same</span>
+<span class="sd">    names as the input files.</span>
+
+<span class="sd">    Args</span>
+<span class="sd">        uni (exatomic.container.Universe): molecular specification</span>
+<span class="sd">        name (str): prefix for job names</span>
+<span class="sd">        mult (int): spin multiplicity</span>
+<span class="sd">        charge (int): charge of the system</span>
+<span class="sd">        basis (list): tuples of atomic symbol, string of basis name</span>
+<span class="sd">        gammas (iter): values of range separation parameter (omega)</span>
+<span class="sd">        alphas (iter): fractions of Hartree-Fock in the short range</span>
+<span class="sd">        route (list): strings or tuples of keyword, value pairs (default [(&quot;Pop&quot;, &quot;full&quot;)])</span>
+<span class="sd">        link0 (list): strings or tuples of keyword, value pairs</span>
+<span class="sd">        writedir (str): directory path to write input files</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        editors (list): input files as exa.Editors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">route</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Pop&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)]</span>
+    <span class="n">fnstr</span> <span class="o">=</span> <span class="s1">&#39;xcampbe96 1.0 cpbe96 1.0 HFexch 1.0</span><span class="se">\n</span><span class="s1">&#39;</span>\
+            <span class="s1">&#39; cam </span><span class="si">{gam:.4f}</span><span class="s1"> cam_alpha </span><span class="si">{alp:.4f}</span><span class="s1"> cam_beta </span><span class="si">{bet:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+    <span class="n">jbnm</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{name}</span><span class="s1">-{{gam:.2f}}-{{alp:.2f}}-{{chg}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">format</span>
+    <span class="n">chgnms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;neut&#39;</span><span class="p">,</span> <span class="s1">&#39;an&#39;</span><span class="p">]</span>
+    <span class="n">chgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">charge</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="n">charge</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">mults</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">mult</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="p">[</span><span class="n">mult</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mult</span><span class="p">,</span> <span class="n">mult</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">fls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">gam</span> <span class="ow">in</span> <span class="n">gammas</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">alp</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+            <span class="c1">#bet = 1 - alp</span>
+            <span class="k">for</span> <span class="n">chgnm</span><span class="p">,</span> <span class="n">chg</span><span class="p">,</span> <span class="n">mult</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">chgnms</span><span class="p">,</span> <span class="n">chgs</span><span class="p">,</span> <span class="n">mults</span><span class="p">):</span>
+                <span class="n">fnc</span> <span class="o">=</span> <span class="n">fnstr</span><span class="p">(</span><span class="n">gam</span><span class="o">=</span><span class="n">gam</span><span class="p">,</span> <span class="n">alp</span><span class="o">=</span><span class="n">alp</span><span class="p">,</span> <span class="n">bet</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">alp</span><span class="p">)</span>
+                <span class="n">jnm</span> <span class="o">=</span> <span class="n">jbnm</span><span class="p">(</span><span class="n">gam</span><span class="o">=</span><span class="n">gam</span><span class="p">,</span> <span class="n">alp</span><span class="o">=</span><span class="n">alp</span><span class="p">,</span> <span class="n">bet</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">alp</span><span class="p">,</span> <span class="n">chg</span><span class="o">=</span><span class="n">chgnm</span><span class="p">)</span>
+                <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;charge&#39;</span><span class="p">:</span> <span class="n">chg</span><span class="p">,</span> <span class="s1">&#39;mult&#39;</span><span class="p">:</span> <span class="n">mult</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;dft&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">jnm</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">jnm</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">:</span> <span class="n">fnc</span><span class="p">,</span>
+                        <span class="s1">&#39;basis&#39;</span><span class="p">:</span> <span class="n">basis</span><span class="p">,</span> <span class="s1">&#39;prop&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> <span class="c1">#, &#39;writedir&#39;: writedir}</span>
+                <span class="n">fls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Input</span><span class="o">.</span><span class="n">from_universe</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">))</span>
+                <span class="n">fls</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">jnm</span> <span class="o">+</span> <span class="s1">&#39;.nw&#39;</span>
+    <span class="k">return</span> <span class="n">fls</span></div>
+
+<span class="c1"># def tuning_inputs(uni, name, mult, charge, basis, gammas, alphas,</span>
+<span class="c1">#                   route=[(&#39;Pop&#39;, &#39;full&#39;)], link0=None, nproc=4, mem=4,</span>
+<span class="c1">#                   field=None, writedir=None, deep=False):</span>
+    <span class="c1"># def from_universe(cls, uni, task=&#39;scf&#39;, fp=None, name=None, title=None,</span>
+    <span class="c1">#                   charge=0, geomopts=&#39;units bohr\nsymmetry c1&#39;,</span>
+    <span class="c1">#                   basisopts=&#39;spherical&#39;, basis=&#39;* library 6-31G&#39;,</span>
+    <span class="c1">#                   mult=1, xc=&#39;b3lyp&#39;, iterations=100,</span>
+    <span class="c1">#                   convergence=&#39;nolevelshifting&#39;, prop=&#39; nbofile 2&#39;,</span>
+    <span class="c1">#                   relativistic=&#39;&#39;, tddft=&#39;&#39;, ecp=&#39;&#39;):</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

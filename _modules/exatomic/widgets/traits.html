@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.widgets.traits &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.widgets.traits</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.widgets.traits</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Universe trait functions</span>
+<span class="sd">#########################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">##########</span>
+<span class="c1"># traits #</span>
+<span class="c1">##########</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2radius</span><span class="p">,</span> <span class="n">sym2color</span>
+
+
+<div class="viewcode-block" id="atom_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.atom_traits">[docs]</a><span class="k">def</span> <span class="nf">atom_traits</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">atomcolors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atomradii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atomlabels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get atom table traits. Atomic size (using the covalent radius) and atom</span>
+<span class="sd">    colors (using the common `Jmol`_ color scheme) are packed as dicts and</span>
+<span class="sd">    obtained from the static data in exa.</span>
+
+<span class="sd">    .. _Jmol: http://jmol.sourceforge.net/jscolors/</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atomlabels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span> <span class="k">if</span> <span class="n">atomlabels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">atomlabels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">atomcolors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span> <span class="k">if</span> <span class="n">atomcolors</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">atomcolors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">atomradii</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">if</span> <span class="n">atomradii</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">atomradii</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">traits</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+    <span class="n">grps</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">ncol</span> <span class="o">=</span> <span class="s1">&#39;atom_&#39;</span> <span class="o">+</span> <span class="n">col</span>
+        <span class="n">traits</span><span class="p">[</span><span class="n">ncol</span><span class="p">]</span> <span class="o">=</span> <span class="n">grps</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span>
+            <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">,</span> <span class="n">double_precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;values&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">syms</span> <span class="o">=</span> <span class="n">grps</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">symmap</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+              <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">unique_atoms</span><span class="p">}</span>
+    <span class="n">unq</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">cov_radii</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sym2radius</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">unq</span><span class="p">}</span>
+    <span class="n">van_radii</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sym2radius</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">unq</span><span class="p">}</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sym2color</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">unq</span><span class="p">}</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">symmap</span>
+    <span class="n">colors</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atomcolors</span><span class="p">)</span>
+    <span class="n">cov_radii</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atomradii</span><span class="p">)</span>
+    <span class="n">van_radii</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atomradii</span><span class="p">)</span>
+    <span class="n">labels</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atomlabels</span><span class="p">)</span>
+    <span class="n">traits</span><span class="p">[</span><span class="s1">&#39;atom_s&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">syms</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">)</span>
+    <span class="n">traits</span><span class="p">[</span><span class="s1">&#39;atom_cr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">cov_radii</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">symmap</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">traits</span><span class="p">[</span><span class="s1">&#39;atom_vr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">van_radii</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">symmap</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">traits</span><span class="p">[</span><span class="s1">&#39;atom_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">symmap</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">traits</span><span class="p">[</span><span class="s1">&#39;atom_l&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="k">return</span> <span class="n">traits</span></div>
+
+
+<div class="viewcode-block" id="field_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.field_traits">[docs]</a><span class="k">def</span> <span class="nf">field_traits</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get field table traits.&quot;&quot;&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">grps</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+    <span class="n">fps</span> <span class="o">=</span> <span class="n">grps</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[[</span><span class="s1">&#39;ox&#39;</span><span class="p">,</span> <span class="s1">&#39;oy&#39;</span><span class="p">,</span> <span class="s1">&#39;oz&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">grps</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">except</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">grp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">grps</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;field_v&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">,</span>
+                        <span class="n">double_precision</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">field_values</span><span class="p">],</span>
+            <span class="s1">&#39;field_i&#39;</span><span class="p">:</span> <span class="n">idxs</span><span class="p">,</span>
+            <span class="s1">&#39;field_p&#39;</span><span class="p">:</span> <span class="n">fps</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="two_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.two_traits">[docs]</a><span class="k">def</span> <span class="nf">two_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get two table traitlets.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s2">&quot;atom_two&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;for the catcher&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;frame&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom_two</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">uni</span><span class="o">.</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">])</span>
+    <span class="n">lbls</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">get_atom_labels</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom_two</span>
+    <span class="n">bonded</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">]]</span>
+    <span class="n">lbl0</span> <span class="o">=</span> <span class="n">bonded</span><span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">lbls</span><span class="p">)</span>
+    <span class="n">lbl1</span> <span class="o">=</span> <span class="n">bonded</span><span class="p">[</span><span class="s1">&#39;atom1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">lbls</span><span class="p">)</span>
+    <span class="n">lbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">lbl0</span><span class="p">,</span> <span class="n">lbl1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">lbl</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bonded</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="n">bond_grps</span> <span class="o">=</span> <span class="n">lbl</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;O&#39;</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">b0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">b0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond_grps</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">frame</span><span class="p">)[</span><span class="s1">&#39;atom0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">b1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond_grps</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">frame</span><span class="p">)[</span><span class="s1">&#39;atom1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">b0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">b1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;two_b0&#39;</span><span class="p">:</span> <span class="n">b0</span><span class="p">,</span> <span class="s1">&#39;two_b1&#39;</span><span class="p">:</span> <span class="n">b1</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="frame_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.frame_traits">[docs]</a><span class="k">def</span> <span class="nf">frame_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get frame table traits.&quot;&quot;&quot;</span>
+    <span class="c1"># ASSUME SIMPLE CUBIC CELL this is a hack for now.</span>
+    <span class="k">if</span> <span class="s1">&#39;xi&#39;</span> <span class="ow">in</span> <span class="n">uni</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;frame__a&#39;</span><span class="p">:</span> <span class="n">uni</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()}</span>
+    <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="tensor_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.tensor_traits">[docs]</a><span class="k">def</span> <span class="nf">tensor_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">):</span>
+    <span class="n">grps</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">grps</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">except</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">grp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">grps</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;tensor_d&#39;</span><span class="p">:</span> <span class="n">grps</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="s1">&#39;tensor_i&#39;</span><span class="p">:</span> <span class="n">idxs</span><span class="p">}</span></div>
+
+
+<span class="c1">#def freq_traits(uni):</span>
+<span class="c1">#    grps = uni.frequency.groupby(&#39;frequency&#39;)</span>
+<span class="c1">#    try: idxs = list(grps.groups.keys())</span>
+<span class="c1">#    except: idxs = [list(grp.index) for i, grp in grps]</span>
+<span class="c1">#    #print(idxs)</span>
+<span class="c1">#    return {&#39;freq_d&#39;: grps.apply(lambda x: x.T.to_dict()).to_dict(), &#39;freq_i&#39;: idxs}</span>
+
+
+<div class="viewcode-block" id="uni_traits"><a class="viewcode-back" href="../../../exatomic.widgets.traits.html#exatomic.widgets.traits.uni_traits">[docs]</a><span class="k">def</span> <span class="nf">uni_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">atomcolors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atomradii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atomlabels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get Universe traits.&quot;&quot;&quot;</span>
+    <span class="n">unargs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1">#    fields, tensors, freq = [], None, None</span>
+    <span class="n">fields</span><span class="p">,</span> <span class="n">tensors</span> <span class="o">=</span> <span class="p">[],</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">):</span>
+        <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="p">):</span>
+        <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atom_traits</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="n">atomcolors</span><span class="p">,</span> <span class="n">atomradii</span><span class="p">,</span> <span class="n">atomlabels</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;atom_two&#39;</span><span class="p">):</span>
+        <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">two_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">):</span>
+        <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_traits</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="p">))</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;null&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">unargs</span><span class="p">[</span><span class="s1">&#39;field_i&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;tensor&#39;</span><span class="p">):</span>
+        <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tensor_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">))</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="n">unargs</span><span class="p">[</span><span class="s1">&#39;tensor_i&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1">#    if hasattr(uni, &#39;frequency&#39;):</span>
+<span class="c1">#        unargs.update(freq_traits(uni))</span>
+<span class="c1">#        freq = unargs[&#39;freq_i&#39;]</span>
+<span class="c1">#    return unargs, fields, tensors, freq</span>
+    <span class="k">return</span> <span class="n">unargs</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">tensors</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+exatomic.qe.types module
+========================
+
+.. automodule:: exatomic.qe.types
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+exatomic.interfaces.cube module
+===============================
+
+.. automodule:: exatomic.interfaces.cube
+   :members:
+   :undoc-members:
+   :show-inheritance:

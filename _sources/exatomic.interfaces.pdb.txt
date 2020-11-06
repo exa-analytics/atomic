@@ -1,0 +1,7 @@
+exatomic.interfaces.pdb module
+==============================
+
+.. automodule:: exatomic.interfaces.pdb
+   :members:
+   :undoc-members:
+   :show-inheritance:

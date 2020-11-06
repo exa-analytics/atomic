@@ -1,0 +1,7 @@
+exatomic.algorithms.interpolation module
+========================================
+
+.. automodule:: exatomic.algorithms.interpolation
+   :members:
+   :undoc-members:
+   :show-inheritance:

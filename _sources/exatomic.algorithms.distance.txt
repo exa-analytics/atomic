@@ -1,0 +1,7 @@
+exatomic.algorithms.distance module
+===================================
+
+.. automodule:: exatomic.algorithms.distance
+   :members:
+   :undoc-members:
+   :show-inheritance:

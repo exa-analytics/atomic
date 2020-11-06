@@ -1,0 +1,7 @@
+exatomic.qe.pw.output module
+============================
+
+.. automodule:: exatomic.qe.pw.output
+   :members:
+   :undoc-members:
+   :show-inheritance:

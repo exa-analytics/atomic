@@ -1,0 +1,7 @@
+exatomic.qchem.inputs module
+============================
+
+.. automodule:: exatomic.qchem.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

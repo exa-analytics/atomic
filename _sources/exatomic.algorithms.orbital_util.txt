@@ -1,0 +1,7 @@
+exatomic.algorithms.orbital\_util module
+========================================
+
+.. automodule:: exatomic.algorithms.orbital_util
+   :members:
+   :undoc-members:
+   :show-inheritance:

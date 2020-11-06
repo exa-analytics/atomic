@@ -1,0 +1,7 @@
+exatomic.qe.pw.composer module
+==============================
+
+.. automodule:: exatomic.qe.pw.composer
+   :members:
+   :undoc-members:
+   :show-inheritance:

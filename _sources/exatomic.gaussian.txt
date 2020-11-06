@@ -1,0 +1,17 @@
+exatomic.gaussian package
+=========================
+
+.. automodule:: exatomic.gaussian
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.gaussian.editor
+   exatomic.gaussian.inputs
+   exatomic.gaussian.output

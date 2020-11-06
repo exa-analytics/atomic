@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.nwchem.output module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.plotter package" href="exatomic.plotter.html" />
+    <link rel="prev" title="exatomic.nwchem.inputs module" href="exatomic.nwchem.inputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.nwchem.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.nwchem.html">exatomic.nwchem package</a> &raquo;</li>
+        
+      <li>exatomic.nwchem.output module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.nwchem.output.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.nwchem.output">
+<span id="exatomic-nwchem-output-module"></span><h1>exatomic.nwchem.output module<a class="headerlink" href="#module-exatomic.nwchem.output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nwchem-output">
+<h2>NWChem Output<a class="headerlink" href="#nwchem-output" title="Permalink to this headline">¶</a></h2>
+<p>Parse NWChem output files and convert them into an exatomic Universe container.</p>
+<dl class="py class">
+<dt id="exatomic.nwchem.output.OutMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nwchem.output.</code><code class="sig-name descname">OutMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#OutMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.OutMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.atom">
+<code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.orbital">
+<code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.orbital" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.Orbital" title="exatomic.core.orbital.Orbital"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.Orbital</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.momatrix">
+<code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.MOMatrix" title="exatomic.core.orbital.MOMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.MOMatrix</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.basis_set">
+<code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSet" title="exatomic.core.basis.BasisSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSet</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.basis_set_order">
+<code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSetOrder" title="exatomic.core.basis.BasisSetOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSetOrder</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.frame">
+<code class="sig-name descname">frame</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.frame.html#exatomic.core.frame.Frame" title="exatomic.core.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.frame.Frame</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.roa">
+<code class="sig-name descname">roa</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.roa" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.tensor.html#exatomic.core.tensor.Polarizability" title="exatomic.core.tensor.Polarizability"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.tensor.Polarizability</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.gradient">
+<code class="sig-name descname">gradient</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.gradient.html#exatomic.core.gradient.Gradient" title="exatomic.core.gradient.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.gradient.Gradient</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nwchem.output.OutMeta.frequency">
+<code class="sig-name descname">frequency</code><a class="headerlink" href="#exatomic.nwchem.output.OutMeta.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Frequency" title="exatomic.core.atom.Frequency"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Frequency</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.nwchem.output.Output">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nwchem.output.</code><code class="sig-name descname">Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.nwchem.editor.html#exatomic.nwchem.editor.Editor" title="exatomic.nwchem.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nwchem.editor.Editor</span></code></a></p>
+<p>Editor for NWChem calculation output file (stdout).</p>
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_atom">
+<code class="sig-name descname">parse_atom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the atom dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_orbital">
+<code class="sig-name descname">parse_orbital</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_orbital"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_orbital" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.Orbital" title="exatomic.core.orbital.Orbital"><code class="xref py py-class docutils literal notranslate"><span class="pre">Orbital</span></code></a> dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.MOMatrix" title="exatomic.core.orbital.MOMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">MOMatrix</span></code></a> dataframe.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Must supply ‘print “final vectors” “final vectors analysis”’ for momatrix</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_basis_set">
+<code class="sig-name descname">parse_basis_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_basis_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_basis_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSet" title="exatomic.core.basis.BasisSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasisSet</span></code></a> dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_basis_set_order">
+<code class="sig-name descname">parse_basis_set_order</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_basis_set_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_roa">
+<code class="sig-name descname">parse_roa</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_roa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_roa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the <a class="reference internal" href="exatomic.core.tensor.html#exatomic.core.tensor.Polarizability" title="exatomic.core.tensor.Polarizability"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polarizability</span></code></a> dataframe. This will parse the
+output from the Raman Optical Activity outputs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We generate a 3D tensor with the 2D tensor code. 3D tensors will have 3 rows labeled
+with the same name.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_frequency">
+<code class="sig-name descname">parse_frequency</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Frequency" title="exatomic.core.atom.Frequency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frequency</span></code></a> dataframe.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This code removes all negative frequencies.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_gradient">
+<code class="sig-name descname">parse_gradient</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse <a class="reference internal" href="exatomic.core.gradient.html#exatomic.core.gradient.Gradient" title="exatomic.core.gradient.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.gradient.Gradient</span></code></a> dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.parse_frame">
+<code class="sig-name descname">parse_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Output.parse_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Output.parse_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a minimal <a class="reference internal" href="exatomic.core.frame.html#exatomic.core.frame.Frame" title="exatomic.core.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a> from the (parsed)
+<a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.nwchem.output.Output.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.basis_set">
+<em class="property">property </em><code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.nwchem.output.Output.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.basis_set_order">
+<em class="property">property </em><code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.nwchem.output.Output.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.frame">
+<em class="property">property </em><code class="sig-name descname">frame</code><a class="headerlink" href="#exatomic.nwchem.output.Output.frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.frequency">
+<em class="property">property </em><code class="sig-name descname">frequency</code><a class="headerlink" href="#exatomic.nwchem.output.Output.frequency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.gradient">
+<em class="property">property </em><code class="sig-name descname">gradient</code><a class="headerlink" href="#exatomic.nwchem.output.Output.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.momatrix">
+<em class="property">property </em><code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.nwchem.output.Output.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.orbital">
+<em class="property">property </em><code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.nwchem.output.Output.orbital" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Output.roa">
+<em class="property">property </em><code class="sig-name descname">roa</code><a class="headerlink" href="#exatomic.nwchem.output.Output.roa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.nwchem.output.Ecce">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nwchem.output.</code><code class="sig-name descname">Ecce</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Ecce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Ecce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.nwchem.editor.html#exatomic.nwchem.editor.Editor" title="exatomic.nwchem.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nwchem.editor.Editor</span></code></a></p>
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Ecce.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Ecce.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#Ecce.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.Ecce.parse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.basis_set">
+<em class="property">property </em><code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.basis_set_order">
+<em class="property">property </em><code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.frame">
+<em class="property">property </em><code class="sig-name descname">frame</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.frequency">
+<em class="property">property </em><code class="sig-name descname">frequency</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.frequency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.gradient">
+<em class="property">property </em><code class="sig-name descname">gradient</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.momatrix">
+<em class="property">property </em><code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.orbital">
+<em class="property">property </em><code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.orbital" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nwchem.output.Ecce.roa">
+<em class="property">property </em><code class="sig-name descname">roa</code><a class="headerlink" href="#exatomic.nwchem.output.Ecce.roa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.nwchem.output.parse_nwchem">
+<code class="sig-prename descclassname">exatomic.nwchem.output.</code><code class="sig-name descname">parse_nwchem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em>, <em class="sig-param"><span class="n">ecce</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'scf'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nwchem/output.html#parse_nwchem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nwchem.output.parse_nwchem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will parse an NWChem output file. Optionally it will attempt to parse
+an ECCE (extensible computational chemistry environment) output containing
+the C matrix to be used in visualization of molecular orbitals. The kind
+parameter chooses the ‘scf’ or ‘dft’ C matrix in the ecce output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – file path to the output file</p></li>
+<li><p><strong>ecce</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the ecce output in the same directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>parsed (Editor)</em> –</p>
+<dl class="simple">
+<dt>contains many attributes similar to the</dt><dd><p>exatomic Universe</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.plotter.html" class="btn btn-neutral float-right" title="exatomic.plotter package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.nwchem.inputs.html" class="btn btn-neutral float-left" title="exatomic.nwchem.inputs module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

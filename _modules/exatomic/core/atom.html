@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.atom &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.atom</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.atom</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Atomic Position Data</span>
+<span class="sd">############################</span>
+<span class="sd">This module provides a collection of dataframes supporting nuclear positions,</span>
+<span class="sd">forces, velocities, symbols, etc. (all data associated with atoms as points).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Integral</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Length</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2z</span><span class="p">,</span> <span class="n">sym2mass</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.distance</span> <span class="kn">import</span> <span class="n">modv</span>
+<span class="kn">from</span> <span class="nn">exatomic.core.error</span> <span class="kn">import</span> <span class="n">PeriodicUniverseError</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.geometry</span> <span class="kn">import</span> <span class="n">make_small_molecule</span>
+<span class="kn">from</span> <span class="nn">exatomic</span> <span class="kn">import</span> <span class="n">plotter</span>
+
+
+<div class="viewcode-block" id="Atom"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom">[docs]</a><span class="k">class</span> <span class="nc">Atom</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The atom dataframe.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | x                 | float    | position in x (req.)                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | y                 | float    | position in y (req.)                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | z                 | float    | position in z (req.)                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | frame             | category | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | symbol            | category | element symbol (req.)                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | fx                | float    | force in x                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | fy                | float    | force in y                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | fz                | float    | force in z                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | vx                | float    | velocity in x                             |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | vy                | float    | velocity in y                             |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | vz                | float    | velocity in z                             |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;atom&#39;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;molecule&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
+                   <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Atom</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nframes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the total number of frames in the atom table.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">as_ordered</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the last frame of the atom table.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">unique_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return unique atom symbols of the last frame.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_determine_center</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine the center of the molecule with respect to</span>
+<span class="sd">        the given attribute data. Used for the center of nuclear</span>
+<span class="sd">        charge and center of mass.&quot;&quot;&quot;</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">coords</span><span class="p">),</span> <span class="n">attr</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">center</span>
+
+<div class="viewcode-block" id="Atom.center"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.center">[docs]</a>    <span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of a single frame of the atom table</span>
+<span class="sd">        centered around a specific atom index. There is also</span>
+<span class="sd">        the ability to center the molecule to the center of</span>
+<span class="sd">        nuclear charge (NuclChrg) or center of mass (Mass).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int): Atom index in the atom table</span>
+<span class="sd">            frame (int): Frame to perform the operation on</span>
+<span class="sd">            to (str): Tells the program which centering algorithm to use</span>
+
+<span class="sd">        Returs:</span>
+<span class="sd">            frame (:class:`exatomic.Universe.atom`): Atom frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">to</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Must provide an atom to center to&quot;</span><span class="p">)</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">to</span> <span class="o">==</span> <span class="s1">&#39;NuclChrg&#39;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">Z</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">Z</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2z</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_center</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="n">Z</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">frame</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">to</span> <span class="o">==</span> <span class="s1">&#39;Mass&#39;</span><span class="p">:</span>
+            <span class="n">mass</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2mass</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_center</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="n">mass</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">frame</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Sorry the centering option </span><span class="si">{}</span><span class="s2"> is not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">center</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="n">frame</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">-</span> <span class="n">center</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">frame</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Atom</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Atom.rotate"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of a single frame of the atom table rotated</span>
+<span class="sd">        around the specified rotation axis by the specified angle.</span>
+<span class="sd">        As we have the rotation axis and the rotation angle we are</span>
+<span class="sd">        able to use the Rodrigues&#39; formula to get the rotated</span>
+<span class="sd">        vectors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            theta (float): The angle that you wish to rotate by</span>
+<span class="sd">            axis (list): The axis of rotation</span>
+<span class="sd">            frame (int): The frame that you wish to rotate</span>
+<span class="sd">            degrees (bool): If true convert from degrees to radians</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            frame (:class:`exatomic.Universe.atom`): Atom frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">axis</span><span class="p">))</span> <span class="ow">or</span> <span class="n">theta</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span> <span class="k">return</span> <span class="n">frame</span>
+        <span class="c1"># as we have the rotation axis and the angle we will rotate over</span>
+        <span class="c1"># we implement the Rodrigues&#39; rotation formula</span>
+        <span class="c1"># v_rot = v*np.cos(theta) + (np.cross(k,v))*np.sin(theta) + k*(np.dot(k,v))*(1-np.cos(theta))</span>
+
+        <span class="c1"># convert units if not degrees</span>
+        <span class="k">if</span> <span class="n">degrees</span><span class="p">:</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span>
+
+        <span class="c1"># normalize rotation axis vector</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">axis</span> <span class="o">/=</span> <span class="n">norm</span>
+        <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Trying to normalize axis </span><span class="si">{}</span><span class="s2"> by a 0 value&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="p">))</span>
+        <span class="c1"># get the coordinates</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># generate the first term in rodrigues formula</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="c1"># generate second term in rodrigures formula</span>
+        <span class="c1"># this creates a matrix of size coords.shape[0]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="c1"># generate the last term in rodrigues formula</span>
+        <span class="c1"># we use np.outer to make a dyadic productof the result from the dot product vector</span>
+        <span class="c1"># and the axis vector</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">axis</span><span class="p">),</span> <span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+        <span class="n">rotated</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+        <span class="n">frame</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rotated</span>
+        <span class="k">return</span> <span class="n">Atom</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Atom.translate"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dz</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;au&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of a single frame of the atom table translated by</span>
+<span class="sd">        some specified distance.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Vector can be used instead of dx, dy, dz as it will be decomposed</span>
+<span class="sd">            into those components. If vector and any of the others are</span>
+<span class="sd">            specified the values in vector will be used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dx (float): Displacement distance in x</span>
+<span class="sd">            dy (float): Displacement distance in y</span>
+<span class="sd">            dz (float): Displacement distance in z</span>
+<span class="sd">            vector (list): Displacement vector</span>
+<span class="sd">            units (str): Units that are used for the displacement</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            frame (:class:`exatomic.Universe.atom`): Atom frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># check if vector is specified</span>
+        <span class="k">if</span> <span class="n">vector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># convert vector units to au</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">Length</span><span class="p">[</span><span class="n">units</span><span class="p">,</span> <span class="s1">&#39;au&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vector</span><span class="p">]</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">dz</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="c1"># add the values to each respective coordinate</span>
+        <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dx</span>
+        <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dy</span>
+        <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dz</span>
+        <span class="k">return</span> <span class="n">Atom</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Atom.align_to_axis"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.align_to_axis">[docs]</a>    <span class="k">def</span> <span class="nf">align_to_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adx0</span><span class="p">,</span> <span class="n">adx1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">center_to</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This a short method to center and align the molecule along some defined axis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            adx0 (int): Atom to place at the origin</span>
+<span class="sd">            adx1 (int): Atom to align along the axis</span>
+<span class="sd">            axis (list): Axis that the vector adx0-adx1 will align to</span>
+<span class="sd">            frame (int): Frame to align</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            aligned (:class:`exatomic.Universe.atom`): Aligned atom frame</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">atom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">atom</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+        <span class="c1"># define the original vector</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">adx1</span><span class="p">][</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-</span> <span class="n">atom</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">adx0</span><span class="p">][</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="c1"># get the vector to align with and normalize</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="c1"># find the normal vector to rotate around</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="c1"># find the angle to rotate the vector</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span><span class="p">)))</span>
+        <span class="c1"># use the center method to center the molecule</span>
+        <span class="n">centered</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="n">adx0</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">center_to</span><span class="p">)</span>
+        <span class="c1"># rotate the molecule around the normal vector</span>
+        <span class="n">aligned</span> <span class="o">=</span> <span class="n">centered</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Atom</span><span class="p">(</span><span class="n">aligned</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Atom.to_xyz"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.to_xyz">[docs]</a>    <span class="k">def</span> <span class="nf">to_xyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;Angstrom&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return atomic data in XYZ format, by default without the first 2 lines.</span>
+<span class="sd">        If multiple frames are specified, return an XYZ trajectory format. If</span>
+<span class="sd">        frame is not specified, by default returns the last frame in the table.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): column name to use in place of &#39;symbol&#39;</span>
+<span class="sd">            header (bool): if True, return the first 2 lines of XYZ format</span>
+<span class="sd">            comment (str, list): comment(s) to put in the comment line</span>
+<span class="sd">            frame (int, iter): frame or frames to return</span>
+<span class="sd">            units (str): units (default angstroms)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (str): XYZ formatted atomic data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO :: this is conceptually a duplicate of XYZ.from_universe</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">columns</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">frame</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span> <span class="n">frame</span> <span class="o">=</span> <span class="p">[</span><span class="n">frame</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">comments</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">comments</span> <span class="o">=</span> <span class="p">[</span><span class="n">comments</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">comments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="n">comments</span> <span class="o">=</span> <span class="n">comments</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">frame</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span>
+                <span class="n">stoz</span> <span class="o">=</span> <span class="n">sym2z</span><span class="p">()</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">stoz</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="n">units</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="n">units</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="n">units</span><span class="p">]</span>
+        <span class="n">grps</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="p">{</span><span class="n">tag</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:&lt;5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">}</span>
+        <span class="n">stargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="n">columns</span><span class="p">,</span> <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                  <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="n">formatter</span><span class="p">}</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">grps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">grp</span><span class="p">):</span> <span class="k">continue</span>
+            <span class="n">tru</span> <span class="o">=</span> <span class="p">(</span><span class="n">header</span> <span class="ow">or</span> <span class="n">comments</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">hdr</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grp</span><span class="p">)),</span> <span class="n">comments</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">tru</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ret</span><span class="p">,</span> <span class="n">hdr</span><span class="p">,</span> <span class="n">grp</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="o">**</span><span class="n">stargs</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">])</span>
+            <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="Atom.get_element_masses"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.get_element_masses">[docs]</a>    <span class="k">def</span> <span class="nf">get_element_masses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute and return element masses from symbols.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2mass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Atom.get_atom_labels"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.get_atom_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_atom_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute and return enumerated atoms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            labels (:class:`~exa.core.numerical.Series`): Enumerated atom labels (of type int)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cardinal_groupby</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">nat</span> <span class="ow">in</span> <span class="n">nats</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span>
+        <span class="k">return</span> <span class="n">labels</span></div>
+
+<div class="viewcode-block" id="Atom.from_small_molecule_data"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Atom.from_small_molecule_data">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_small_molecule_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ligand</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                 <span class="n">offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plane</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">domains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;Angstrom&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A minimal molecule builder for simple one-center, homogeneous ligand</span>
+<span class="sd">        molecules of various general chemistry molecular geometries. If domains</span>
+<span class="sd">        is not specified and geometry is ambiguous (like &#39;bent&#39;),</span>
+<span class="sd">        it just guesses the simplest geometry (smallest number of domains).</span>
+
+<span class="sd">        Args</span>
+<span class="sd">            center (str): atomic symbol of central atom</span>
+<span class="sd">            ligand (str): atomic symbol of ligand atoms</span>
+<span class="sd">            distance (float): distance between central atom and any ligand</span>
+<span class="sd">            geometry (str): molecular geometry</span>
+<span class="sd">            domains (int): number of electronic domains</span>
+<span class="sd">            offset (np.array): 3-array of position of central atom</span>
+<span class="sd">            plane (str): cartesian plane of molecule (eg. for &#39;square_planar&#39;)</span>
+<span class="sd">            axis (str): cartesian axis of molecule (eg. for &#39;linear&#39;)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            exatomic.atom.Atom: Atom table of small molecule</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">make_small_molecule</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">ligand</span><span class="o">=</span><span class="n">ligand</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
+                                       <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">plane</span><span class="o">=</span><span class="n">plane</span><span class="p">,</span>
+                                       <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">domains</span><span class="o">=</span><span class="n">domains</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="UnitAtom"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.UnitAtom">[docs]</a><span class="k">class</span> <span class="nc">UnitAtom</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In unit cell coordinates (sparse) for periodic systems. These coordinates</span>
+<span class="sd">    are used to update the corresponding :class:`~exatomic.atom.Atom` object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;atom&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return UnitAtom</span>
+
+<div class="viewcode-block" id="UnitAtom.from_universe"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.UnitAtom.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">universe</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">universe</span><span class="o">.</span><span class="n">periodic</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;rx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">compute_cell_magnitudes</span><span class="p">()</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="p">[[</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;rz&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">modv</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">modv</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">modv</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">})</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">df</span><span class="p">])</span>
+        <span class="k">raise</span> <span class="n">PeriodicUniverseError</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ProjectedAtom"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.ProjectedAtom">[docs]</a><span class="k">class</span> <span class="nc">ProjectedAtom</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Projected atom coordinates (e.g. on 3x3x3 supercell). These coordinates are</span>
+<span class="sd">    typically associated with their corresponding indices in another dataframe.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This table is computed when periodic two body properties are computed;</span>
+<span class="sd">        it doesn&#39;t have meaning outside of that context.</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        :func:`~exatomic.two.compute_periodic_two`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;two&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span></div>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return ProjectedAtom</span>
+
+
+<div class="viewcode-block" id="VisualAtom"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.VisualAtom">[docs]</a><span class="k">class</span> <span class="nc">VisualAtom</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;atom&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="VisualAtom.from_universe"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.VisualAtom.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">universe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">is_periodic</span><span class="p">():</span>
+            <span class="n">atom</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">unit_atom</span><span class="p">)</span>
+            <span class="n">bonded</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom_two</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">universe</span><span class="o">.</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="n">prjd</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">projected_atom</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bonded</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+            <span class="n">prjd</span><span class="p">[</span><span class="s1">&#39;atom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bonded</span>
+            <span class="n">prjd</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;atom&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">prjd</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;atom&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">prjd</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="n">atom</span> <span class="o">!=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]])</span>
+        <span class="k">raise</span> <span class="n">PeriodicUniverseError</span><span class="p">()</span></div></div>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return VisualAtom</span>
+
+
+<div class="viewcode-block" id="Frequency"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Frequency">[docs]</a><span class="k">class</span> <span class="nc">Frequency</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Frequency dataframe.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | frame             | category | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | frequency         | float    | frequency of oscillation (cm-1) (req.)    |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | freqdx            | int      | index of frequency of oscillation (req.)  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | dx                | float    | atomic displacement in x direction (req.) |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | dy                | float    | atomic displacement in y direction (req.) |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | dz                | float    | atomic displacement in z direction (req.) |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | ir_int            | float    | ir intensity of the vibrational mode      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | symbol            | str      | atomic symbol (req.)                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | label             | int      | atomic identifier                         |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;frequency&#39;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;freqdx&#39;</span><span class="p">,</span> <span class="s1">&#39;ir_int&#39;</span><span class="p">]</span>
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Frequency</span>
+
+<div class="viewcode-block" id="Frequency.displacement"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Frequency.displacement">[docs]</a>    <span class="k">def</span> <span class="nf">displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freqdx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">freqdx</span><span class="p">][[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="Frequency.ir_spectra"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.Frequency.ir_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">ir_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">lineshape</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">xrange</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">invert_x</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Generate an IR spectra with the plotter classes. We can define a gaussian or lorentzian</span>
+<span class="sd">        lineshape functions. For the most part we pass all of the kwargs directly into the</span>
+<span class="sd">        plotter.Plot class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fwhm (float): Full-width at half-maximum</span>
+<span class="sd">            lineshape (str): Switch between the different lineshape functions available</span>
+<span class="sd">            xrange (list): X-bounds for the plot</span>
+<span class="sd">            res (float): Resolution for the plot line</span>
+<span class="sd">            invert_x (bool): Invert x-axis</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># define the lineshape and store the function call in the line variable</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span> <span class="n">lineshape</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Sorry we have not yet implemented the lineshape </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lineshape</span><span class="p">))</span>
+        <span class="c1"># define a default parameter for the plot width</span>
+        <span class="c1"># we did this for a full-screen jupyter notebook on a 1920x1080 monitor</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;plot_width&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span>
+        <span class="c1"># define xbounds</span>
+        <span class="n">xrange</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4000</span><span class="p">]</span> <span class="k">if</span> <span class="n">xrange</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xrange</span>
+        <span class="c1"># deal with inverted bounds</span>
+        <span class="k">if</span> <span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">xrange</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">xrange</span><span class="p">)</span>
+            <span class="n">invert_x</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># define the resolution</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">fwhm</span><span class="o">/</span><span class="mi">50</span> <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">res</span>
+        <span class="c1"># define the class</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># this is designed for a single frame</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;We have not yet expanded to include multiple frames&quot;</span><span class="p">)</span>
+        <span class="c1"># grab the locations of the peaks between the bounds</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">freqdx</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">]</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span><span class="p">[</span><span class="n">freq</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="o">*</span><span class="n">xrange</span><span class="p">)]</span>
+        <span class="c1"># grab the ir intensity data</span>
+        <span class="c1"># we use the frequency indexes instead of drop duplicates as we may have similar intensities</span>
+        <span class="n">inten</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">freq</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;ir_int&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># change to using the values instead as we no longer need the index data</span>
+        <span class="c1"># we could also use jit for the lineshape functions as we only deal with numpy arrays</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">xrange</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+        <span class="c1"># get the y data by calling the lineshape function generator</span>
+        <span class="n">y_data</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_data</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm</span><span class="p">,</span> <span class="n">inten</span><span class="o">=</span><span class="n">inten</span><span class="p">)</span>
+        <span class="c1"># plot the lineshape data</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">)</span>
+        <span class="c1"># plot the points on the plot to show were the frequency values are</span>
+        <span class="c1"># more useful when we have nearly degenerate vibrations</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">line</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm</span><span class="p">,</span> <span class="n">inten</span><span class="o">=</span><span class="n">inten</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">invert_x</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_xrange</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_xrange</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># display the figure with our generated method</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="add_vibrational_mode"><a class="viewcode-back" href="../../../exatomic.core.atom.html#exatomic.adf.output.add_vibrational_mode">[docs]</a><span class="k">def</span> <span class="nf">add_vibrational_mode</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">freqdx</span><span class="p">):</span>
+    <span class="n">displacements</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">displacements</span><span class="p">(</span><span class="n">freqdx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">displacements</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mismatch in ordering of atoms and frequencies.&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">displaced</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Should these only be absolute values?</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">fac</span> <span class="ow">in</span> <span class="n">factor</span><span class="p">:</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">moved</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">displacements</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">fac</span>
+        <span class="n">moved</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">displacements</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">fac</span>
+        <span class="n">moved</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">displacements</span><span class="p">[</span><span class="s1">&#39;dz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">fac</span>
+        <span class="n">displaced</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">moved</span><span class="p">)</span>
+        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">movie</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">displaced</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">movie</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">))</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">atom</span> <span class="o">=</span> <span class="n">movie</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

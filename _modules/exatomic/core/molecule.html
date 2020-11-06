@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.molecule &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.molecule</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.molecule</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Molecule Table</span>
+<span class="sd">###################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">networkx.algorithms.components</span> <span class="kn">import</span> <span class="n">connected_components</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2mass</span>
+<span class="kn">from</span> <span class="nn">exatomic.formula</span> <span class="kn">import</span> <span class="n">string_to_dict</span><span class="p">,</span> <span class="n">dict_to_string</span>
+
+
+<div class="viewcode-block" id="Molecule"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.Molecule">[docs]</a><span class="k">class</span> <span class="nc">Molecule</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Description of molecules in the atomic universe.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;molecule&#39;</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;formula&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;classification&#39;</span><span class="p">:</span> <span class="nb">object</span><span class="p">}</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Molecule</span>
+
+<div class="viewcode-block" id="Molecule.classify"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.Molecule.classify">[docs]</a>    <span class="k">def</span> <span class="nf">classify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">classifiers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classify molecules into arbitrary categories.</span>
+
+<span class="sd">        .. code-block:: Python</span>
+
+<span class="sd">            u.molecule.classify((&#39;solute&#39;, &#39;Na&#39;), (&#39;solvent&#39;, &#39;H(2)O(1)&#39;))</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            classifiers: Any number of tuples of the form (&#39;label&#39;, &#39;identifier&#39;, exact) (see below)</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            A classifier has 3 parts, &quot;label&quot;, e.g. &quot;solvent&quot;, &quot;identifier&quot;, e.g.</span>
+<span class="sd">            &quot;H(2)O(1)&quot;, and exact (true or false). If exact is false (default),</span>
+<span class="sd">            classification is greedy and (in this example) molecules with formulas</span>
+<span class="sd">            &quot;H(1)O(1)&quot;, &quot;H(3)O(1)&quot;, etc. would get classified as &quot;solvent&quot;. If,</span>
+<span class="sd">            instead, exact were set to true, those molecules would remain</span>
+<span class="sd">            unclassified.</span>
+
+<span class="sd">        Warning:</span>
+<span class="sd">            Classifiers are applied in the order passed; where identifiers overlap,</span>
+<span class="sd">            the latter classification is used.</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            :func:`~exatomic.algorithms.nearest.compute_nearest_molecules`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classifiers</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ClassificationError</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">classifier</span> <span class="ow">in</span> <span class="n">classifiers</span><span class="p">:</span>
+            <span class="n">identifier</span> <span class="o">=</span> <span class="n">string_to_dict</span><span class="p">(</span><span class="n">classifier</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">classification</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">exact</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">classifier</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="n">this</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">for</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">identifier</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">this</span> <span class="o">=</span> <span class="n">this</span><span class="p">[</span><span class="n">this</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">==</span> <span class="n">count</span><span class="p">]</span> <span class="k">if</span> <span class="n">exact</span> <span class="k">else</span> <span class="n">this</span><span class="p">[</span><span class="n">this</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="s1">&#39;classification&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">classification</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;No records found for </span><span class="si">{}</span><span class="s1">, with identifier </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">classification</span><span class="p">,</span> <span class="n">identifier</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unclassified molecules remaining...&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Molecule.get_atom_count"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.Molecule.get_atom_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_atom_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the number of atoms per molecule.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_symbols</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">symbols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Molecule.get_formula"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.Molecule.get_formula">[docs]</a>    <span class="k">def</span> <span class="nf">get_formula</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">as_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the string representation of the molecule.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_symbols</span><span class="p">()</span>
+        <span class="n">mcules</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">symbols</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">dict_to_string</span><span class="p">,</span> <span class="n">mcules</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">as_map</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_symbols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to get atom symbols.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">istitle</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="compute_molecule"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.compute_molecule">[docs]</a><span class="k">def</span> <span class="nf">compute_molecule</span><span class="p">(</span><span class="n">universe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cluster atoms into molecules and create the :class:`~exatomic.molecule.Molecule`</span>
+<span class="sd">    table.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        universe: Atomic universe</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        molecule: Molecule table</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        This function modifies the universe&#39;s atom (:class:`~exatomic.atom.Atom`)</span>
+<span class="sd">        table in place!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">bonded</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom_two</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">universe</span><span class="o">.</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">]]</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bonded</span><span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="n">bonded</span><span class="p">[</span><span class="s1">&#39;atom1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    <span class="c1"># generate molecule indices for the atom table</span>
+    <span class="n">mapper</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">degree</span><span class="p">():</span>    <span class="c1"># First handle single atom &quot;molecules&quot;</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mapper</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">seht</span> <span class="ow">in</span> <span class="n">connected_components</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>    <span class="c1"># Second handle multi atom molecules</span>
+        <span class="k">for</span> <span class="n">adx</span> <span class="ow">in</span> <span class="n">seht</span><span class="p">:</span>
+            <span class="n">mapper</span><span class="p">[</span><span class="n">adx</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">mapper</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2mass</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">grps</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;molecule&#39;</span><span class="p">)</span>
+    <span class="n">molecule</span> <span class="o">=</span> <span class="n">grps</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">molecule</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">molecule</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grps</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">molecule</span></div>
+
+
+<div class="viewcode-block" id="compute_molecule_count"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.compute_molecule_count">[docs]</a><span class="k">def</span> <span class="nf">compute_molecule_count</span><span class="p">(</span><span class="n">universe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;molecule&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">universe</span><span class="o">.</span><span class="n">compute_molecule</span><span class="p">()</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">_revert_categories</span><span class="p">()</span>
+    <span class="n">mapper</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;molecule&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;molecule&#39;</span><span class="p">)[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">_set_categories</span><span class="p">()</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">molecule</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">molecule</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">mapper</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="n">molecule_count</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">molecule</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="k">del</span> <span class="n">universe</span><span class="o">.</span><span class="n">molecule</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">molecule_count</span></div>
+
+
+<div class="viewcode-block" id="compute_molecule_com"><a class="viewcode-back" href="../../../exatomic.core.molecule.html#exatomic.core.molecule.compute_molecule_com">[docs]</a><span class="k">def</span> <span class="nf">compute_molecule_com</span><span class="p">(</span><span class="n">universe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute molecules&#39; centers of mass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;molecule&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">universe</span><span class="o">.</span><span class="n">compute_molecule</span><span class="p">()</span>
+    <span class="n">mass</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">get_element_masses</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">is_periodic</span><span class="p">():</span>
+        <span class="n">xyz</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">xyz</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">visual_atom</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xyz</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span>
+    <span class="n">xm</span> <span class="o">=</span> <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+    <span class="n">ym</span> <span class="o">=</span> <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+    <span class="n">zm</span> <span class="o">=</span> <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+    <span class="c1">#rm = xm.add(ym).add(zm)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;xm&#39;</span><span class="p">:</span> <span class="n">xm</span><span class="p">,</span> <span class="s1">&#39;ym&#39;</span><span class="p">:</span> <span class="n">ym</span><span class="p">,</span> <span class="s1">&#39;zm&#39;</span><span class="p">:</span> <span class="n">zm</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">mass</span><span class="p">,</span>
+                                 <span class="s1">&#39;molecule&#39;</span><span class="p">:</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]})</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;molecule&#39;</span><span class="p">)</span>
+    <span class="n">sums</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="n">sums</span><span class="p">[</span><span class="s1">&#39;xm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">sums</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">])</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="n">sums</span><span class="p">[</span><span class="s1">&#39;ym&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">sums</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">])</span>
+    <span class="n">cz</span> <span class="o">=</span> <span class="n">sums</span><span class="p">[</span><span class="s1">&#39;zm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">sums</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">cz</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

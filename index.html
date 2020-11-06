@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Exatomic &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Exatomic</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="exatomic">
+<h1><a class="reference external" href="https://exa-analytics.github.io/">Exatomic</a><a class="headerlink" href="#exatomic" title="Permalink to this headline">¶</a></h1>
+<p><em>A unified platform for theoretical and computational chemists</em></p>
+<p>This package provides a platform for computational and theoretical chemists
+and physicists to parse, process, analyze, and visualize data coming from
+quantum mechanics calculations. Included in this package are sub-packages
+dedicated to parsing data from software programs used in the field. A quick
+method to get started with visualization is through the <a class="reference external" href="https://jupyter.org">Jupyter notebook</a>.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+</div>
+<div class="section" id="api-label">
+<span id="id1"></span><h2>exatomic<a class="headerlink" href="#api-label" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.html">exatomic package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.gaussian.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.interfaces.html#interfaces">Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.interfaces.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.molcas.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nbo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nwchem.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.plotter.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qchem.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.html#quantum-espresso">Quantum ESPRESSO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.util.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.va.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.base.html">exatomic.base module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.base.html#base-functionality">Base Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.formula.html">exatomic.formula module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.formula.html#simple-formula">Simple Formula</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.mpl.html">exatomic.mpl module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.mpl.html#custom-axes">Custom Axes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.static.html">exatomic.static module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="info">
+<h1>Info<a class="headerlink" href="#info" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" download="" href="_downloads/16e66d320f6335cc82caaeebd16c1334/LICENSE"><code class="xref download docutils literal notranslate"><span class="pre">License</span></code></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

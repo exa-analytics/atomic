@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.orbital &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.orbital</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.algorithms.orbital</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Numerical Orbital Functions</span>
+<span class="sd">#############################</span>
+<span class="sd">Building discrete molecular orbitals (for visualization) requires a complex</span>
+<span class="sd">set of operations that are provided by this module and wrapped into a clean API.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">TypingError</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">exatomic</span> <span class="kn">import</span> <span class="n">func_log</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2z</span>
+<span class="kn">from</span> <span class="nn">.orbital_util</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">numerical_grid_from_field_params</span><span class="p">,</span> <span class="n">_determine_fps</span><span class="p">,</span>
+    <span class="n">_determine_vector</span><span class="p">,</span> <span class="n">_compute_orb_ang_mom</span><span class="p">,</span> <span class="n">_compute_current_density</span><span class="p">,</span>
+    <span class="n">_compute_density</span><span class="p">,</span> <span class="n">_check_column</span><span class="p">,</span> <span class="n">_make_field</span><span class="p">,</span>
+    <span class="n">_compute_orbitals_numba</span><span class="p">,</span> <span class="n">_compute_orbitals_numpy</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_setup_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">icoefs</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jcoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Boilerplate for starting the functions in this module.&quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">log</span> <span class="ow">or</span> <span class="n">func_log</span><span class="p">(</span><span class="n">_setup_orbital</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">nbf</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">basis_functions</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">irrep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nbf</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">basis_set_order</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">irrep</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="s1">&#39;Evaluating </span><span class="si">{}</span><span class="s1"> basis functions once.&#39;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nbf</span><span class="p">))</span>
+    <span class="n">vector</span> <span class="o">=</span> <span class="n">_determine_vector</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">irrep</span><span class="p">)</span>
+    <span class="n">fps</span> <span class="o">=</span> <span class="n">_determine_fps</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vector</span><span class="p">))</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">numerical_grid_from_field_params</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+    <span class="n">bvs</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_functions</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="n">irrep</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">icoefs</span> <span class="o">=</span> <span class="n">_check_column</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;current_momatrix&#39;</span><span class="p">,</span> <span class="n">icoefs</span><span class="p">)</span>
+    <span class="n">icoefs</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">current_momatrix</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">icoefs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="n">irrep</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="n">jcoefs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">jcoefs</span> <span class="o">=</span> <span class="n">_check_column</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;current_momatrix&#39;</span><span class="p">,</span> <span class="n">jcoefs</span><span class="p">)</span>
+        <span class="n">jcoefs</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">current_momatrix</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">jcoefs</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">return</span> <span class="n">t1</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">icoefs</span><span class="p">,</span> <span class="n">jcoefs</span>
+    <span class="k">return</span> <span class="n">t1</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">icoefs</span>
+
+<span class="k">def</span> <span class="nf">_compute_orbital</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="n">npts</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">cmat</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">log</span> <span class="ow">or</span> <span class="n">func_log</span><span class="p">(</span><span class="n">_compute_orbital</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span> <span class="n">ovs</span> <span class="o">=</span> <span class="n">_compute_orbitals_numba</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">cmat</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">,</span> <span class="n">TypingError</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;numba eval failed, falling back to numpy&#39;</span><span class="p">)</span>
+        <span class="n">ovs</span> <span class="o">=</span> <span class="n">_compute_orbitals_numpy</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">cmat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ovs</span>
+
+<span class="k">def</span> <span class="nf">_teardown_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;orbitals&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Boilerplate for finishing the functions in this module.&quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">log</span> <span class="ow">or</span> <span class="n">func_log</span><span class="p">(</span><span class="n">_teardown_orbital</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="s1">&#39;Timing: compute </span><span class="si">{:&lt;8}</span><span class="s1"> - </span><span class="si">{:&gt;8.2f}</span><span class="s1">s.&#39;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span> <span class="k">return</span> <span class="n">field</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="add_molecular_orbitals"><a class="viewcode-back" href="../../../exatomic.algorithms.orbital.html#exatomic.algorithms.orbital.add_molecular_orbitals">[docs]</a><span class="k">def</span> <span class="nf">add_molecular_orbitals</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">field_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">vector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                           <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A universe must contain basis_set, [basis_set_order], and</span>
+<span class="sd">    momatrix attributes to use this function.  Evaluate molecular</span>
+<span class="sd">    orbitals on a numerical grid.  Attempts to generate reasonable</span>
+<span class="sd">    defaults if none are provided.  If vector is not provided,</span>
+<span class="sd">    attempts to calculate vector from the orbital table, or by the</span>
+<span class="sd">    sum of Z (Zeff) of the atoms in the atom table divided by two;</span>
+<span class="sd">    roughly (HOMO-5, LUMO+7).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`~exatomic.core.universe.Universe`): a universe</span>
+<span class="sd">        field_params (dict): See :func:`~exatomic.algorithms.orbital_util.make_fps`</span>
+<span class="sd">        mocoefs (str): column in uni.current_momatrix (default &#39;coef&#39;)</span>
+<span class="sd">        vector (int, list, range, np.ndarray): the MO vectors to evaluate</span>
+<span class="sd">        inplace (bool): if False, return the field obj instead of modifying uni</span>
+<span class="sd">        replace (bool): if False, do not delete any previous fields</span>
+<span class="sd">        irrep (int): if symmetrized, the irrep to which the orbitals belong</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        If replace is True, removes any fields previously attached to the universe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">func_log</span><span class="p">(</span><span class="n">add_molecular_orbitals</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">replace</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;_field&#39;</span><span class="p">):</span> <span class="k">del</span> <span class="n">uni</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;_field&#39;</span><span class="p">]</span>
+    <span class="n">t1</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">mocoefs</span> <span class="o">=</span> \
+        <span class="n">_setup_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">field_params</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="n">irrep</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+    <span class="n">ovs</span> <span class="o">=</span> <span class="n">_compute_orbital</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">_make_field</span><span class="p">(</span><span class="n">ovs</span><span class="p">,</span> <span class="n">fps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_teardown_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_density"><a class="viewcode-back" href="../../../exatomic.algorithms.orbital.html#exatomic.algorithms.orbital.add_density">[docs]</a><span class="k">def</span> <span class="nf">add_density</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">field_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">orbocc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A universe must contain basis_set, [basis_set_order], and</span>
+<span class="sd">    momatrix attributes to use this function.  Compute a density</span>
+<span class="sd">    with C matrix mocoefs and occupation vector orbocc.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`~exatomic.container.Universe`): a universe</span>
+<span class="sd">        field_params (dict): See :func:`~exatomic.algorithms.orbital_util.make_fps`</span>
+<span class="sd">        mocoefs (str): column in uni.current_momatrix (default &#39;coef&#39;)</span>
+<span class="sd">        orbocc (str): column in uni.orbital (default &#39;occupation&#39;)</span>
+<span class="sd">        inplace (bool): if False, return the field obj instead of modifying uni</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">func_log</span><span class="p">(</span><span class="n">add_density</span><span class="p">)</span>
+    <span class="n">mocol</span> <span class="o">=</span> <span class="n">mocoefs</span>
+    <span class="n">t1</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">mocoefs</span> <span class="o">=</span> \
+        <span class="n">_setup_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_params</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+    <span class="n">orbocc</span> <span class="o">=</span> <span class="n">mocol</span> <span class="k">if</span> <span class="n">orbocc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mocol</span> <span class="o">!=</span> <span class="s1">&#39;coef&#39;</span> <span class="k">else</span> <span class="n">orbocc</span>
+    <span class="n">orbocc</span> <span class="o">=</span> <span class="n">_check_column</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">)</span>
+    <span class="n">vector</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="p">[</span><span class="n">orbocc</span><span class="p">],</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">orbocc</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">vector</span><span class="p">][</span><span class="n">orbocc</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">ovs</span> <span class="o">=</span> <span class="n">_compute_orbital</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">_make_field</span><span class="p">(</span><span class="n">_compute_density</span><span class="p">(</span><span class="n">ovs</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">),</span> <span class="n">fps</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">_teardown_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_orb_ang_mom"><a class="viewcode-back" href="../../../exatomic.algorithms.orbital.html#exatomic.algorithms.orbital.add_orb_ang_mom">[docs]</a><span class="k">def</span> <span class="nf">add_orb_ang_mom</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">field_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">orbocc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A universe must contain basis_set, [basis_set_order], and</span>
+<span class="sd">    momatrix attributes to use this function.  Compute the orbital</span>
+<span class="sd">    angular momentum.  Requires C matrices from SODIZLDENS.X.X.R,I</span>
+<span class="sd">    files from Molcas.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`~exatomic.container.Universe`): a universe</span>
+<span class="sd">        field_params (dict): See :func:`~exatomic.algorithms.orbital_util.make_fps`</span>
+<span class="sd">        rcoefs (str): column in uni.current_momatrix (default &#39;lreal&#39;)</span>
+<span class="sd">        icoefs (str): column in uni.current_momatrix (default &#39;limag&#39;)</span>
+<span class="sd">        maxes (np.ndarray): 3x3 array of magnetic axes (default np.eye(3))</span>
+<span class="sd">        orbocc (str): column in uni.orbital (default &#39;lreal&#39;)</span>
+<span class="sd">        inplace (bool): if False, return the field obj instead of modifying uni</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">func_log</span><span class="p">(</span><span class="n">add_orb_ang_mom</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rcoefs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">icoefs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Must specify rcoefs and icoefs&quot;</span><span class="p">)</span>
+    <span class="n">rcol</span> <span class="o">=</span> <span class="n">rcoefs</span>
+    <span class="n">t1</span><span class="p">,</span> <span class="n">vector</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">bvs</span><span class="p">,</span> <span class="n">rcoefs</span><span class="p">,</span> <span class="n">icoefs</span> <span class="o">=</span> \
+        <span class="n">_setup_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_params</span><span class="p">,</span> <span class="n">rcoefs</span><span class="p">,</span> <span class="n">jcoefs</span><span class="o">=</span><span class="n">icoefs</span><span class="p">)</span>
+    <span class="n">orbocc</span> <span class="o">=</span> <span class="n">rcol</span> <span class="k">if</span> <span class="n">orbocc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">orbocc</span>
+    <span class="k">if</span> <span class="n">maxes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">maxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;If magnetic axes are not an identity matrix, specify maxes.&quot;</span><span class="p">)</span>
+    <span class="n">occvec</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">grx</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_functions</span><span class="o">.</span><span class="n">evaluate_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">gry</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_functions</span><span class="o">.</span><span class="n">evaluate_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">grz</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_functions</span><span class="o">.</span><span class="n">evaluate_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="s1">&#39;Timing: grid evaluation  - </span><span class="si">{:&gt;8.2f}</span><span class="s1">s.&#39;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+    <span class="n">curx</span><span class="p">,</span> <span class="n">cury</span><span class="p">,</span> <span class="n">curz</span> <span class="o">=</span> <span class="n">_compute_current_density</span><span class="p">(</span>
+        <span class="n">bvs</span><span class="p">,</span> <span class="n">grx</span><span class="p">,</span> <span class="n">gry</span><span class="p">,</span> <span class="n">grz</span><span class="p">,</span> <span class="n">rcoefs</span><span class="p">,</span> <span class="n">icoefs</span><span class="p">,</span> <span class="n">occvec</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">t3</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="s1">&#39;Timing: current density  - </span><span class="si">{:&gt;8.2f}</span><span class="s1">s.&#39;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">t3</span><span class="o">-</span><span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">_make_field</span><span class="p">(</span><span class="n">_compute_orb_ang_mom</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">curx</span><span class="p">,</span> <span class="n">cury</span><span class="p">,</span> <span class="n">curz</span><span class="p">,</span> <span class="n">maxes</span><span class="p">),</span> <span class="n">fps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_teardown_orbital</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;angmom&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

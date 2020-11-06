@@ -1,0 +1,7 @@
+exatomic.core.two module
+========================
+
+.. automodule:: exatomic.core.two
+   :members:
+   :undoc-members:
+   :show-inheritance:

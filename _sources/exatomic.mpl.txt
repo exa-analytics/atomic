@@ -1,0 +1,7 @@
+exatomic.mpl module
+===================
+
+.. automodule:: exatomic.mpl
+   :members:
+   :undoc-members:
+   :show-inheritance:

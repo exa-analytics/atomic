@@ -1,0 +1,7 @@
+exatomic.adf.editor module
+==========================
+
+.. automodule:: exatomic.adf.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

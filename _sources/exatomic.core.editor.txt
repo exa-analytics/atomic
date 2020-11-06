@@ -1,0 +1,7 @@
+exatomic.core.editor module
+===========================
+
+.. automodule:: exatomic.core.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

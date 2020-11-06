@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.frame module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.core.gradient module" href="exatomic.core.gradient.html" />
+    <link rel="prev" title="exatomic.core.field module" href="exatomic.core.field.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.core.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.core.html">exatomic.core package</a> &raquo;</li>
+        
+      <li>exatomic.core.frame module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.core.frame.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.core.frame">
+<span id="exatomic-core-frame-module"></span><h1>exatomic.core.frame module<a class="headerlink" href="#module-exatomic.core.frame" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="frame-data">
+<h2>Frame Data<a class="headerlink" href="#frame-data" title="Permalink to this headline">¶</a></h2>
+<p>The primary “coordinate” for the atomic container (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>)
+is the “frame”. The frame concept can be anything; time, step along a geometry
+optimization, different functional, etc. Each frame is distinguished from other
+frames by unique atomic coordinates, a different level of theory, etc.</p>
+<dl class="py class">
+<dt id="exatomic.core.frame.Frame">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.core.frame.</code><code class="sig-name descname">Frame</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#Frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.Frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.numerical.DataFrame</span></code></p>
+<p>Information about the current frame; a frame is a concept that distinguishes
+atomic coordinates along a molecular dynamics simulation, geometry optimization,
+etc.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>atom_count</p></td>
+<td><p>int</p></td>
+<td><p>non-unique integer (req.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>molecule_count</p></td>
+<td><p>int</p></td>
+<td><p>non-unique integer</p></td>
+</tr>
+<tr class="row-even"><td><p>ox</p></td>
+<td><p>float</p></td>
+<td><p>unit cell origin point in x</p></td>
+</tr>
+<tr class="row-odd"><td><p>oy</p></td>
+<td><p>float</p></td>
+<td><p>unit cell origin point in y</p></td>
+</tr>
+<tr class="row-even"><td><p>oz</p></td>
+<td><p>float</p></td>
+<td><p>unit cell origin point in z</p></td>
+</tr>
+<tr class="row-odd"><td><p>periodic</p></td>
+<td><p>bool</p></td>
+<td><p>true if periodic system</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="exatomic.core.frame.Frame.is_periodic">
+<code class="sig-name descname">is_periodic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">how</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#Frame.is_periodic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.Frame.is_periodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if any/all frames are periodic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>how</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Require “any” frames to be periodic (“all” default)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>result (bool)</em> – True if any/all frame are periodic</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.frame.Frame.is_variable_cell">
+<code class="sig-name descname">is_variable_cell</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">how</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#Frame.is_variable_cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.Frame.is_variable_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the simulation cell (applicable to periodic simulations) varies
+(e.g. variable cell molecular dynamics).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.frame.Frame.compute_cell_magnitudes">
+<code class="sig-name descname">compute_cell_magnitudes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#Frame.compute_cell_magnitudes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.Frame.compute_cell_magnitudes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the magnitudes of the unit cell vectors (rx, ry, rz).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.frame.Frame.orthorhombic">
+<code class="sig-name descname">orthorhombic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#Frame.orthorhombic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.Frame.orthorhombic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.core.frame.compute_frame">
+<code class="sig-prename descclassname">exatomic.core.frame.</code><code class="sig-name descname">compute_frame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#compute_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.compute_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute (minmal) <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code> from
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uni</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>) – Universe with atom table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frame (<code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code>) – Minimal frame table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.core.frame.compute_frame_from_atom">
+<code class="sig-prename descclassname">exatomic.core.frame.</code><code class="sig-name descname">compute_frame_from_atom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atom</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/frame.html#compute_frame_from_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.frame.compute_frame_from_atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code> from <code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code>
+(or related).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>atom</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code>) – Atom table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frame (<code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code>) – Minimal frame table</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.core.gradient.html" class="btn btn-neutral float-right" title="exatomic.core.gradient module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.core.field.html" class="btn btn-neutral float-left" title="exatomic.core.field module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

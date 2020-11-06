@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.va.inputs module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.va.plot module" href="exatomic.va.plot.html" />
+    <link rel="prev" title="exatomic.va package" href="exatomic.va.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.va.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.va.html">exatomic.va package</a> &raquo;</li>
+        
+      <li>exatomic.va.inputs module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.va.inputs.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.va.inputs">
+<span id="exatomic-va-inputs-module"></span><h1>exatomic.va.inputs module<a class="headerlink" href="#module-exatomic.va.inputs" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="exatomic.va.inputs.gen_delta">
+<code class="sig-prename descclassname">exatomic.va.inputs.</code><code class="sig-name descname">gen_delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">freq</span></em>, <em class="sig-param"><span class="n">delta_type</span></em>, <em class="sig-param"><span class="n">disp</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/inputs.html#gen_delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.inputs.gen_delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the delta parameter to be used for the maximum distortion
+of the molecule along the normal mode.</p>
+<p>When delta_type = 0 we normalize the displacments to have a maximum of 0.04 Bohr
+on each normal mode.</p>
+<p>When delta_type = 1 we normalize all atomic displacements along all normal modes
+to have a global average displacement of 0.04 Bohr.</p>
+<p>When delta_type = 2 we normalize each displacement so the maximum displacement
+of any atom in the normal mode is 0.04 Bohr.</p>
+<p>When delta_typ = 3 the user can select a delta parameter to use with the disp
+keyword this will displace all normal modes by that delta parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>freq</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.atom.Frequency</span></code>) – Frequency dataframe</p></li>
+<li><p><strong>delta_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Integer value to define the type of delta parameter to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.va.inputs.GenMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.va.inputs.</code><code class="sig-name descname">GenMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/inputs.html#GenMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.inputs.GenMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.va.inputs.GenMeta.disp">
+<code class="sig-name descname">disp</code><a class="headerlink" href="#exatomic.va.inputs.GenMeta.disp" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.va.inputs.GenMeta.delta">
+<code class="sig-name descname">delta</code><a class="headerlink" href="#exatomic.va.inputs.GenMeta.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.core.frame.DataFrame</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.va.inputs.GenMeta.atom">
+<code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.va.inputs.GenMeta.atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.va.inputs.GenInput">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.va.inputs.</code><code class="sig-name descname">GenInput</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/inputs.html#GenInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.inputs.GenInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Supporting class for Vibrational Averaging that will generate input files
+for a selected program under a certain displacement parameter.</p>
+<p>Computes displaced coordinates for all available normal modes from the equilibrium
+position by using the displacement vector components contained in the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Frequency</span></code> dataframe. It will scale these displacements to a
+desired type defined by the user with the delta_type keyword. For more information
+on this keyword see the documentation on the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">gen_delta</span></code> function.</p>
+<p>We can also define a specific normal mode or a list of normal modes that are of
+interest and generate displaced coordinates along those specific modes rather
+than all of the normal modes. This is highly recommended if applicable
+as it may reduce number of computations and memory usage significantly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>) – Universe object containg pertinent data</p></li>
+<li><p><strong>delta_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Integer value to define the type of delta parameter to use</p></li>
+<li><p><strong>fdx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – Integer or list parameter to only displace along the
+selected normal modes</p></li>
+<li><p><strong>disp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Floating point value to set a specific displacement delta
+parameter. Must be used with delta_type=3</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="exatomic.va.inputs.GenInput.gen_inputs">
+<code class="sig-name descname">gen_inputs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">comm</span></em>, <em class="sig-param"><span class="n">soft</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/inputs.html#GenInput.gen_inputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.inputs.GenInput.gen_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write the displaced coordinates as an input for the quantum code program
+of choice. Currently only the following input generators have been tested with this
+generalized input generator:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nwchem.Input.from_universe</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.gaussian.Input.from_universe</span></code></p></li>
+</ul>
+<p>More to come as the need is met.</p>
+<p>This code will use the software input and iterate over all available frequency
+indexes sending the data to the specified input generator. We have designed the code
+to create the self.atom attribute as it gets called by input generators.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>comm is currently supported as a single dictionary, i.e. the gradient and property
+claculation will happen within the same script. The hope is that we can extend this
+so a user can calculate the property and gradient separately. One case that this is
+applicable to is if the user must use a different functional/basis for one of the
+calculations.
+The format is:</p>
+<ul class="simple">
+<li><p>{[keys of specified software]: [values]}</p></li>
+</ul>
+<p>As an example this would be the comm input for a SP calculation at the
+B3LYP/6-31G* level of theory with NProc=4 and Chk=test.chk for
+exatomic.gaussian.Input.from_universe</p>
+<ul class="simple">
+<li><p>{‘link0’: {‘NProc’: 4, ‘Chk’: ‘test.chk’}, ‘route’: ‘#P B3LYP/6-31G* SP’,</p></li>
+</ul>
+<p>‘writedir’: dir_path, ‘name’: ‘filename’}</p>
+<p>For questions regarding the inputs needed for each input generator please refer
+to the docs of the specific input generator.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Dictionary containing all of the pertinent commands for the input</p></li>
+<li><p><strong>soft</strong> (<em>class instance</em>) – Software of choice for the input generation</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.inputs.GenInput.delta">
+<em class="property">property </em><code class="sig-name descname">delta</code><a class="headerlink" href="#exatomic.va.inputs.GenInput.delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.inputs.GenInput.disp">
+<em class="property">property </em><code class="sig-name descname">disp</code><a class="headerlink" href="#exatomic.va.inputs.GenInput.disp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.inputs.GenInput.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.va.inputs.GenInput.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.va.plot.html" class="btn btn-neutral float-right" title="exatomic.va.plot module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.va.html" class="btn btn-neutral float-left" title="exatomic.va package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

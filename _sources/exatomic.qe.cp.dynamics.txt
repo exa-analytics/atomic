@@ -1,0 +1,7 @@
+exatomic.qe.cp.dynamics module
+==============================
+
+.. automodule:: exatomic.qe.cp.dynamics
+   :members:
+   :undoc-members:
+   :show-inheritance:

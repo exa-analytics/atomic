@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.interfaces.cclib &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.interfaces.cclib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.interfaces.cclib</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Interface to `cclib`_</span>
+<span class="sd">#######################</span>
+
+<span class="sd">.. _cclib: https://cclib.github.io/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Length</span><span class="p">,</span> <span class="n">Energy</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.basis</span> <span class="kn">import</span> <span class="n">lmap</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">z2sym</span>
+
+
+<div class="viewcode-block" id="universe_from_cclib"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.universe_from_cclib">[docs]</a><span class="k">def</span> <span class="nf">universe_from_cclib</span><span class="p">(</span><span class="n">ccobj</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">ccobj</span><span class="o">.</span><span class="vm">__dict__</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">parse_ccobj_atom</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">atom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot convert ccobj to exatomic.Universe&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">dfs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;atom&#39;</span><span class="p">:</span> <span class="n">atom</span><span class="p">}</span>
+    <span class="n">orbital</span> <span class="o">=</span> <span class="n">parse_ccobj_orbital</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">orbital</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dfs</span><span class="p">[</span><span class="s1">&#39;orbital&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">orbital</span>
+    <span class="n">momatrix</span> <span class="o">=</span> <span class="n">parse_ccobj_momatrix</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">momatrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dfs</span><span class="p">[</span><span class="s1">&#39;momatrix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">momatrix</span>
+    <span class="n">bso</span> <span class="o">=</span> <span class="n">parse_ccobj_basis_set_order</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bso</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dfs</span><span class="p">[</span><span class="s1">&#39;basis_set_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bso</span>
+    <span class="n">basis_set</span> <span class="o">=</span> <span class="n">parse_ccobj_gaussian_basis_set</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">basis_set</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dfs</span><span class="p">[</span><span class="s1">&#39;basis_set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_set</span>
+    <span class="k">return</span> <span class="n">dfs</span></div>
+
+<div class="viewcode-block" id="parse_ccobj_atom"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.parse_ccobj_atom">[docs]</a><span class="k">def</span> <span class="nf">parse_ccobj_atom</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets atom table information from ccobj.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;atomcoords&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="s1">&#39;atomnos&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;atomcoords&#39;</span><span class="p">][:,:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;Angstrom&#39;</span><span class="p">,</span> <span class="s1">&#39;au&#39;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;atomcoords&#39;</span><span class="p">][:,:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;Angstrom&#39;</span><span class="p">,</span> <span class="s1">&#39;au&#39;</span><span class="p">]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;atomcoords&#39;</span><span class="p">][:,:,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;Angstrom&#39;</span><span class="p">,</span> <span class="s1">&#39;au&#39;</span><span class="p">]</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;atomnos&#39;</span><span class="p">]</span>
+    <span class="n">nframe</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nframe</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">//</span> <span class="n">nframe</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">nframe</span><span class="p">)</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                                   <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">})</span>
+    <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">z2sym</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">atom</span></div>
+
+<div class="viewcode-block" id="parse_ccobj_orbital"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.parse_ccobj_orbital">[docs]</a><span class="k">def</span> <span class="nf">parse_ccobj_orbital</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nmo&#39;</span><span class="p">,</span> <span class="s1">&#39;homos&#39;</span><span class="p">,</span> <span class="s1">&#39;moenergies&#39;</span><span class="p">,</span> <span class="s1">&#39;mosyms&#39;</span><span class="p">)):</span>
+        <span class="k">return</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">]</span>
+    <span class="n">os</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;homos&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">nbas</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;moenergies&#39;</span><span class="p">])</span>
+    <span class="n">occs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">ens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">syms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">homo</span><span class="p">,</span> <span class="n">moens</span><span class="p">,</span> <span class="n">sym</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;homos&#39;</span><span class="p">],</span>
+                                               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;moenergies&#39;</span><span class="p">],</span>
+                                               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mosyms&#39;</span><span class="p">])):</span>
+        <span class="n">occs</span><span class="p">[:</span><span class="n">homo</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">os</span> <span class="k">else</span> <span class="mi">2</span>
+        <span class="n">occs</span><span class="p">[</span><span class="n">homo</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ens</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">nbas</span><span class="p">:</span><span class="n">i</span> <span class="o">*</span> <span class="n">nbas</span> <span class="o">+</span> <span class="n">nbas</span><span class="p">]</span> <span class="o">=</span> <span class="n">moens</span> <span class="o">*</span> <span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;eV&#39;</span><span class="p">,</span> <span class="s1">&#39;Ha&#39;</span><span class="p">]</span>
+        <span class="n">syms</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">nbas</span><span class="p">:</span> <span class="n">i</span> <span class="o">*</span> <span class="n">nbas</span> <span class="o">+</span> <span class="n">nbas</span><span class="p">]</span> <span class="o">=</span> <span class="n">sym</span>
+    <span class="n">orbital</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;occupation&#39;</span><span class="p">:</span> <span class="n">occs</span><span class="p">,</span> <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">ens</span><span class="p">,</span>
+                                      <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="n">syms</span><span class="p">})</span>
+    <span class="n">orbital</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">orbital</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">orbital</span></div>
+
+<div class="viewcode-block" id="parse_ccobj_momatrix"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.parse_ccobj_momatrix">[docs]</a><span class="k">def</span> <span class="nf">parse_ccobj_momatrix</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;nmo&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="s1">&#39;mocoeffs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">chis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">]),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">])</span>
+    <span class="n">orbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">]),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">])</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;nmo&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">momatrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;chi&#39;</span><span class="p">:</span> <span class="n">chis</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">:</span> <span class="n">orbs</span><span class="p">,</span>
+                                       <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">})</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">coefs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">coef</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">coef</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mocoeffs&#39;</span><span class="p">]]):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="s1">&#39;coef&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span> <span class="k">else</span> <span class="s1">&#39;coef</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">momatrix</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">coefs</span>
+    <span class="k">return</span> <span class="n">momatrix</span></div>
+
+<div class="viewcode-block" id="parse_ccobj_basis_set_order"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.parse_ccobj_basis_set_order">[docs]</a><span class="k">def</span> <span class="nf">parse_ccobj_basis_set_order</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets basis set information from ccobj. currently</span>
+<span class="sd">    only works for Gaussian basis set formats.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;aonames&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span> <span class="k">return</span>
+    <span class="k">if</span> <span class="n">code</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span>
+        <span class="n">split0</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;([A-z])([0-9]*)&quot;</span>
+        <span class="n">split1</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;([0-9]*)([A-z]</span><span class="si">{1}</span><span class="s2">)(.*)&quot;</span>
+        <span class="n">bso</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">bf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">bf</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;aonames&#39;</span><span class="p">]])</span>
+        <span class="n">bso</span><span class="p">[[</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">split0</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">bso</span><span class="p">[[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;ml&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">split1</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">lmap</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;ml&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bso</span><span class="p">[</span><span class="s1">&#39;ml&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}))</span>
+        <span class="n">shfns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">shl</span><span class="p">,</span> <span class="n">pcen</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">pn</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">cen</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pcen</span> <span class="o">==</span> <span class="n">cen</span><span class="p">:</span> <span class="n">shl</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pl</span> <span class="o">==</span> <span class="n">l</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pn</span> <span class="o">==</span> <span class="n">n</span><span class="p">):</span> <span class="n">shl</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">shfns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shl</span><span class="p">)</span>
+            <span class="n">pcen</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">pn</span> <span class="o">=</span> <span class="n">cen</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">n</span>
+        <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;shell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shfns</span>
+        <span class="n">bso</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bso</span></div>
+
+<div class="viewcode-block" id="parse_ccobj_gaussian_basis_set"><a class="viewcode-back" href="../../../exatomic.interfaces.cclib.html#exatomic.interfaces.cclib.parse_ccobj_gaussian_basis_set">[docs]</a><span class="k">def</span> <span class="nf">parse_ccobj_gaussian_basis_set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;gbasis&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">seht</span><span class="p">,</span> <span class="n">shell</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;shell&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;seht&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gbasis&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">angmom</span><span class="p">,</span> <span class="n">contracted</span> <span class="ow">in</span> <span class="n">center</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">contracted</span><span class="p">:</span>
+                <span class="c1">#L = lmap[angmom.lower()]</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">dat</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="n">shell</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">seht</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">shell</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;seht&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

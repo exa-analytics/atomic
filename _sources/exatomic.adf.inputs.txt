@@ -1,0 +1,7 @@
+exatomic.adf.inputs module
+==========================
+
+.. automodule:: exatomic.adf.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.numerical module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.algorithms.orbital module" href="exatomic.algorithms.orbital.html" />
+    <link rel="prev" title="exatomic.algorithms.neighbors module" href="exatomic.algorithms.neighbors.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.algorithms.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.algorithms.html">exatomic.algorithms package</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.numerical module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.algorithms.numerical.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.algorithms.numerical">
+<span id="exatomic-algorithms-numerical-module"></span><h1>exatomic.algorithms.numerical module<a class="headerlink" href="#module-exatomic.algorithms.numerical" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="numerical-methods-and-classes">
+<h2>Numerical methods and classes<a class="headerlink" href="#numerical-methods-and-classes" title="Permalink to this headline">¶</a></h2>
+<p>Everything in this module is implemented in numba.</p>
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.fac">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">fac</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#fac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.fac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.fac2">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">fac2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#fac2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.fac2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.dfac21">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">dfac21</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#dfac21"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.dfac21" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.choose">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">choose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">k</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#choose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.choose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.sdist">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">sdist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em>, <em class="sig-param"><span class="n">ay</span></em>, <em class="sig-param"><span class="n">az</span></em>, <em class="sig-param"><span class="n">bx</span></em>, <em class="sig-param"><span class="n">by</span></em>, <em class="sig-param"><span class="n">bz</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#sdist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.sdist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.density_from_momatrix">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">density_from_momatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmat</span></em>, <em class="sig-param"><span class="n">occvec</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#density_from_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.density_from_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.density_as_square">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">density_as_square</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">denvec</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#density_as_square"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.density_as_square" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.momatrix_as_square">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">momatrix_as_square</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">movec</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#momatrix_as_square"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.momatrix_as_square" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.numerical.reorder_matrix">
+<code class="sig-prename descclassname">exatomic.algorithms.numerical.</code><code class="sig-name descname">reorder_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni_to_reorder</span></em>, <em class="sig-param"><span class="n">ordered_uni</span></em>, <em class="sig-param"><span class="n">attr</span><span class="o">=</span><span class="default_value">'momatrix'</span></em>, <em class="sig-param"><span class="n">mocoefs</span><span class="o">=</span><span class="default_value">'coef'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/numerical.html#reorder_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.numerical.reorder_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorders matrix elements in a uni_to_reorder by the basis set order
+defined in ordered_uni.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni_to_reorder</strong> (<a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a>) – uni to reorder</p></li>
+<li><p><strong>ordered_uni</strong> (<a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a>) – ordered uni</p></li>
+<li><p><strong>attr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – specify if non-standard matrices (default “momatrix”)</p></li>
+<li><p><strong>mocoefs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – column name in gettattr(uni_to_reorder, attr)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>reordered (pd.DataFrame)</em> – reordered matrix with labeled columns and indices</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.algorithms.orbital.html" class="btn btn-neutral float-right" title="exatomic.algorithms.orbital module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.algorithms.neighbors.html" class="btn btn-neutral float-left" title="exatomic.algorithms.neighbors module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

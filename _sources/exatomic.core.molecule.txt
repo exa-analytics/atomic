@@ -1,0 +1,7 @@
+exatomic.core.molecule module
+=============================
+
+.. automodule:: exatomic.core.molecule
+   :members:
+   :undoc-members:
+   :show-inheritance:

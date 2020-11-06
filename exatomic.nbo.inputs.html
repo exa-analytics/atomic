@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.nbo.inputs module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.nbo.output module" href="exatomic.nbo.output.html" />
+    <link rel="prev" title="exatomic.nbo.editor module" href="exatomic.nbo.editor.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.nbo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.nbo.html">exatomic.nbo package</a> &raquo;</li>
+        
+      <li>exatomic.nbo.inputs module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.nbo.inputs.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.nbo.inputs">
+<span id="exatomic-nbo-inputs-module"></span><h1>exatomic.nbo.inputs module<a class="headerlink" href="#module-exatomic.nbo.inputs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exnbo-input-generator-and-parser">
+<h2>exnbo Input Generator and Parser<a class="headerlink" href="#exnbo-input-generator-and-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="exatomic.nbo.inputs.InpMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nbo.inputs.</code><code class="sig-name descname">InpMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#InpMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.nbo.inputs.InpMeta.atom">
+<code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta.atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nbo.inputs.InpMeta.basis_set_order">
+<code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSetOrder" title="exatomic.core.basis.BasisSetOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSetOrder</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nbo.inputs.InpMeta.momatrix">
+<code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.MOMatrix" title="exatomic.core.orbital.MOMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.MOMatrix</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nbo.inputs.InpMeta.frame">
+<code class="sig-name descname">frame</code><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta.frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.frame.html#exatomic.core.frame.Frame" title="exatomic.core.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.frame.Frame</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.nbo.inputs.InpMeta.overlap">
+<code class="sig-name descname">overlap</code><a class="headerlink" href="#exatomic.nbo.inputs.InpMeta.overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.Overlap" title="exatomic.core.basis.Overlap"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.Overlap</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.nbo.inputs.Input">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nbo.inputs.</code><code class="sig-name descname">Input</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.nbo.editor.html#exatomic.nbo.editor.Editor" title="exatomic.nbo.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nbo.editor.Editor</span></code></a></p>
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.parse_atom">
+<code class="sig-name descname">parse_atom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input.parse_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input.parse_atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.parse_basis_set_order">
+<code class="sig-name descname">parse_basis_set_order</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input.parse_basis_set_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input.parse_basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.parse_overlap">
+<code class="sig-name descname">parse_overlap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input.parse_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input.parse_overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.from_universe">
+<em class="property">classmethod </em><code class="sig-name descname">from_universe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="n">mocoefs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">orbocc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/inputs.html#Input.from_universe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.inputs.Input.from_universe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an NBO input from a properly populated universe.
+uni must have atom, basis_set, basis_set_order, overlap,
+momatrix and orbital information.</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>uni (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>): containing the above attributes
+mocoefs (str): column name of MO coefficients to use in uni.momatrix
+orbocc (str): column name of occupations in uni.orbital
+name (str): prefix of file name to write</p>
+</dd>
+<dt>Returns</dt><dd><p>editor (<code class="xref py py-class docutils literal notranslate"><span class="pre">Input</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.nbo.inputs.Input.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.basis_set_order">
+<em class="property">property </em><code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.nbo.inputs.Input.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.frame">
+<em class="property">property </em><code class="sig-name descname">frame</code><a class="headerlink" href="#exatomic.nbo.inputs.Input.frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.momatrix">
+<em class="property">property </em><code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.nbo.inputs.Input.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.inputs.Input.overlap">
+<em class="property">property </em><code class="sig-name descname">overlap</code><a class="headerlink" href="#exatomic.nbo.inputs.Input.overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.nbo.output.html" class="btn btn-neutral float-right" title="exatomic.nbo.output module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.nbo.editor.html" class="btn btn-neutral float-left" title="exatomic.nbo.editor module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.field &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.field</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.field</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Atomic Field</span>
+<span class="sd">#####################</span>
+<span class="sd">Essentially a :class:`~exa.numerical.Field3D` used for storing cube file data</span>
+<span class="sd">(see :mod:`~exatomic.filetypes.cube`). Cube files values are written in a</span>
+<span class="sd">csv-like structure with the outer loop going over the x dimension, the middle</span>
+<span class="sd">loop going over the y dimension, and the inner loop going over the z dimension.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Series</span>
+
+
+<div class="viewcode-block" id="AtomicField"><a class="viewcode-back" href="../../../exatomic.core.field.html#exatomic.core.field.AtomicField">[docs]</a><span class="k">class</span> <span class="nc">AtomicField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for storing exatomic cube data (scalar field of 3D space). Note that</span>
+<span class="sd">    this class follows the pattern established by the `cube file format`_.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Supports any shape &quot;cube&quot;.</span>
+
+<span class="sd">    .. _cube file format: http://paulbourke.net/dataformats/cube/</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">,</span> <span class="s1">&#39;ox&#39;</span><span class="p">,</span> <span class="s1">&#39;oy&#39;</span><span class="p">,</span> <span class="s1">&#39;oz&#39;</span><span class="p">,</span> <span class="s1">&#39;dxi&#39;</span><span class="p">,</span> <span class="s1">&#39;dxj&#39;</span><span class="p">,</span> <span class="s1">&#39;dxk&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;dyi&#39;</span><span class="p">,</span> <span class="s1">&#39;dyj&#39;</span><span class="p">,</span> <span class="s1">&#39;dyk&#39;</span><span class="p">,</span> <span class="s1">&#39;dzi&#39;</span><span class="p">,</span> <span class="s1">&#39;dzj&#39;</span><span class="p">,</span> <span class="s1">&#39;dzk&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nfields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AtomicField.compute_final"><a class="viewcode-back" href="../../../exatomic.core.field.html#exatomic.core.field.AtomicField.compute_final">[docs]</a>    <span class="k">def</span> <span class="nf">compute_final</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">((</span><span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">])):</span>
+            <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)]:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="o">+</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="o">+</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="o">+</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="o">+</span><span class="n">d</span><span class="o">+</span><span class="n">l</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AtomicField.compute_dv"><a class="viewcode-back" href="../../../exatomic.core.field.html#exatomic.core.field.AtomicField.compute_dv">[docs]</a>    <span class="k">def</span> <span class="nf">compute_dv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the volume element for each field.</span>
+
+<span class="sd">        Volume of a parallelpiped whose dimensions are :math:`\mathbf{a}`,</span>
+<span class="sd">        :math:`\mathbf{b}`, :math:`\mathbf{c}` is given by:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            v = \\left|\\mathbf{a}\\cdot\\left(\\mathbf{b}\\times\\mathbf{c}\\right)\\right|</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">_dv</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Helper function that performs the operation above.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">row</span><span class="p">[[</span><span class="s1">&#39;dxi&#39;</span><span class="p">,</span> <span class="s1">&#39;dxj&#39;</span><span class="p">,</span> <span class="s1">&#39;dxk&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">row</span><span class="p">[[</span><span class="s1">&#39;dyi&#39;</span><span class="p">,</span> <span class="s1">&#39;dyj&#39;</span><span class="p">,</span> <span class="s1">&#39;dyk&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">row</span><span class="p">[[</span><span class="s1">&#39;dzi&#39;</span><span class="p">,</span> <span class="s1">&#39;dzj&#39;</span><span class="p">,</span> <span class="s1">&#39;dzk&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;dv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_dv</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AtomicField.integrate"><a class="viewcode-back" href="../../../exatomic.core.field.html#exatomic.core.field.AtomicField.integrate">[docs]</a>    <span class="k">def</span> <span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that field values are normalized.</span>
+
+<span class="sd">        Computes the integral of the field values. For normalized fields (e.g</span>
+<span class="sd">        orbitals), the result should be 1.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\int\\left|\\phi_{i}\\right|^{2}dV \equiv 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;dv&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compute_dv</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;sums&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fv</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">fv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">]</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;dv&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;sums&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;sums&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">norm</span></div>
+
+<div class="viewcode-block" id="AtomicField.rotate"><a class="viewcode-back" href="../../../exatomic.core.field.html#exatomic.core.field.AtomicField.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unitary transformation of the discrete field.</span>
+
+<span class="sd">        .. code-block:: Python</span>
+
+<span class="sd">            newfield = uni.field.rotate(0, 1, np.pi / 2)  # returns an :class:`~exatomic.core.field.AtomicField`</span>
+<span class="sd">            uni.add_field(newfield)                       # appends new fields to :class:`~exatomic.core.universe.Universe`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a (int): Index of first field</span>
+<span class="sd">            b (int): Index of second field</span>
+<span class="sd">            angle (float or list of floats): angle(s) of rotation (in radians)</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            rotated (:class:`~exatomic.field.AtomicField`): positive then negative linear combinations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">field_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">a</span><span class="p">]]</span>
+        <span class="n">f0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+        <span class="n">posvals</span><span class="p">,</span> <span class="n">negvals</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">angle</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angle</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span> <span class="o">*</span> <span class="n">f0</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span> <span class="o">*</span> <span class="n">f1</span>
+            <span class="n">posvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Series</span><span class="p">(</span><span class="n">t1</span> <span class="o">+</span> <span class="n">t2</span><span class="p">))</span>
+            <span class="n">negvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Series</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t2</span><span class="p">))</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">posvals</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">negvals</span><span class="p">)</span>
+        <span class="n">field_params</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">field_params</span><span class="p">]</span> <span class="o">*</span> <span class="n">num</span><span class="p">)</span>
+        <span class="n">field_params</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AtomicField</span><span class="p">(</span><span class="n">field_params</span><span class="p">,</span> <span class="n">field_values</span><span class="o">=</span><span class="n">posvals</span> <span class="o">+</span> <span class="n">negvals</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;field_values&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">field_values</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;field_values&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;field_values should not exist as an attached &#39;</span>
+                                <span class="s1">&#39;attribute and a kwarg at the same time.&#39;</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;field_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">field_values</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AtomicField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute_final</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+exatomic.nwchem.basis module
+============================
+
+.. automodule:: exatomic.nwchem.basis
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.nbo.output module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.nwchem package" href="exatomic.nwchem.html" />
+    <link rel="prev" title="exatomic.nbo.inputs module" href="exatomic.nbo.inputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.nbo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.nbo.html">exatomic.nbo package</a> &raquo;</li>
+        
+      <li>exatomic.nbo.output module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.nbo.output.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.nbo.output">
+<span id="exatomic-nbo-output-module"></span><h1>exatomic.nbo.output module<a class="headerlink" href="#module-exatomic.nbo.output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exnbo-output-editor">
+<h2>exnbo Output Editor<a class="headerlink" href="#exnbo-output-editor" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="exatomic.nbo.output.Output">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nbo.output.</code><code class="sig-name descname">Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#Output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.Output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.nbo.editor.html#exatomic.nbo.editor.Editor" title="exatomic.nbo.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nbo.editor.Editor</span></code></a></p>
+<p>Parser for NBO output.</p>
+<dl class="py method">
+<dt id="exatomic.nbo.output.Output.to_universe">
+<code class="sig-name descname">to_universe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#Output.to_universe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.Output.to_universe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the editor to a <a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Description of parsed file</p></li>
+<li><p><strong>meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Optional dictionary of metadata</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Verbose information on failed parse methods</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Ignore failed parse methods</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.output.Output.parse_nao">
+<code class="sig-name descname">parse_nao</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#Output.parse_nao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.Output.parse_nao" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.output.Output.parse_nbo">
+<code class="sig-name descname">parse_nbo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#Output.parse_nbo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.Output.parse_nbo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.output.Output.parse_nlmo">
+<code class="sig-name descname">parse_nlmo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#Output.parse_nlmo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.Output.parse_nlmo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.nbo.output.MOMatrix">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.nbo.output.</code><code class="sig-name descname">MOMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#MOMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.MOMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.nbo.editor.html#exatomic.nbo.editor.Editor" title="exatomic.nbo.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.nbo.editor.Editor</span></code></a></p>
+<p>The NBO code has the ability to dump any orbital transformation it performs
+such as the NBOAO, NLMOAO, etc. As long as it is in the AO basis, it is
+possible to add this momatrix to a corresponding universe’s momatrix and
+view these orbitals.</p>
+<dl class="py method">
+<dt id="exatomic.nbo.output.MOMatrix.to_universe">
+<code class="sig-name descname">to_universe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#MOMatrix.to_universe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.MOMatrix.to_universe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the editor to a <a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Description of parsed file</p></li>
+<li><p><strong>meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Optional dictionary of metadata</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Verbose information on failed parse methods</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Ignore failed parse methods</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.nbo.output.MOMatrix.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nbas</span></em>, <em class="sig-param"><span class="n">nmo</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">os</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">nbo6</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/nbo/output.html#MOMatrix.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.nbo.output.MOMatrix.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requires the number of basis functions in this matrix.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.nwchem.html" class="btn btn-neutral float-right" title="exatomic.nwchem package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.nbo.inputs.html" class="btn btn-neutral float-left" title="exatomic.nbo.inputs module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

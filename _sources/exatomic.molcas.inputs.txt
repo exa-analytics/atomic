@@ -1,0 +1,7 @@
+exatomic.molcas.inputs module
+=============================
+
+.. automodule:: exatomic.molcas.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

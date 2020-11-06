@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.frame &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.frame</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.frame</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Frame Data</span>
+<span class="sd">######################</span>
+<span class="sd">The primary &quot;coordinate&quot; for the atomic container (:class:`~exatomic.container.Universe`)</span>
+<span class="sd">is the &quot;frame&quot;. The frame concept can be anything; time, step along a geometry</span>
+<span class="sd">optimization, different functional, etc. Each frame is distinguished from other</span>
+<span class="sd">frames by unique atomic coordinates, a different level of theory, etc.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.distance</span> <span class="kn">import</span> <span class="n">cartmag</span>
+
+
+<div class="viewcode-block" id="Frame"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.Frame">[docs]</a><span class="k">class</span> <span class="nc">Frame</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Information about the current frame; a frame is a concept that distinguishes</span>
+<span class="sd">    atomic coordinates along a molecular dynamics simulation, geometry optimization,</span>
+<span class="sd">    etc.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | atom_count        | int      | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | molecule_count    | int      | non-unique integer                        |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | ox                | float    | unit cell origin point in x               |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | oy                | float    | unit cell origin point in y               |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | oz                | float    | unit cell origin point in z               |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | periodic          | bool     | true if periodic system                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;frame&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;atom_count&#39;</span><span class="p">]</span>
+
+<span class="c1">#    @property</span>
+<span class="c1">#    def _constructor(self):</span>
+<span class="c1">#        return Frame</span>
+
+<div class="viewcode-block" id="Frame.is_periodic"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.Frame.is_periodic">[docs]</a>    <span class="k">def</span> <span class="nf">is_periodic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if any/all frames are periodic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            how (str): Require &quot;any&quot; frames to be periodic (&quot;all&quot; default)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            result (bool): True if any/all frame are periodic</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;periodic&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">how</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;periodic&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">how</span> <span class="o">==</span> <span class="s1">&#39;any&#39;</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;periodic&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Frame.is_variable_cell"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.Frame.is_variable_cell">[docs]</a>    <span class="k">def</span> <span class="nf">is_variable_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the simulation cell (applicable to periodic simulations) varies</span>
+<span class="sd">        (e.g. variable cell molecular dynamics).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_periodic</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;rx&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">compute_cell_magnitudes</span><span class="p">()</span>
+            <span class="n">rx</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">ry</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">rz</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">],</span> <span class="n">rx</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">],</span> <span class="n">ry</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">],</span> <span class="n">rz</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">raise</span> <span class="n">PeriodicUniverseError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Frame.compute_cell_magnitudes"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.Frame.compute_cell_magnitudes">[docs]</a>    <span class="k">def</span> <span class="nf">compute_cell_magnitudes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the magnitudes of the unit cell vectors (rx, ry, rz).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cartmag</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;yi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;zi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cartmag</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;xj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;yj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;zj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cartmag</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;xk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;yk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;zk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Frame.orthorhombic"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.Frame.orthorhombic">[docs]</a>    <span class="k">def</span> <span class="nf">orthorhombic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;xi&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;xj&quot;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div></div>
+
+
+<div class="viewcode-block" id="compute_frame"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.compute_frame">[docs]</a><span class="k">def</span> <span class="nf">compute_frame</span><span class="p">(</span><span class="n">universe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute (minmal) :class:`~exatomic.frame.Frame` from</span>
+<span class="sd">    :class:`~exatomic.container.Universe`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`~exatomic.container.Universe`): Universe with atom table</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        frame (:class:`~exatomic.frame.Frame`): Minimal frame table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">compute_frame_from_atom</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="compute_frame_from_atom"><a class="viewcode-back" href="../../../exatomic.core.frame.html#exatomic.core.frame.compute_frame_from_atom">[docs]</a><span class="k">def</span> <span class="nf">compute_frame_from_atom</span><span class="p">(</span><span class="n">atom</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute :class:`~exatomic.frame.Frame` from :class:`~exatomic.atom.Atom`</span>
+<span class="sd">    (or related).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        atom (:class:`~exatomic.atom.Atom`): Atom table</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        frame (:class:`~exatomic.frame.Frame`): Minimal frame table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">cardinal_groupby</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;atom_count&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

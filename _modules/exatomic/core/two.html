@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.two &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.two</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.two</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Atomic Two Body</span>
+<span class="sd">##################################</span>
+<span class="sd">This module provides functions for computing two body properties. A body can be,</span>
+<span class="sd">for example, an atom (such that two body properties correspond to inter-atomic</span>
+<span class="sd">distances - bonds), or a molecule (such that two body properties correspond to</span>
+<span class="sd">distances between molecule centers of mass). The following table provides a</span>
+<span class="sd">guide for the types of data found in two body tables provided by this module</span>
+<span class="sd">(specifically for atom two body properties).</span>
+
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| Column            | Type     | Description                                 |</span>
+<span class="sd">+===================+==========+=============================================+</span>
+<span class="sd">| atom0             | integer  | foreign key to :class:`~exatomic.atom.Atom` |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| atom1             | integer  | foreign key to :class:`~exatomic.atom.Atom` |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| distance          | float    | distance between atom0 and atom1            |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| bond              | boolean  | True if bond                                |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| frame             | category | non-unique integer (req.)                   |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">| symbols           | category | concatenated atomic symbols                 |</span>
+<span class="sd">+-------------------+----------+---------------------------------------------+</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">FloatProgress</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="c1">#from exa.util.units import Length</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2radius</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.distance</span> <span class="kn">import</span> <span class="p">(</span><span class="n">pdist_ortho</span><span class="p">,</span> <span class="n">pdist_ortho_nv</span><span class="p">,</span> <span class="n">pdist</span><span class="p">,</span>
+                                          <span class="n">pdist_nv</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AtomTwo"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.AtomTwo">[docs]</a><span class="k">class</span> <span class="nc">AtomTwo</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interatomic distances.&quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s2">&quot;two&quot;</span>
+    <span class="c1">#_cardinal = (&quot;frame&quot;, np.int64)</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;atom0&quot;</span><span class="p">,</span> <span class="s2">&quot;atom1&quot;</span><span class="p">,</span> <span class="s2">&quot;dr&quot;</span><span class="p">]</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;symbols&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+
+<span class="c1">#    @property</span>
+<span class="c1">#    def _constructor(self):</span>
+<span class="c1">#        return AtomTwo</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bonded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MoleculeTwo"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.MoleculeTwo">[docs]</a><span class="k">class</span> <span class="nc">MoleculeTwo</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MoleculeTwo</span></div>
+
+
+<div class="viewcode-block" id="compute_atom_two"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_atom_two">[docs]</a><span class="k">def</span> <span class="nf">compute_atom_two</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bonds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute interatomic distances and determine bonds.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        atom_two = compute_atom_two(uni, dmax=4.0)    # Max distance of interest as 4 bohr</span>
+<span class="sd">        atom_two = compute_atom_two(uni, vector=True) # Return distance vector components as well as distance</span>
+<span class="sd">        atom_two = compute_atom_two(uni, bonds=False) # Don&#39;t compute bonds</span>
+<span class="sd">        # Compute bonds with custom covalent radii (atomic units)</span>
+<span class="sd">        atom_two = compute_atom_two(unit, H=10.0, He=20.0, Li=30.0, bond_extra=100.0)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        universe (:class:`~exatomic.core.universe.Universe`): Universe object with atom table</span>
+<span class="sd">        dmax (float): Maximum distance of interest</span>
+<span class="sd">        vector (bool): Compute distance vector (needed for angles)</span>
+<span class="sd">        bonds (bool): Compute bonds (default True)</span>
+<span class="sd">        kwargs: Additional keyword arguments for :func:`~exatomic.core.two._compute_bonds`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">universe</span><span class="o">.</span><span class="n">periodic</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">universe</span><span class="o">.</span><span class="n">orthorhombic</span> <span class="ow">and</span> <span class="n">vector</span><span class="p">:</span>
+            <span class="n">atom_two</span> <span class="o">=</span> <span class="n">compute_pdist_ortho</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="n">dmax</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">universe</span><span class="o">.</span><span class="n">orthorhombic</span><span class="p">:</span>
+            <span class="n">atom_two</span> <span class="o">=</span> <span class="n">compute_pdist_ortho_nv</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="n">dmax</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Only supports orthorhombic cells&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">vector</span><span class="p">:</span>
+        <span class="n">atom_two</span> <span class="o">=</span> <span class="n">compute_pdist</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="n">dmax</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">atom_two</span> <span class="o">=</span> <span class="n">compute_pdist_nv</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="n">dmax</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bonds</span><span class="p">:</span>
+        <span class="n">_compute_bonds</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="n">atom_two</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">atom_two</span></div>
+
+
+<div class="viewcode-block" id="compute_pdist"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_pdist">[docs]</a><span class="k">def</span> <span class="nf">compute_pdist</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute interatomic distances for atoms in free boundary conditions.</span>
+
+<span class="sd">    Does return distance vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dxs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dzs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                           <span class="n">group</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                           <span class="n">group</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                           <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">dmax</span><span class="p">)</span>
+            <span class="n">dxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">dys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">dzs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">drs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">atom0s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">atom1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+    <span class="n">dxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dxs</span><span class="p">)</span>
+    <span class="n">dys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dys</span><span class="p">)</span>
+    <span class="n">dzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dzs</span><span class="p">)</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">drs</span><span class="p">)</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom0s</span><span class="p">)</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom1s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AtomTwo</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;dx&#39;</span><span class="p">:</span> <span class="n">dxs</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">:</span> <span class="n">dys</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">:</span> <span class="n">dzs</span><span class="p">,</span> <span class="s1">&#39;dr&#39;</span><span class="p">:</span> <span class="n">drs</span><span class="p">,</span>
+                              <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">atom0s</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">atom1s</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="compute_pdist_nv"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_pdist_nv">[docs]</a><span class="k">def</span> <span class="nf">compute_pdist_nv</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute interatomic distances for atoms in free boundary conditions.</span>
+
+<span class="sd">    Does not return distance vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#for fdx, group in universe.atom.groupby(&quot;frame&quot;):</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pdist_nv</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                              <span class="n">group</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                              <span class="n">group</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                              <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">dmax</span><span class="p">)</span>
+            <span class="n">drs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">atom0s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">atom1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">drs</span><span class="p">)</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom0s</span><span class="p">)</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom1s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AtomTwo</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;dr&#39;</span><span class="p">:</span> <span class="n">drs</span><span class="p">,</span> <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">atom0s</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">atom1s</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="compute_pdist_ortho"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_pdist_ortho">[docs]</a><span class="k">def</span> <span class="nf">compute_pdist_ortho</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute interatomic distances between atoms in an orthorhombic</span>
+<span class="sd">    periodic cell.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        universe (:class:`~exatomic.core.universe.Universe`): A universe</span>
+<span class="sd">        bonds (bool): Compute bonds as well as distances</span>
+<span class="sd">        bond_extra (float): Extra factor to use when determining bonds</span>
+<span class="sd">        dmax (float): Maximum distance of interest</span>
+<span class="sd">        rtol (float): Relative tolerance (float equivalence)</span>
+<span class="sd">        atol (float): Absolute tolerance (float equivalence)</span>
+<span class="sd">        radii (kwargs): Custom (covalent) radii to use when determining bonds</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;rx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">compute_cell_magnitudes</span><span class="p">()</span>
+    <span class="n">dxs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dzs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">prjs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">atom</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">unit_atom</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fdx</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;rz&quot;</span><span class="p">]]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pdist_ortho</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                 <span class="n">group</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                 <span class="n">group</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                 <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>
+                                 <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">dmax</span><span class="p">)</span>
+            <span class="n">dxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">dys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">dzs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">drs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">atom0s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">atom1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="n">prjs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+    <span class="n">dxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dxs</span><span class="p">)</span>
+    <span class="n">dys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dys</span><span class="p">)</span>
+    <span class="n">dzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dzs</span><span class="p">)</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">drs</span><span class="p">)</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom0s</span><span class="p">)</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom1s</span><span class="p">)</span>
+    <span class="n">prjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">prjs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AtomTwo</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;dx&#39;</span><span class="p">:</span> <span class="n">dxs</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">:</span> <span class="n">dys</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">:</span> <span class="n">dzs</span><span class="p">,</span> <span class="s1">&#39;dr&#39;</span><span class="p">:</span> <span class="n">drs</span><span class="p">,</span>
+                              <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">atom0s</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">atom1s</span><span class="p">,</span> <span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">prjs</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="compute_pdist_ortho_nv"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_pdist_ortho_nv">[docs]</a><span class="k">def</span> <span class="nf">compute_pdist_ortho_nv</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute interatomic distances between atoms in an orthorhombic</span>
+<span class="sd">    periodic cell.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        universe (:class:`~exatomic.core.universe.Universe`): A universe</span>
+<span class="sd">        bonds (bool): Compute bonds as well as distances</span>
+<span class="sd">        bond_extra (float): Extra factor to use when determining bonds</span>
+<span class="sd">        dmax (float): Maximum distance of interest</span>
+<span class="sd">        rtol (float): Relative tolerance (float equivalence)</span>
+<span class="sd">        atol (float): Absolute tolerance (float equivalence)</span>
+<span class="sd">        radii (kwargs): Custom (covalent) radii to use when determining bonds</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;rx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">compute_cell_magnitudes</span><span class="p">()</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">prjs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">atom</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">universe</span><span class="o">.</span><span class="n">unit_atom</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fdx</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;rz&quot;</span><span class="p">]]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pdist_ortho_nv</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>
+                                    <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">dmax</span><span class="p">)</span>
+            <span class="n">drs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">atom0s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">atom1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">prjs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">drs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">drs</span><span class="p">)</span>
+    <span class="n">atom0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom0s</span><span class="p">)</span>
+    <span class="n">atom1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">atom1s</span><span class="p">)</span>
+    <span class="n">prjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">prjs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AtomTwo</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;dr&#39;</span><span class="p">:</span> <span class="n">drs</span><span class="p">,</span> <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">atom0s</span><span class="p">,</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">atom1s</span><span class="p">,</span>
+                              <span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">prjs</span><span class="p">})</span></div>
+
+
+<span class="k">def</span> <span class="nf">_compute_bonds</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">atom_two</span><span class="p">,</span> <span class="n">bond_extra</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="o">**</span><span class="n">radii</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute bonds inplce.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bond_extra (float): Additional amount for determining bonds</span>
+<span class="sd">        radii: Custom radii to use for computing bonds</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+    <span class="n">radmap</span> <span class="o">=</span> <span class="p">{</span><span class="n">sym</span><span class="p">:</span> <span class="n">sym2radius</span><span class="p">[</span><span class="n">sym</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">}</span>
+    <span class="n">radmap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
+    <span class="n">maxdr</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;atom0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">radmap</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">+</span>
+             <span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;atom1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">radmap</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">+</span> <span class="n">bond_extra</span><span class="p">)</span>
+    <span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">maxdr</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_bond_count</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">atom_two</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute bond counts inplace.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;bond&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">atom_two</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">_compute_bonds</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">atom_two</span><span class="p">)</span>
+    <span class="n">bonded</span> <span class="o">=</span> <span class="n">atom_two</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">atom_two</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;atom0&quot;</span><span class="p">,</span> <span class="s2">&quot;atom1&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+    <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;bond_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bonded</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="compute_atom_two_out_of_core"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_atom_two_out_of_core">[docs]</a><span class="k">def</span> <span class="nf">compute_atom_two_out_of_core</span><span class="p">(</span><span class="n">hdfname</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform an out of core periodic two body calculation for a simple cubic</span>
+<span class="sd">    unit cell with dimension a.</span>
+
+<span class="sd">    All data will be saved to and HDF5 file with the given filename. Key</span>
+<span class="sd">    structure is per frame, i.e. ``frame_fdx/atom_two``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hdfname (str): HDF file name</span>
+<span class="sd">        uni (:class:`~exatomic.core.universe.Universe`): Universe</span>
+<span class="sd">        a (float): Simple cubic unit cell dimension</span>
+<span class="sd">        kwargs: Keyword arguments for bond computation (i.e. covalent radii)</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        :func:`~exatomic.core.two._compute_bonds`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="n">hdfname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="n">unit_atom</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">unit_atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unit_atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">unit_atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unit_atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">unit_atom</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">unit_atom</span><span class="p">)</span>
+    <span class="n">grps</span> <span class="o">=</span> <span class="n">unit_atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grps</span><span class="p">)</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">FloatProgress</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;AtomTwo to HDF:&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">fdx</span><span class="p">,</span> <span class="n">atom</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grps</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">pdist_ortho</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                        <span class="n">atom</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span>
+                        <span class="n">atom</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="n">tdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">fdx</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                                      <span class="s1">&#39;dx&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;dy&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;dz&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;dr&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                       <span class="s1">&#39;atom0&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;atom1&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">6</span><span class="p">]})</span>
+        <span class="n">_compute_bonds</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">fdx</span><span class="p">],</span> <span class="n">tdf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;frame_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">fdx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/atom_two&quot;</span><span class="p">,</span> <span class="n">tdf</span><span class="p">)</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="mi">100</span>
+    <span class="n">store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="compute_molecule_two"><a class="viewcode-back" href="../../../exatomic.core.two.html#exatomic.core.two.compute_molecule_two">[docs]</a><span class="k">def</span> <span class="nf">compute_molecule_two</span><span class="p">(</span><span class="n">universe</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

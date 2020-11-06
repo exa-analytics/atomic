@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.molcas.inputs &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.molcas.inputs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.molcas.inputs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Input Generator and Parser</span>
+<span class="sd">###############################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.editor</span> <span class="kn">import</span> <span class="n">Editor</span>
+
+
+<span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="si">{seward}</span><span class="s2"></span>
+
+<span class="si">{calc}</span><span class="s2"></span>
+
+<span class="si">{postcalc}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_seward</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">&amp;SEWARD &amp;END</span>
+<span class="s2">Title</span>
+<span class="si">{title}</span><span class="s2"></span>
+<span class="si">{atoms_bases}</span><span class="s2"></span>
+<span class="si">{seward_options}</span><span class="s2"></span>
+<span class="s2">End of input</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_scf</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">&amp;SCF &amp;END</span>
+<span class="s2">Title</span>
+<span class="si">{title}</span><span class="s2"></span>
+<span class="s2">Charge</span>
+<span class="si">{charge}</span><span class="s2"></span>
+<span class="si">{mult}</span><span class="s2"></span>
+<span class="s2">End of input</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_rasscf</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="si">{rasrestart}</span><span class="s2"></span>
+<span class="s2">&amp;RASSCF &amp;END</span>
+<span class="s2">Spin</span>
+<span class="si">{mult}</span><span class="s2"></span>
+<span class="s2">Symmetry</span>
+<span class="si">{symmetry}</span><span class="s2"></span>
+<span class="s2">nActEl</span>
+<span class="si">{nactel}</span><span class="s2"> </span><span class="si">{ras1_out_of}</span><span class="s2"> </span><span class="si">{ras3_into}</span><span class="s2"></span>
+<span class="s2">Inactive</span>
+<span class="si">{inactive}</span><span class="s2"></span>
+<span class="s2">Ras1</span>
+<span class="si">{ras1}</span><span class="s2"></span>
+<span class="s2">Ras2</span>
+<span class="si">{ras2}</span><span class="s2"></span>
+<span class="s2">Ras3</span>
+<span class="si">{ras3}</span><span class="s2"></span>
+<span class="s2">Iter</span>
+<span class="si">{iterations}</span><span class="s2"></span>
+<span class="si">{restart_key}</span><span class="s2"></span>
+<span class="s2">CIRoots</span>
+<span class="si">{ciroots}</span><span class="s2"> </span><span class="si">{ciroots}</span><span class="s2"> 1</span>
+<span class="s2">ORBAppear</span>
+<span class="si">{orbappear}</span><span class="s2"></span>
+<span class="s2">Outorbital</span>
+<span class="si">{outorbital}</span><span class="s2"></span>
+<span class="s2">levshift</span>
+<span class="si">{levshift}{alter}</span><span class="s2"></span>
+<span class="s2">End of input</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_caspt2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">&amp;CASPT2 &amp;END</span>
+<span class="s2">End of input</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_rassi</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">&amp;RASSI &amp;END</span>
+<span class="s2">End of input</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="InputGenerator"><a class="viewcode-back" href="../../../exatomic.molcas.inputs.html#exatomic.molcas.inputs.InputGenerator">[docs]</a><span class="k">class</span> <span class="nc">InputGenerator</span><span class="p">(</span><span class="n">Editor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InputGenerator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_handle_basis</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">atom</span><span class="p">:</span> <span class="n">basis</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">atom</span><span class="p">:</span> <span class="n">bas</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">bas</span> <span class="ow">in</span> <span class="n">basis</span><span class="p">}</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Cannot handle basis with type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">basis</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="write_molcas_input"><a class="viewcode-back" href="../../../exatomic.molcas.inputs.html#exatomic.molcas.inputs.write_molcas_input">[docs]</a><span class="k">def</span> <span class="nf">write_molcas_input</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seward</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">caspt2</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rassi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">task</span><span class="o">=</span><span class="s1">&#39;scf&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seward_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;ANO-RCC-VDZP&#39;</span><span class="p">,</span> <span class="n">mult</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">ras1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                       <span class="n">ras2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ras3</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nactel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ras1_out_of</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ras3_into</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">ciroots</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">levshift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">restart</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                       <span class="n">restart_key</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">orbappear</span><span class="o">=</span><span class="s1">&#39;compact&#39;</span><span class="p">,</span> <span class="n">outorbital</span><span class="o">=</span><span class="s1">&#39;canonical&#39;</span><span class="p">,):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Molcas is not a black box. Do not use this function.</span>
+<span class="sd">    basis can be string, list of tuples or dictionary of symbol, basis pairs</span>
+<span class="sd">    seward_options is an iterable of string options to go in seward</span>
+<span class="sd">    if restart is specified and restart_key is not, restart is ignored</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seward&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;calc&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;postcalc&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">seward</span><span class="p">:</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+        <span class="n">atoms_bases</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;tag&#39;</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">tagcount</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]:</span>
+                <span class="n">tagcount</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">tagcount</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tagcount</span><span class="p">[</span><span class="n">atom</span><span class="p">]))</span>
+            <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span>
+        <span class="n">atom_types</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">_handle_basis</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atom_types</span><span class="p">):</span>
+            <span class="n">atoms_bases</span> <span class="o">+=</span> <span class="s1">&#39;Basis set</span><span class="se">\n</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">basis</span><span class="p">[</span><span class="n">atom</span><span class="p">])</span>
+            <span class="n">subatom</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">atom</span><span class="p">]</span>
+            <span class="n">atoms_bases</span> <span class="o">+=</span> <span class="n">subatom</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">atoms_bases</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">End of basis&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">atoms_bases</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">End of basis</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">sew_opts</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">seward_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">string</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seward_options</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">seward_options</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">sew_opts</span> <span class="o">+=</span> <span class="n">string</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sew_opts</span> <span class="o">+=</span> <span class="n">string</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;seward&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_seward</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">atoms_bases</span><span class="o">=</span><span class="n">atoms_bases</span><span class="p">,</span>
+                                          <span class="n">seward_options</span><span class="o">=</span><span class="n">sew_opts</span><span class="p">)</span>
+
+    <span class="n">totalz</span> <span class="o">=</span> <span class="n">universe</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># Calculation type</span>
+    <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s1">&#39;scf&#39;</span><span class="p">:</span>
+        <span class="n">nopen</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mult</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">scfmult</span> <span class="o">=</span> <span class="s1">&#39;UHF</span><span class="se">\n</span><span class="s1">ZSPIn</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nopen</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;calc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_scf</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="n">charge</span><span class="p">,</span> <span class="n">mult</span><span class="o">=</span><span class="n">scfmult</span><span class="p">)</span>
+        <span class="c1"># SCF check</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Check    :</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Total Z  : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Total e- : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;nopen orb: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">totalz</span><span class="p">,</span> <span class="n">totalz</span> <span class="o">-</span> <span class="n">charge</span><span class="p">,</span> <span class="n">nopen</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">task</span> <span class="o">==</span> <span class="s1">&#39;rasscf&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">restart_key</span> <span class="o">==</span> <span class="s1">&#39;LUMORB&#39;</span><span class="p">:</span>
+            <span class="n">rasrestart</span> <span class="o">=</span> <span class="s1">&#39;&gt;&gt; COPY </span><span class="si">{}</span><span class="s1"> INPORB&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">restart_key</span> <span class="o">==</span> <span class="s1">&#39;JOBIPH&#39;</span><span class="p">:</span>
+            <span class="n">rasrestart</span> <span class="o">=</span> <span class="s1">&#39;&gt;&gt; COPY </span><span class="si">{}</span><span class="s1"> JOBIPH&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">restart_key</span><span class="p">:</span>
+            <span class="n">rasrestart</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;restart_key must be LUMORB or JOBIPH&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alter</span><span class="p">:</span>
+            <span class="n">altfmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">ALTER</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alter</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">altfmt</span> <span class="o">+=</span> <span class="n">alter</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alter</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">alt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">alter</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">alter</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">altfmt</span> <span class="o">+=</span> <span class="n">alt</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">altfmt</span> <span class="o">+=</span> <span class="n">alt</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;calc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_rasscf</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mult</span><span class="o">=</span><span class="n">mult</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="n">symmetry</span><span class="p">,</span> <span class="n">nactel</span><span class="o">=</span><span class="n">nactel</span><span class="p">,</span>
+                                        <span class="n">ras1_out_of</span><span class="o">=</span><span class="n">ras1_out_of</span><span class="p">,</span> <span class="n">ras3_into</span><span class="o">=</span><span class="n">ras3_into</span><span class="p">,</span>
+                                        <span class="n">inactive</span><span class="o">=</span><span class="n">inactive</span><span class="p">,</span> <span class="n">ras1</span><span class="o">=</span><span class="n">ras1</span><span class="p">,</span> <span class="n">ras2</span><span class="o">=</span><span class="n">ras2</span><span class="p">,</span>
+                                        <span class="n">ras3</span><span class="o">=</span><span class="n">ras3</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
+                                        <span class="n">rasrestart</span><span class="o">=</span><span class="n">rasrestart</span><span class="p">,</span> <span class="n">restart_key</span><span class="o">=</span><span class="n">restart_key</span><span class="p">,</span>
+                                        <span class="n">ciroots</span><span class="o">=</span><span class="n">ciroots</span><span class="p">,</span> <span class="n">orbappear</span><span class="o">=</span><span class="n">orbappear</span><span class="p">,</span>
+                                        <span class="n">outorbital</span><span class="o">=</span><span class="n">outorbital</span><span class="p">,</span> <span class="n">levshift</span><span class="o">=</span><span class="n">levshift</span><span class="p">,</span>
+                                        <span class="n">alter</span><span class="o">=</span><span class="n">altfmt</span><span class="p">)</span>
+        <span class="c1"># RASSCF check</span>
+        <span class="n">sumelec</span> <span class="o">=</span> <span class="n">inactive</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">nactel</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Check     :</span><span class="se">\n</span><span class="s1">&#39;</span>\
+              <span class="s1">&#39;Spin      : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Total Z   : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Total e-  : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Inactives : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Ras1 holes: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Ras2 size : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Ras3 holes: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+              <span class="s1">&#39;Sum of e- : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mult</span><span class="p">,</span> <span class="n">totalz</span><span class="p">,</span> <span class="n">totalz</span> <span class="o">-</span> <span class="n">charge</span><span class="p">,</span> <span class="n">inactive</span><span class="p">,</span>
+                                      <span class="n">ras1</span><span class="p">,</span> <span class="n">ras2</span><span class="p">,</span> <span class="n">ras3</span><span class="p">,</span> <span class="n">sumelec</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The specification of your (</span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">)</span><span class="si">{}</span><span class="s1">) (RAS1(NACT,RAS2)RAS3)&#39;</span> \
+              <span class="s1">&#39;active space corresponds to a molecular charge of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+              <span class="n">ras1</span><span class="p">,</span> <span class="n">nactel</span><span class="p">,</span> <span class="n">ras2</span><span class="p">,</span> <span class="n">ras3</span><span class="p">,</span> <span class="n">totalz</span> <span class="o">-</span> <span class="n">sumelec</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;task must be scf or rasscf&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">caspt2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;currently does not support caspt2&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rassi</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;currently does not support rassi&quot;</span><span class="p">)</span>
+
+    <span class="n">fl</span> <span class="o">=</span> <span class="n">InputGenerator</span><span class="p">(</span><span class="n">_template</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fl</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

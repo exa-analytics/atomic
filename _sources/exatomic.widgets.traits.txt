@@ -1,0 +1,7 @@
+exatomic.widgets.traits module
+==============================
+
+.. automodule:: exatomic.widgets.traits
+   :members:
+   :undoc-members:
+   :show-inheritance:

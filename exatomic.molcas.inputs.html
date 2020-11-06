@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.molcas.inputs module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.molcas.output module" href="exatomic.molcas.output.html" />
+    <link rel="prev" title="exatomic.molcas.editor module" href="exatomic.molcas.editor.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.molcas.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.molcas.html">exatomic.molcas package</a> &raquo;</li>
+        
+      <li>exatomic.molcas.inputs module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.molcas.inputs.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.molcas.inputs">
+<span id="exatomic-molcas-inputs-module"></span><h1>exatomic.molcas.inputs module<a class="headerlink" href="#module-exatomic.molcas.inputs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="input-generator-and-parser">
+<h2>Input Generator and Parser<a class="headerlink" href="#input-generator-and-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="exatomic.molcas.inputs.InputGenerator">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.inputs.</code><code class="sig-name descname">InputGenerator</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/inputs.html#InputGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.inputs.InputGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.molcas.editor.html#exatomic.molcas.editor.Editor" title="exatomic.molcas.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.molcas.editor.Editor</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.molcas.inputs.write_molcas_input">
+<code class="sig-prename descclassname">exatomic.molcas.inputs.</code><code class="sig-name descname">write_molcas_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em>, <em class="sig-param"><span class="n">fp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seward</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">caspt2</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">rassi</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">task</span><span class="o">=</span><span class="default_value">'scf'</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">charge</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seward_options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">basis</span><span class="o">=</span><span class="default_value">'ANO-RCC-VDZP'</span></em>, <em class="sig-param"><span class="n">mult</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">ras1</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">inactive</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">alter</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">ras2</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">ras3</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">nactel</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">ras1_out_of</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">ras3_into</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">ciroots</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">levshift</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">symmetry</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">restart</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">restart_key</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">orbappear</span><span class="o">=</span><span class="default_value">'compact'</span></em>, <em class="sig-param"><span class="n">outorbital</span><span class="o">=</span><span class="default_value">'canonical'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/inputs.html#write_molcas_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.inputs.write_molcas_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Molcas is not a black box. Do not use this function.
+basis can be string, list of tuples or dictionary of symbol, basis pairs
+seward_options is an iterable of string options to go in seward
+if restart is specified and restart_key is not, restart is ignored</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.molcas.output.html" class="btn btn-neutral float-right" title="exatomic.molcas.output module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.molcas.editor.html" class="btn btn-neutral float-left" title="exatomic.molcas.editor module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

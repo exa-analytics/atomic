@@ -1,0 +1,7 @@
+exatomic.molcas.editor module
+=============================
+
+.. automodule:: exatomic.molcas.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+exatomic.qe.pw.header module
+============================
+
+.. automodule:: exatomic.qe.pw.header
+   :members:
+   :undoc-members:
+   :show-inheritance:

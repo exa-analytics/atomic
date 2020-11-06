@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.pcf module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.core package" href="exatomic.core.html" />
+    <link rel="prev" title="exatomic.algorithms.packing module" href="exatomic.algorithms.packing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.algorithms.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.algorithms.html">exatomic.algorithms package</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.pcf module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.algorithms.pcf.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.algorithms.pcf">
+<span id="exatomic-algorithms-pcf-module"></span><h1>exatomic.algorithms.pcf module<a class="headerlink" href="#module-exatomic.algorithms.pcf" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pair-correlation-functions">
+<h2>Pair Correlation Functions<a class="headerlink" href="#pair-correlation-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="exatomic.algorithms.pcf.radial_pair_correlation">
+<code class="sig-prename descclassname">exatomic.algorithms.pcf.</code><code class="sig-name descname">radial_pair_correlation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">universe</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">dr</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">stop</span><span class="o">=</span><span class="default_value">13.0</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">'Angstrom'</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/pcf.html#radial_pair_correlation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.pcf.radial_pair_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the angularly independent pair correlation function.</p>
+<p>This function is sometimes called the pair radial distribution function. The
+quality of the result depends strongly on the amount of two body distances
+computed (see <code class="xref py py-func docutils literal notranslate"><span class="pre">compute_two_body()</span></code>) in the case of a
+periodic unvierse. Furthermore, the result can be skewed if only a single
+atom a (or b) exists in each frame. In these situations one can use the
+<strong>window</strong> and <strong>dr</strong> parameter to adjust the result accordingly. Reasonable
+values for <strong>dr</strong> range from 0.1 to 0.01 and reasonable values for <strong>window</strong>
+range from 1 to 5 (default is 1 - no smoothing).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pcf</span> <span class="o">=</span> <span class="n">radial_pair_correlation</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">)</span>
+<span class="n">pcf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">secondary_y</span><span class="o">=</span><span class="s2">&quot;Pair Count&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}g_{AB}\left(r\right) = \frac{V}{4\pi r^{2}\Delta r MN_{A}N_{B}}
+\sum_{m=1}^{M}\sum_{a=1}^{N_{A}}\sum_{b=1}^{N_{B}}Q_{m}
+\left(r_{a}, r_{b}; r, \Delta r\right)\\\begin{split}Q_{m}\left(r_{a}, r_{b}; r, \Delta r\right) = \begin{cases} \
+    &amp;1\ \ if\ r - \frac{\Delta r}{2} \le \left|r_{a} - r_{b}\right|\lt r + \frac{\Delta r}{2} \\
+    &amp;0\ \ otherwise \\
+\end{cases}\end{split}\end{aligned}\end{align} \]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>universe</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>) – The universe (with two body data)</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>, </em><em>array</em>) – First atom type (see Note)</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>, </em><em>array</em>) – Second atom type (see Note)</p></li>
+<li><p><strong>dr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Radial step size</p></li>
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Starting radial point</p></li>
+<li><p><strong>stop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Stopping radial point</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Output unit of length</p></li>
+<li><p><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Smoothen data (useful when only a single a or b exist, default no smoothing)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pcf (<a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – Pair correlation distribution and count</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a, b are strings pairs are determined using atomic symbols. If integers
+or lists/tuples are passed pairs are determined by atomic labels (see
+<a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom.get_atom_labels" title="exatomic.core.atom.Atom.get_atom_labels"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_atom_labels()</span></code></a>). Arrays are assumed to
+be index values directly.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Depending on the type of two body computation (or data) used, the volume
+may not be the cell volume; the normalization factor (the prefactor) is
+the volume sampled during computation of two body properties divided by
+the number of properties used in the histogram (the triple summation
+above, divided by the normalization for the radial distance outward).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using a start and stop length different from 0 and simple cubic cell dimension
+will cause the y axis magnitudes to be inaccurate. This can be remedied by
+rescaling values appropriately.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.pcf.radial_pcf_out_of_core">
+<code class="sig-prename descclassname">exatomic.algorithms.pcf.</code><code class="sig-name descname">radial_pcf_out_of_core</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hdftwo</span></em>, <em class="sig-param"><span class="n">hdfout</span></em>, <em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">pairs</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/pcf.html#radial_pcf_out_of_core"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.pcf.radial_pcf_out_of_core" title="Permalink to this definition">¶</a></dt>
+<dd><p>Out of core radial pair correlation calculation.</p>
+<p>Atomic two body data is expected to have been computed (see
+<a class="reference internal" href="exatomic.core.two.html#exatomic.core.two.compute_atom_two_out_of_core" title="exatomic.core.two.compute_atom_two_out_of_core"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_atom_two_out_of_core()</span></code></a>)
+An example is given below. Note the importance of the definition
+of pairs and the presence of additional arguments.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">radial_pcf_out_of_core</span><span class="p">(</span><span class="s2">&quot;in.hdf&quot;</span><span class="p">,</span> <span class="s2">&quot;out.hdf&quot;</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;O_H&quot;</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;H&quot;</span><span class="p">)},</span>
+                       <span class="n">length</span><span class="o">=</span><span class="s2">&quot;Angstrom&quot;</span><span class="p">,</span> <span class="n">dr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hdftwo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – HDF filepath containing atomic two body data</p></li>
+<li><p><strong>hdfout</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – HDF filepath to which radial PCF data will be written (see Note)</p></li>
+<li><p><strong>u</strong> (<a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a>) – Universe</p></li>
+<li><p><strong>pairs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Dictionary of string name keys, values of <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> arguments (see Note)</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to be passed (see Note)</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results will be stored in the hdfout HDF file. Keys are of the form
+<code class="docutils literal notranslate"><span class="pre">radial_pcf_key</span></code>. The keys of <code class="docutils literal notranslate"><span class="pre">pairs</span></code> are used to store the output
+while the values are used to perform the pair correlation itself.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.core.html" class="btn btn-neutral float-right" title="exatomic.core package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.algorithms.packing.html" class="btn btn-neutral float-left" title="exatomic.algorithms.packing module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,821 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.widgets.widget &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.widgets.widget</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.widgets.widget</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Universe Notebook Widget</span>
+<span class="sd">#########################</span>
+<span class="sd">To visualize a universe containing atoms, molecules, orbitals, etc., do</span>
+<span class="sd">the following in a Jupyter notebook environment.</span>
+
+<span class="sd">.. code-block:: Python</span>
+
+<span class="sd">    exatomic.UniverseWidget(u)    # type(u) is exatomic.core.universe.Universe</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="c1">#from traitlets import Unicode, link</span>
+<span class="kn">from</span> <span class="nn">traitlets</span> <span class="kn">import</span> <span class="n">Unicode</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Button</span><span class="p">,</span> <span class="n">Dropdown</span><span class="p">,</span> <span class="n">jslink</span><span class="p">,</span> <span class="n">register</span><span class="p">,</span> <span class="n">VBox</span><span class="p">,</span> <span class="n">HBox</span><span class="p">,</span>
+                        <span class="n">IntSlider</span><span class="p">,</span> <span class="n">IntRangeSlider</span><span class="p">,</span> <span class="n">FloatSlider</span><span class="p">,</span> <span class="n">Play</span><span class="p">,</span>
+                        <span class="n">FloatText</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Select</span><span class="p">,</span> <span class="n">Output</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.widget_base</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ExatomicScene</span><span class="p">,</span> <span class="n">UniverseScene</span><span class="p">,</span>
+                          <span class="n">TensorScene</span><span class="p">,</span> <span class="n">ExatomicBox</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.widget_utils</span> <span class="kn">import</span> <span class="n">_wlo</span><span class="p">,</span> <span class="n">_ListDict</span><span class="p">,</span> <span class="n">Folder</span>
+<span class="kn">from</span> <span class="nn">.traits</span> <span class="kn">import</span> <span class="n">uni_traits</span>
+<span class="kn">from</span> <span class="nn">exatomic.core.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display_html</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Length</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+
+<div class="viewcode-block" id="DemoContainer"><a class="viewcode-back" href="../../../exatomic.widgets.widget.html#exatomic.widgets.widget.DemoContainer">[docs]</a><span class="k">class</span> <span class="nc">DemoContainer</span><span class="p">(</span><span class="n">ExatomicBox</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A proof-of-concept mixing GUI controls with a three.js scene.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_field_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses field GUI controls.&quot;&quot;&quot;</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DemoContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">fopts</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="s1">&#39;Sphere&#39;</span><span class="p">,</span> <span class="s1">&#39;Torus&#39;</span><span class="p">,</span> <span class="s1">&#39;Ellipsoid&#39;</span><span class="p">])</span>
+        <span class="n">fopts</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">fopts</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">def</span> <span class="nf">_field</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">fopts</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_field</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="p">,</span> <span class="n">fopts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">folder</span>
+
+    <span class="k">def</span> <span class="nf">_init_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize generic GUI controls and observe callbacks.&quot;&quot;&quot;</span>
+        <span class="n">mainopts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DemoContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_init_gui</span><span class="p">()</span>
+        <span class="n">geom</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;gear&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Mesh&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_geom</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">geom</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">geom</span>
+        <span class="n">geom</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_geom</span><span class="p">)</span>
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;geom&#39;</span><span class="p">,</span> <span class="n">geom</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))])</span>
+        <span class="k">return</span> <span class="n">mainopts</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">scenes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">scenes</span><span class="p">,</span>
+                                            <span class="n">uni</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="c1">#test=True,</span>
+                                            <span class="n">typ</span><span class="o">=</span><span class="n">ExatomicScene</span><span class="p">,</span>
+                                            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TensorContainer"><a class="viewcode-back" href="../../../exatomic.widgets.widget.html#exatomic.widgets.widget.TensorContainer">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">TensorContainer</span><span class="p">(</span><span class="n">ExatomicBox</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple container to implement cartesian tensor visualization.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path (string): Takes a file path name to pass through the Tensor.from_file function. Default to None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_model_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;TensorContainerModel&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;TensorContainerView&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Control which scenes are controlled by the GUI.</span>
+
+<span class="sd">        Additionally align traits with active scenes so that</span>
+<span class="sd">        the GUI reflects that correct values of active scenes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TensorContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_update_active</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">scns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">scns</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">scns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span>
+        <span class="n">carts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">carts</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">carts</span><span class="p">:</span>
+                <span class="n">tij</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+                <span class="n">cache</span><span class="p">[</span><span class="n">tij</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">scns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tij</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tij</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">scn</span><span class="p">,</span> <span class="n">tij</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize generic GUI controls and observe callbacks.&quot;&quot;&quot;</span>
+        <span class="n">mainopts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TensorContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_init_gui</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">scn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">alo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;74px&#39;</span><span class="p">)</span>
+        <span class="n">rlo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;235px&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">txx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;xx&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">txy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;xy&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">txz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;xz&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tyx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;yx&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tyy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;yy&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tyz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;yz&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tzx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;zx&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tzy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;zy&#39;</span><span class="p">]</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">tzz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;zz&#39;</span><span class="p">]</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">txx</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">txy</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">txz</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">)]</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tyx</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tyy</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tyz</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">)]</span>
+        <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tzx</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tzy</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">),</span>
+              <span class="n">FloatText</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">scn</span><span class="o">.</span><span class="n">tzz</span> <span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">alo</span><span class="p">)]</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+        <span class="n">tensorIndex</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">opt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">rlo</span><span class="p">)</span>
+        <span class="n">tdxlabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;Select the tensor index:&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_x0</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">txx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_x1</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">txy</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_x2</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">txz</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_y0</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tyx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_y1</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tyy</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_y2</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tyz</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_z0</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tzx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_z1</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tzy</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_z2</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tzz</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_x0</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_x1</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_x2</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_y0</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">ys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_y1</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">ys</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_y2</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">zs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_z0</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">zs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_z1</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">zs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_z2</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">rlo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;234px&#39;</span><span class="p">)</span>
+        <span class="n">xbox</span> <span class="o">=</span> <span class="n">HBox</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">rlo</span><span class="p">)</span>
+        <span class="n">ybox</span> <span class="o">=</span> <span class="n">HBox</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">rlo</span><span class="p">)</span>
+        <span class="n">zbox</span> <span class="o">=</span> <span class="n">HBox</span><span class="p">(</span><span class="n">zs</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">rlo</span><span class="p">)</span>
+        <span class="n">geom</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;cubes&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Geometry&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_change_tensor</span><span class="p">(</span><span class="n">tdx</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">carts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">bra</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">carts</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ket</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">carts</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">xs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tdx</span><span class="p">,</span><span class="n">bra</span><span class="o">+</span><span class="n">ket</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">ys</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tdx</span><span class="p">,</span><span class="n">bra</span><span class="o">+</span><span class="n">ket</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">zs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tdx</span><span class="p">,</span><span class="n">bra</span><span class="o">+</span><span class="n">ket</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">_geom</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">geom</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">geom</span>
+
+        <span class="k">def</span> <span class="nf">_tdx</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">tdx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+            <span class="n">_change_tensor</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+
+        <span class="n">geom</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_geom</span><span class="p">)</span>
+        <span class="n">tensorIndex</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_tdx</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;geom&#39;</span><span class="p">,</span> <span class="n">geom</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;tlbl&#39;</span><span class="p">,</span> <span class="n">tdxlabel</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;tidx&#39;</span><span class="p">,</span> <span class="n">tensorIndex</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;xbox&#39;</span><span class="p">,</span> <span class="n">xbox</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;ybox&#39;</span><span class="p">,</span> <span class="n">ybox</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;zbox&#39;</span><span class="p">,</span> <span class="n">zbox</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">mainopts</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TensorContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                              <span class="n">uni</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                              <span class="c1">#test=False,</span>
+                                              <span class="n">typ</span><span class="o">=</span><span class="n">TensorScene</span><span class="p">,</span>
+                                              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DemoUniverse"><a class="viewcode-back" href="../../../exatomic.widgets.widget.html#exatomic.widgets.widget.DemoUniverse">[docs]</a><span class="k">class</span> <span class="nc">DemoUniverse</span><span class="p">(</span><span class="n">ExatomicBox</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A showcase of functional forms used in quantum chemistry.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_update_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Control which scenes are controlled by the GUI.</span>
+
+<span class="sd">        Additionally align traits with active scenes so that</span>
+<span class="sd">        the GUI reflects that correct values of active scenes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoUniverse</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_update_active</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">scns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">scns</span><span class="p">:</span> <span class="k">return</span>
+        <span class="n">flds</span> <span class="o">=</span> <span class="p">[</span><span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">]</span>
+        <span class="n">fks</span> <span class="o">=</span> <span class="p">[</span><span class="n">scn</span><span class="o">.</span><span class="n">field_kind</span> <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">]</span>
+        <span class="n">fmls</span> <span class="o">=</span> <span class="p">[</span><span class="n">scn</span><span class="o">.</span><span class="n">field_ml</span> <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">]</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span>
+        <span class="n">fopts</span> <span class="o">=</span> <span class="n">folder</span><span class="p">[</span><span class="s1">&#39;fopts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">options</span>
+        <span class="n">fld</span> <span class="o">=</span> <span class="n">flds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">fk</span> <span class="o">=</span> <span class="n">fks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">fml</span> <span class="o">=</span> <span class="n">fmls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">flds</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">:</span> <span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">fld</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">fks</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">:</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_kind</span> <span class="o">=</span> <span class="n">fk</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">fmls</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="n">scns</span><span class="p">:</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_ml</span> <span class="o">=</span> <span class="n">fml</span>
+        <span class="n">folder</span><span class="p">[</span><span class="n">fld</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">fk</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">fld</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fopts</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="n">fld</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">fld</span> <span class="o">==</span> <span class="s1">&#39;SolidHarmonic&#39;</span><span class="p">:</span>
+            <span class="n">ofks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="n">fk</span><span class="p">]</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">fk</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="o">*</span><span class="n">ofks</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">_set_gui</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_field_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses field GUI controls.&quot;&quot;&quot;</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DemoUniverse</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">uni_field_lists</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;Hydrogenic&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;1s&#39;</span><span class="p">,</span>   <span class="s1">&#39;2s&#39;</span><span class="p">,</span>   <span class="s1">&#39;2px&#39;</span><span class="p">,</span> <span class="s1">&#39;2py&#39;</span><span class="p">,</span> <span class="s1">&#39;2pz&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;3s&#39;</span><span class="p">,</span>   <span class="s1">&#39;3px&#39;</span><span class="p">,</span>  <span class="s1">&#39;3py&#39;</span><span class="p">,</span> <span class="s1">&#39;3pz&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;3d-2&#39;</span><span class="p">,</span> <span class="s1">&#39;3d-1&#39;</span><span class="p">,</span> <span class="s1">&#39;3d0&#39;</span><span class="p">,</span> <span class="s1">&#39;3d+1&#39;</span><span class="p">,</span> <span class="s1">&#39;3d+2&#39;</span><span class="p">]),</span>
+            <span class="p">(</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="s1">&#39;py&#39;</span><span class="p">,</span> <span class="s1">&#39;pz&#39;</span><span class="p">,</span> <span class="s1">&#39;d200&#39;</span><span class="p">,</span> <span class="s1">&#39;d110&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;d101&#39;</span><span class="p">,</span> <span class="s1">&#39;d020&#39;</span><span class="p">,</span> <span class="s1">&#39;d011&#39;</span><span class="p">,</span> <span class="s1">&#39;d002&#39;</span><span class="p">,</span> <span class="s1">&#39;f300&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;f210&#39;</span><span class="p">,</span> <span class="s1">&#39;f201&#39;</span><span class="p">,</span> <span class="s1">&#39;f120&#39;</span><span class="p">,</span> <span class="s1">&#39;f111&#39;</span><span class="p">,</span> <span class="s1">&#39;f102&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;f030&#39;</span><span class="p">,</span> <span class="s1">&#39;f021&#39;</span><span class="p">,</span> <span class="s1">&#39;f012&#39;</span><span class="p">,</span> <span class="s1">&#39;f003&#39;</span><span class="p">]),</span>
+            <span class="p">(</span><span class="s1">&#39;SolidHarmonic&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)])])</span>
+        <span class="n">kind_widgets</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">vals</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">uni_field_lists</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="n">ml_widgets</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)]))</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)])</span>
+        <span class="n">fopts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">uni_field_lists</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kind_widgets</span><span class="p">,</span> <span class="n">relayout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ml_widgets</span><span class="p">,</span> <span class="n">relayout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_field</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="n">fk</span> <span class="o">=</span> <span class="n">uni_field_lists</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_kind</span> <span class="o">=</span> <span class="n">fk</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">old</span><span class="p">)</span>
+            <span class="n">folder</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">fk</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span> <span class="o">==</span> <span class="s1">&#39;SolidHarmonic&#39;</span><span class="p">:</span>
+                <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">fk</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aml</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">folder</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                       <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()]</span>
+                <span class="k">if</span> <span class="n">aml</span><span class="p">:</span>
+                    <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="o">*</span><span class="n">aml</span><span class="p">)</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">_set_gui</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">_field_kind</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_kind</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+                <span class="k">if</span> <span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="o">==</span> <span class="s1">&#39;SolidHarmonic&#39;</span><span class="p">:</span>
+                    <span class="n">scn</span><span class="o">.</span><span class="n">field_ml</span> <span class="o">=</span> <span class="n">folder</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">old</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_ml</span> <span class="o">!=</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                        <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">aml</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">folder</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                           <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()]</span>
+                    <span class="k">if</span> <span class="n">aml</span><span class="p">:</span>
+                        <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="o">*</span><span class="n">aml</span><span class="p">)</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">_set_gui</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">_field_ml</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_ml</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">kind_widgets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_field_kind</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">ml_widgets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_field_ml</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">fopts</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">fopts</span><span class="p">)</span>
+        <span class="n">fopts</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_field</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;fopts&#39;</span><span class="p">,</span> <span class="n">fopts</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s1">&#39;Hydrogenic&#39;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;iso&#39;</span><span class="p">,</span> <span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">folder</span>
+
+
+    <span class="k">def</span> <span class="nf">_init_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize generic GUI controls and observe callbacks.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;field_ox&#39;</span><span class="p">,</span> <span class="s1">&#39;field_oy&#39;</span><span class="p">,</span> <span class="s1">&#39;field_oz&#39;</span><span class="p">]:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">scn</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="o">-</span><span class="mf">30.0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;field_fx&#39;</span><span class="p">,</span> <span class="s1">&#39;field_fy&#39;</span><span class="p">,</span> <span class="s1">&#39;field_fz&#39;</span><span class="p">]:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">scn</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">)</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="s1">&#39;Hydrogenic&#39;</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">field_iso</span> <span class="o">=</span> <span class="mf">0.0005</span>
+            <span class="n">scn</span><span class="o">.</span><span class="n">field_kind</span> <span class="o">=</span> <span class="s1">&#39;1s&#39;</span>
+        <span class="n">mainopts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DemoUniverse</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_init_gui</span><span class="p">()</span>
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))])</span>
+        <span class="k">return</span> <span class="n">mainopts</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">scenes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoUniverse</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">scenes</span><span class="p">,</span> <span class="n">uni</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="c1">#test=True,</span>
+                                           <span class="n">typ</span><span class="o">=</span><span class="n">ExatomicScene</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UniverseWidget"><a class="viewcode-back" href="../../../exatomic.widgets.widget.html#exatomic.widgets.widget.UniverseWidget">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">UniverseWidget</span><span class="p">(</span><span class="n">ExatomicBox</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualize a :class:`~exatomic.core.universe.Universe`.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        u = exatomic.Universe.load(exatomic.base.resource(&quot;adf-lu-valid.hdf5&quot;))</span>
+<span class="sd">        scenekwargs = dict(atomcolors=dict(Lu=&quot;black&quot;))</span>
+<span class="sd">        exatomic.UniverseWidget(u, scenekwargs=scenekwargs)    # In Jupyter notebook</span>
+
+<span class="sd">        scenekwargs = dict(atomcolors=dict(Lu=&quot;#f442f1&quot;), atomradii=dict(Lu=1.0))</span>
+<span class="sd">        exatomic.UniverseWidget(u, scenekwargs=scenekwargs)    # In Jupyter notebook</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni: The Universe object</span>
+<span class="sd">        scenekwargs (dict): Keyword args to be passed to :class:`~exatomic.widgets.widget_base.ExatomicScene`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_frame_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nframes</span><span class="p">):</span>
+        <span class="n">playable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">nframes</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">flims</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">nframes</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">control</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Animate&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;play&#39;</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;playing&#39;</span><span class="p">,</span> <span class="n">Play</span><span class="p">(</span><span class="n">disabled</span><span class="o">=</span><span class="n">playable</span><span class="p">,</span> <span class="o">**</span><span class="n">flims</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;scn_frame&#39;</span><span class="p">,</span> <span class="n">IntSlider</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Frame&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">flims</span><span class="p">))])</span>
+
+        <span class="k">def</span> <span class="nf">_scn_frame</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">frame_idx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;scn_frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_scn_frame</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;playing&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">jslink</span><span class="p">((</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;playing&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+               <span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;scn_frame&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">folder</span>
+
+
+    <span class="k">def</span> <span class="nf">_field_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UniverseWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">)</span>
+        <span class="n">fopts</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_fopts</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_idx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">fopts</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_fopts</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">folder</span><span class="p">[</span><span class="s1">&#39;fopts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fopts</span>
+        <span class="k">return</span> <span class="n">folder</span>
+
+    <span class="k">def</span> <span class="nf">_iso_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="n">isos</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Isosurfaces&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;cube&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_fshow</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_show</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">field_show</span>
+        <span class="n">isos</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_fshow</span><span class="p">)</span>
+        <span class="n">isofolder</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span><span class="n">isos</span><span class="p">,</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;fopts&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="p">[</span><span class="s1">&#39;fopts&#39;</span><span class="p">]),</span>
+            <span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;iso&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iso&#39;</span><span class="p">))]))</span>
+        <span class="n">isofolder</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;iso&#39;</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;iso&#39;</span><span class="p">,</span> <span class="n">isofolder</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_contour_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="n">control</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Contours&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;dot-circle-o&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_cshow</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_show</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_show</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_cshow</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;fopts&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="p">[</span><span class="s1">&#39;fopts&#39;</span><span class="p">]),</span>
+            <span class="p">(</span><span class="s1">&#39;axis&#39;</span><span class="p">,</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="n">IntSlider</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                              <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;lim&#39;</span><span class="p">,</span> <span class="n">IntRangeSlider</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;10**Limits&#39;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">8</span><span class="p">,</span>
+                                   <span class="nb">max</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
+            <span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="n">FloatSlider</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span>
+                                <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">))])</span>
+        <span class="k">def</span> <span class="nf">_cont_axis</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_axis</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_cont_num</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_num</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_cont_lim</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_lim</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_cont_val</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">cont_val</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;axis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_cont_axis</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;num&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_cont_num</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;lim&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_cont_lim</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_cont_val</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">folder</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;contour&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_tensor_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">alo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;70px&#39;</span><span class="p">)</span>
+        <span class="n">rlo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;220px&#39;</span><span class="p">)</span>
+        <span class="n">scale</span> <span class="o">=</span>  <span class="n">FloatSlider</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">tens</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Tensor&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;bank&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_tens</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">tens</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">tens</span>
+        <span class="k">def</span> <span class="nf">_scale</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">tens</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_tens</span><span class="p">)</span>
+        <span class="n">scale</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_scale</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+                <span class="p">(</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="p">),</span>
+                <span class="p">])</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">tens</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_fill_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Fill&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;adjust&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ball and Stick&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Van Der Waals Spheres&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Covalent Spheres&#39;</span><span class="p">]</span>
+               <span class="c1">#&#39;High Performance&#39;]#,&#39;Stick&#39;]</span>
+        <span class="n">fill</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">opt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="n">bond_r</span> <span class="o">=</span> <span class="n">FloatSlider</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Bond Radius&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_atoms</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">atom_3d</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">atom_3d</span>
+
+        <span class="k">def</span> <span class="nf">_fill</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">fill_idx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+            <span class="n">bond_r</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span>
+
+        <span class="k">def</span> <span class="nf">_bond_r</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">bond_r</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+
+        <span class="n">atoms</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_atoms</span><span class="p">)</span>
+        <span class="n">fill</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_fill</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+        <span class="n">bond_r</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_bond_r</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+                    <span class="p">(</span><span class="s1">&#39;opt&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;bond_r&#39;</span><span class="p">,</span> <span class="n">bond_r</span><span class="p">)</span>
+                    <span class="p">])</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">sdx</span><span class="p">,</span> <span class="n">scn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">scn</span><span class="o">.</span><span class="n">selected</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">isdigit</span><span class="p">(),</span> <span class="n">i</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scn</span><span class="o">.</span><span class="n">selected</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">])</span><span class="o">%</span><span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must select an even number of atoms. Last selected atom has been truncated.&quot;</span><span class="p">)</span>
+            <span class="n">atom_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uniatom</span><span class="p">[</span><span class="n">sdx</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">scn</span><span class="o">.</span><span class="n">frame_idx</span><span class="p">)</span><span class="o">.</span> \
+                               <span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span>
+            <span class="n">atom_coords</span><span class="o">.</span><span class="n">set_index</span><span class="p">([[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atom_coords</span><span class="p">))]],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_distance</span><span class="p">(</span><span class="n">atom_coords</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                        <span class="n">atom_coords</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_coords</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;Angstrom&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">distance</span><span class="p">]</span>
+            <span class="k">with</span> <span class="n">out</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">distance</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span> <span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">sdx</span><span class="p">]</span>
+                                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">[</span><span class="n">sdx</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)],</span>
+                                    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dr (Angs.)&quot;</span><span class="p">,</span> <span class="s2">&quot;adx0&quot;</span><span class="p">,</span> <span class="s2">&quot;adx1&quot;</span><span class="p">,</span> <span class="s2">&quot;scene&quot;</span><span class="p">])])</span>
+        <span class="k">with</span> <span class="n">out</span><span class="p">:</span>
+            <span class="n">display_html</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(),</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_distanceBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#TODO: Find way to automatically update the table when there</span>
+        <span class="c1">#      is a change in the selected atoms on the javascript side.</span>
+        <span class="n">atom_df</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="n">clear_selected</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Clear Sel.&#39;</span><span class="p">)</span>
+        <span class="n">get_selected</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Update out&#39;</span><span class="p">)</span>
+        <span class="n">select_opt</span> <span class="o">=</span> <span class="n">HBox</span><span class="p">([</span><span class="n">clear_selected</span><span class="p">,</span> <span class="n">get_selected</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">Output</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+
+        <span class="c1">#selected = Dict().tag(sync=True)</span>
+
+        <span class="k">def</span> <span class="nf">_atom_df</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_output</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+                <span class="c1">#link((self.scenes[0].selected, &#39;value&#39;), (selected, &#39;value&#39;))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">_clear_selected</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">clear_selected</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">clear_selected</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">_get_selected</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_output</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="c1">#selected = List(Dict()).tag(sync=True)</span>
+        <span class="c1">#for scn in self.active():</span>
+        <span class="c1">#    selected.append(scn.selected)</span>
+        <span class="c1">#</span>
+        <span class="c1">#@observe(&#39;selected&#39;)</span>
+        <span class="c1">#def _selected(c):</span>
+        <span class="c1">#    print(c)</span>
+
+        <span class="n">atom_df</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_atom_df</span><span class="p">)</span>
+        <span class="n">atom_df</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">clear_selected</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_clear_selected</span><span class="p">)</span>
+        <span class="n">get_selected</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_get_selected</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">out</span><span class="p">),</span>
+                             <span class="p">(</span><span class="s1">&#39;select_opt&#39;</span><span class="p">,</span> <span class="n">select_opt</span><span class="p">)</span>
+                            <span class="p">])</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">atom_df</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">nframes</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;nframes&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fields&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;tensors&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1">#        freq = kwargs.pop(&quot;freq&quot;, None)</span>
+        <span class="n">mainopts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UniverseWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_init_gui</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Fill&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;adjust&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Axis&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;arrows-alt&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_atom_3d</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">atom_3d</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">atom_3d</span>
+
+        <span class="k">def</span> <span class="nf">_axis</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span> <span class="n">scn</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">axis</span>
+
+        <span class="n">atoms</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_atom_3d</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_axis</span><span class="p">)</span>
+        <span class="n">atoms</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">atoms</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;atom_3d&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fill_folder</span><span class="p">()),</span>
+                         <span class="p">(</span><span class="s1">&#39;axis&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_folder</span><span class="p">(</span><span class="n">nframes</span><span class="p">))])</span>
+        <span class="k">if</span> <span class="n">fields</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_folder</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_iso_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_contour_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+            <span class="n">folder</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;fopts&#39;</span><span class="p">)</span>
+            <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="p">)])</span>
+
+        <span class="k">if</span> <span class="n">tensors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;tensor&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_folder</span><span class="p">())])</span>
+
+        <span class="c1">#print(freq)</span>
+        <span class="c1">#if freq is not None:</span>
+        <span class="c1">#    print(&quot;Inside frequency&quot;)</span>
+
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distanceBox</span><span class="p">())])</span>
+
+        <span class="k">return</span> <span class="n">mainopts</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">unis</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">scenekwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;scenekwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="c1">#scenekwargs.update({&#39;uni&#39;: True, &#39;test&#39;: False})</span>
+        <span class="n">scenekwargs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;uni&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+        <span class="n">atomcolors</span> <span class="o">=</span> <span class="n">scenekwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;atomcolors&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">atomradii</span> <span class="o">=</span> <span class="n">scenekwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;atomradii&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">atomlabels</span> <span class="o">=</span> <span class="n">scenekwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;atomlabels&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1">#        fields, masterkwargs, tens, freq = [], [], [], []</span>
+        <span class="n">fields</span><span class="p">,</span> <span class="n">masterkwargs</span><span class="p">,</span> <span class="n">tens</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uniatom</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">uni</span> <span class="ow">in</span> <span class="n">unis</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_uniatom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">)</span>
+            <span class="n">unargs</span><span class="p">,</span> <span class="n">flds</span><span class="p">,</span> <span class="n">tens</span> <span class="o">=</span> <span class="n">uni_traits</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span>
+                                                  <span class="n">atomcolors</span><span class="o">=</span><span class="n">atomcolors</span><span class="p">,</span>
+                                                  <span class="n">atomradii</span><span class="o">=</span><span class="n">atomradii</span><span class="p">,</span>
+                                                  <span class="n">atomlabels</span><span class="o">=</span><span class="n">atomlabels</span><span class="p">)</span>
+            <span class="c1">#unargs, flds, tens, freq = uni_traits(uni,</span>
+            <span class="c1">#                                      atomcolors=atomcolors,</span>
+            <span class="c1">#                                      atomradii=atomradii,</span>
+            <span class="c1">#                                      atomlabels=atomlabels)</span>
+            <span class="c1">#tensors = tens</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">flds</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flds</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="k">else</span> <span class="n">fields</span>
+            <span class="n">unargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">scenekwargs</span><span class="p">)</span>
+            <span class="n">masterkwargs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unargs</span><span class="p">)</span>
+        <span class="n">nframes</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">nframes</span>
+                      <span class="k">for</span> <span class="n">uni</span> <span class="ow">in</span> <span class="n">unis</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unis</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UniverseWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">masterkwargs</span><span class="p">,</span>
+                                             <span class="n">uni</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                             <span class="c1">#test=False,</span>
+                                             <span class="n">nframes</span><span class="o">=</span><span class="n">nframes</span><span class="p">,</span>
+                                             <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                                             <span class="n">typ</span><span class="o">=</span><span class="n">UniverseScene</span><span class="p">,</span>
+                                             <span class="n">tensors</span><span class="o">=</span><span class="n">tens</span><span class="p">,</span>
+                                             <span class="c1">#freq=freq,</span>
+                                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

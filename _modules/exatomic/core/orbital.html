@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.orbital &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.orbital</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.orbital</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Orbital DataFrame</span>
+<span class="sd">####################</span>
+<span class="sd">Orbital information. All of the dataframe structures and functions associated</span>
+<span class="sd">with the results of a quantum chemical calculation. The Orbital table itself</span>
+<span class="sd">summarizes information such as centers and energies. The Excitation table</span>
+<span class="sd">collects information about orbital excitations from time-dependent calculations.</span>
+<span class="sd">The convolve() bound method can be used to generate photoelectron spectroscopy</span>
+<span class="sd">and absorbance spectra.</span>
+
+<span class="sd">The MOMatrix table contains a C matrix as it is presented in quantum textbooks,</span>
+<span class="sd">stored in a columnar format. The bound method square() returns the</span>
+<span class="sd">matrix as one would write it out. This table should have dimensions</span>
+<span class="sd">N_basis_functions * N_basis_functions. The DensityMatrix table stores</span>
+<span class="sd">a triangular matrix in columnar format and contains a similar square()</span>
+<span class="sd">method to return the matrix as we see it on a piece of paper.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Energy</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.numerical</span> <span class="kn">import</span> <span class="p">(</span><span class="n">density_from_momatrix</span><span class="p">,</span>
+                                           <span class="n">density_as_square</span><span class="p">)</span>
+                                           <span class="c1">#momatrix_as_square)</span>
+<span class="kn">from</span> <span class="nn">exatomic.core.field</span> <span class="kn">import</span> <span class="n">AtomicField</span>
+
+
+<span class="k">class</span> <span class="nc">_Convolve</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_Convolve</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_gauss</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">en</span><span class="p">,</span> <span class="n">en0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span> <span class="o">*</span> \
+               <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">en</span> <span class="o">-</span> <span class="n">en0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_lorentz</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">en</span><span class="p">,</span> <span class="n">en0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">en</span> <span class="o">-</span> <span class="n">en0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">as_ordered</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span><span class="p">]</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">as_ordered</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="s1">&#39;gauss&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;eV&#39;</span><span class="p">,</span> <span class="n">ewin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">broaden</span><span class="o">=</span><span class="mf">0.13</span><span class="p">,</span>
+                 <span class="n">padding</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">1001</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute a spectrum based on excitation energies and oscillator strengths.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            func (str): either &#39;gauss&#39; or &#39;lorentz&#39;</span>
+<span class="sd">            units (str): units of resulting spectrum</span>
+<span class="sd">            ewin (iter): (emin, emax) in same units as units (default in eV)</span>
+<span class="sd">            broaden (float): how broad to make the peaks (FWHM, default in eV)</span>
+<span class="sd">            npoints (int): &quot;resolution&quot; of the spectrum</span>
+<span class="sd">            name (str): optional - name the column of returned data</span>
+<span class="sd">            normalize (bool): set the largest value of signal equal to 1.0</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            df (pd.DataFrame): contains x and y values of a spectrum</span>
+<span class="sd">                               (signal and energy)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span> <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">frame</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_group</span> <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">group</span>
+        <span class="k">if</span> <span class="n">func</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;gauss&#39;</span><span class="p">,</span> <span class="s1">&#39;lorentz&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Convolution must be one of &quot;gauss&quot; or &quot;lorentz&quot;.&#39;</span><span class="p">)</span>
+        <span class="n">choices</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gauss&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gauss</span><span class="p">,</span> <span class="s1">&#39;lorentz&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lorentz</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;Ha&#39;</span><span class="p">:</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;energy&#39;</span>
+        <span class="k">if</span> <span class="n">units</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;Ha&#39;</span><span class="p">,</span> <span class="n">units</span><span class="p">]</span>
+        <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="k">if</span> <span class="n">ewin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ewin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">lg</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">if</span> <span class="n">ewin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ewin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">mine</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">-</span> <span class="n">padding</span> <span class="o">*</span> <span class="n">broaden</span>
+        <span class="n">maxe</span> <span class="o">=</span> <span class="n">lg</span> <span class="o">+</span> <span class="n">padding</span> <span class="o">*</span> <span class="n">broaden</span>
+        <span class="n">enrg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mine</span><span class="p">,</span> <span class="n">maxe</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">npoints</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Excitation&#39;</span><span class="p">:</span>
+            <span class="n">smdf</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sm</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lg</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">)</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">group</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">osc</span><span class="p">,</span> <span class="n">en0</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">smdf</span><span class="p">[</span><span class="s1">&#39;osc&#39;</span><span class="p">],</span> <span class="n">smdf</span><span class="p">[</span><span class="n">units</span><span class="p">]):</span>
+                <span class="n">spec</span> <span class="o">+=</span> <span class="n">osc</span> <span class="o">*</span> <span class="n">choices</span><span class="p">[</span><span class="n">func</span><span class="p">](</span><span class="n">broaden</span><span class="p">,</span> <span class="n">enrg</span><span class="p">,</span> <span class="n">en0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">smdf</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sm</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">units</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lg</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;occupation&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">en0</span> <span class="ow">in</span> <span class="n">smdf</span><span class="p">[</span><span class="n">units</span><span class="p">]:</span>
+                <span class="n">spec</span> <span class="o">+=</span> <span class="n">choices</span><span class="p">[</span><span class="n">func</span><span class="p">](</span><span class="n">broaden</span><span class="p">,</span> <span class="n">enrg</span><span class="p">,</span> <span class="n">en0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectrum is all zeros, check energy window.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+                <span class="n">spec</span> <span class="o">/=</span> <span class="n">spec</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;signal&#39;</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="n">units</span><span class="p">:</span> <span class="n">enrg</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">spec</span><span class="p">})</span>
+
+
+<div class="viewcode-block" id="Orbital"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Orbital">[docs]</a><span class="k">class</span> <span class="nc">Orbital</span><span class="p">(</span><span class="n">_Convolve</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | frame             | category | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | group             | category | like frame but for same geometry          |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | orbital           | int      | vector of MO coefficient matrix           |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | label             | int      | label of orbital                          |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | occupation        | float    | population of orbital                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | energy            | float    | eigenvalue of orbital eigenvector         |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | symmetry          | str      | symmetry designation (if applicable)      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | x                 | float    | orbital center in x                       |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | y                 | float    | orbital center in y                       |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | z                 | float    | orbital center in z                       |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Spin zero means alpha spin or unknown and spin one means beta spin.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation&#39;</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">,</span> <span class="s1">&#39;spin&#39;</span><span class="p">]</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;orbital&#39;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;spin&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Orbital</span>
+
+<div class="viewcode-block" id="Orbital.get_orbital"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Orbital.get_orbital">[docs]</a>    <span class="k">def</span> <span class="nf">get_orbital</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">orbocc</span><span class="o">=</span><span class="s1">&#39;occupation&#39;</span><span class="p">,</span>
+                    <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a specific orbital.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            orb (int): See note below (default HOMO)</span>
+<span class="sd">            spin (int): 0, no spin or alpha (default); 1, beta</span>
+<span class="sd">            index (int): Orbital dataframe index (default None)</span>
+<span class="sd">            frame (int): The frame of the universe (default max(frame))</span>
+<span class="sd">            group (int): The group of orbitals within a given frame</span>
+<span class="sd">            orbocc (str): column of occupations (default &#39;occupation&#39;)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            slc (pd.Series): row of the Orbital table</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            If the index is not known (usually), but a criterion</span>
+<span class="sd">            such as (HOMO or LUMO) is desired, use the *orb* and</span>
+<span class="sd">            *spin* criteria. Negative *orb* values are occupied,</span>
+<span class="sd">            positive are unoccupied. So -1 returns the HOMO, -2</span>
+<span class="sd">            returns the HOMO-1; 0 returns the LUMO, 1 returns the</span>
+<span class="sd">            LUMO+1, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_frame</span> <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">frame</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_group</span> <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">group</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">orb</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">group</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;spin&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">spin</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">orb</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">group</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;spin&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">spin</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">orb</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Orbital.active_orbitals"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Orbital.active_orbitals">[docs]</a>    <span class="k">def</span> <span class="nf">active_orbitals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orbocc</span><span class="o">=</span><span class="s1">&#39;occupation&#39;</span><span class="p">,</span> <span class="n">maxocc</span><span class="o">=</span><span class="mf">1.985</span><span class="p">,</span> <span class="n">minocc</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
+                        <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a slice of the orbital table containing so-called</span>
+<span class="sd">        active orbitals (defined here as orbitals with occupations</span>
+<span class="sd">        between minocc and maxocc).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            orbocc (str): column name of occupation numbers in uni.orbital</span>
+<span class="sd">            maxocc (float): maximum occupation to be considered active</span>
+<span class="sd">            minocc (float): minimum occupation to be considered active</span>
+<span class="sd">            irrep (int): irreducible representation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            slc (pd.DataFrame): active orbitals in the Orbital table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">irrep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">maxocc</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">minocc</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;irrep&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">irrep</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">maxocc</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">minocc</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="Orbital.from_energies"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Orbital.from_energies">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_energies</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">energies</span><span class="p">,</span> <span class="n">alphae</span><span class="p">,</span> <span class="n">betae</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method to generate the Orbital table from an array</span>
+<span class="sd">        of orbital energies and the number of alpha and beta electrons.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            energies (np.ndarray): orbital energies</span>
+<span class="sd">            alphae (int): number of alpha electrons</span>
+<span class="sd">            betae (int): number of beta electrons</span>
+<span class="sd">            os (bool): open shell</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            orb (~:class:`exatomic.core.orbital.Orbital`): the Orbital table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span> <span class="n">ae</span><span class="p">,</span> <span class="n">be</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">alphae</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">betae</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Only integer occupation. &#39;</span>
+                                          <span class="s1">&#39;Low hanging fruit to implement.&#39;</span><span class="p">)</span>
+        <span class="n">nmos</span> <span class="o">=</span> <span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span> <span class="k">else</span> <span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">nmos</span> <span class="o">=</span> <span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">os</span><span class="p">:</span>
+            <span class="n">nmos</span> <span class="o">=</span> <span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">spin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nmos</span><span class="p">)))</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="nb">range</span><span class="p">(</span><span class="n">nmos</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmos</span><span class="p">)))</span>
+            <span class="n">occs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">ae</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span> <span class="o">-</span> <span class="n">ae</span><span class="p">),</span>
+                                   <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">be</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span> <span class="o">-</span> <span class="n">be</span><span class="p">)))</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">group</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nmos</span> <span class="o">=</span> <span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">spin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmos</span><span class="p">)</span>
+            <span class="n">occs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">ae</span><span class="p">),</span>
+                                   <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span> <span class="o">-</span> <span class="n">ae</span><span class="p">)))</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">group</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nmos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">group</span><span class="p">,</span>
+                              <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">energies</span><span class="p">,</span> <span class="s1">&#39;spin&#39;</span><span class="p">:</span> <span class="n">spin</span><span class="p">,</span>
+                              <span class="s1">&#39;occupation&#39;</span><span class="p">:</span> <span class="n">occs</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">:</span> <span class="n">vector</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="Orbital.from_occupation_vector"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Orbital.from_occupation_vector">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_occupation_vector</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">occvec</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method to generate the Orbital table from an array</span>
+<span class="sd">        of occupation numbers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            energies (np.ndarray): orbital energies</span>
+<span class="sd">            os (bool): open shell</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            orb (~:class:`exatomic.core.orbital.Orbital`): the Orbital table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">:</span> <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                         <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;spin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                         <span class="s1">&#39;occupation&#39;</span><span class="p">:</span> <span class="n">occvec</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">occvec</span><span class="p">))})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Implement open shell lazy&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Excitation"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Excitation">[docs]</a><span class="k">class</span> <span class="nc">Excitation</span><span class="p">(</span><span class="n">_Convolve</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | energy            | float    | excitation energy in Ha                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | irrep             | str      | irreducible representation of excitation  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | osc               | float    | oscillator strength (length repr.)        |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | occ               | int      | occupied orbital of excitation            |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | virt              | int      | virtual orbital of excitation             |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | occsym            | str      | occupied orbital symmetry                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | virtsym           | str      | virtual orbital symmetry                  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | frame             | int      | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | group             | int      | like frame but for same geometry          |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;osc&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">]</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;excitation&#39;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Excitation</span>
+
+<div class="viewcode-block" id="Excitation.from_universe"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.Excitation.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the zeroth order approximation to excitation energies</span>
+<span class="sd">        via the transition dipole method (provided a universe contains</span>
+<span class="sd">        an MOMatrix and dipole moment integrals already).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;multipole&#39;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Universe must have dipole integrals.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">basis_set_order</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">fix</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">rx</span> <span class="o">=</span> <span class="p">((</span><span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+             <span class="o">+</span> <span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">fix</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">ry</span> <span class="o">=</span> <span class="p">((</span><span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+             <span class="o">+</span> <span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">fix</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">rz</span> <span class="o">=</span> <span class="p">((</span><span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+             <span class="o">+</span> <span class="n">uni</span><span class="o">.</span><span class="n">multipole</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;ix3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">fix</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">mo</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">momatrix</span><span class="o">.</span><span class="n">square</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">ens</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="p">[</span><span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="o">.</span><span class="n">spin</span> <span class="o">==</span> <span class="n">spin</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span><span class="p">]</span> <span class="o">*</span> <span class="n">dim</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">tdm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+            <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ens</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">ens</span><span class="p">)</span><span class="o">.</span><span class="n">stack</span><span class="p">(),</span>
+            <span class="s1">&#39;mux&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">mo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">mo</span><span class="p">)))</span><span class="o">.</span><span class="n">stack</span><span class="p">(),</span>
+            <span class="s1">&#39;muy&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">mo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ry</span><span class="p">,</span> <span class="n">mo</span><span class="p">)))</span><span class="o">.</span><span class="n">stack</span><span class="p">(),</span>
+            <span class="s1">&#39;muz&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">mo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rz</span><span class="p">,</span> <span class="n">mo</span><span class="p">)))</span><span class="o">.</span><span class="n">stack</span><span class="p">()})</span>
+        <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;osc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;mux&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;muy&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;muz&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tdm</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tdm</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">([</span><span class="s1">&#39;occ&#39;</span><span class="p">,</span> <span class="s1">&#39;virt&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tdm</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="MOMatrix"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.MOMatrix">[docs]</a><span class="k">class</span> <span class="nc">MOMatrix</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The MOMatrix is the result of solving a quantum mechanical eigenvalue</span>
+<span class="sd">    problem in a finite basis set. Individual columns are eigenfunctions</span>
+<span class="sd">    of the Fock matrix with eigenvalues corresponding to orbital energies.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        C^{*}SC = 1</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | chi               | int      | row of MO coefficient matrix              |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | orbital           | int      | vector of MO coefficient matrix           |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | coef              | float    | weight of basis_function in MO            |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | frame             | category | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO :: add an irrep column for groupby?</span>
+    <span class="c1">#_traits = [&#39;orbital&#39;]</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chi&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">]</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return MOMatrix</span>
+
+<div class="viewcode-block" id="MOMatrix.contributions"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.MOMatrix.contributions">[docs]</a>    <span class="k">def</span> <span class="nf">contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orbital</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a slice containing all non-negligible basis function</span>
+<span class="sd">        contributions to a specific orbital.</span>
+
+<span class="sd">        Args</span>
+<span class="sd">            orbital (int): orbital index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;orbital&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">orbital</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tmp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">mocoefs</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MOMatrix.square"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.MOMatrix.square">[docs]</a>    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a square dataframe corresponding to the canonical C matrix</span>
+<span class="sd">        representation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mocoefs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">mocoefs</span> <span class="o">=</span> <span class="n">column</span>
+        <span class="k">if</span> <span class="s1">&#39;irrep&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">irrep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">irreps</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="n">norb</span> <span class="o">=</span> <span class="p">(</span><span class="n">irreps</span><span class="o">.</span><span class="n">orbital</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">nchi</span> <span class="o">=</span> <span class="p">(</span><span class="n">irreps</span><span class="o">.</span><span class="n">chi</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">cmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nchi</span><span class="p">,</span> <span class="n">norb</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">irrep</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">:</span>
+                    <span class="n">piv</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">)</span>
+                    <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="n">cmat</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">ii</span><span class="p">,</span> <span class="n">j</span> <span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="n">jj</span><span class="p">]</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="n">ii</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="n">jj</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nchi</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi&#39;</span><span class="p">),</span>
+                                    <span class="n">columns</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;orbital&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">irrep</span>
+                        <span class="p">)</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DensityMatrix"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.DensityMatrix">[docs]</a><span class="k">class</span> <span class="nc">DensityMatrix</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The density matrix in a contracted basis set. As it is</span>
+<span class="sd">    square symmetric, only n_basis_functions * (n_basis_functions + 1) / 2</span>
+<span class="sd">    rows are stored.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | chi0              | int      | first index in matrix                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | chi1              | int      | second index in matrix                    |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | coef              | float    | overlap matrix element                    |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | frame             | category | non-unique integer (req.)                 |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;coef&#39;</span><span class="p">]</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return DensityMatrix</span>
+
+<div class="viewcode-block" id="DensityMatrix.square"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.DensityMatrix.square">[docs]</a>    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a square dataframe of the density matrix.&quot;&quot;&quot;</span>
+        <span class="n">denvec</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">][</span><span class="s1">&#39;coef&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">square</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">density_as_square</span><span class="p">(</span><span class="n">denvec</span><span class="p">))</span>
+        <span class="n">square</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;chi0&#39;</span>
+        <span class="n">square</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;chi1&#39;</span>
+        <span class="k">return</span> <span class="n">square</span></div>
+
+<div class="viewcode-block" id="DensityMatrix.from_momatrix"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.DensityMatrix.from_momatrix">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_momatrix</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">momatrix</span><span class="p">,</span> <span class="n">occvec</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="s1">&#39;coef&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A density matrix can be constructed from an MOMatrix by:</span>
+<span class="sd">        .. math::</span>
+
+<span class="sd">            D_{uv} = \sum_{i}^{N} C_{ui} C_{vi} n_{i}</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            momatrix (:class:`~exatomic.orbital.MOMatrix`): a C matrix</span>
+<span class="sd">            occvec (:class:`~np.array` or similar): vector of len(C.shape[0])</span>
+<span class="sd">                containing the occupations of each molecular orbital.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (:class:`~exatomic.orbital.DensityMatrix`): The density matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmat</span> <span class="o">=</span> <span class="n">momatrix</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">mocoefs</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span><span class="p">,</span> <span class="n">dens</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">density_from_momatrix</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">occvec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;chi0&#39;</span><span class="p">:</span> <span class="n">chi0</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">:</span> <span class="n">chi1</span><span class="p">,</span>
+                              <span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">dens</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="DensityMatrix.from_universe"><a class="viewcode-back" href="../../../exatomic.core.orbital.html#exatomic.adf.output.DensityMatrix.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">mocoefs</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The density matrix is defined as:</span>
+<span class="sd">        .. math::</span>
+
+<span class="sd">            D_{uv} = \sum_{i}^{N} C_{ui} C_{vi} n_{i}</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uni (:class:`~exatomic.core.universe.Universe`): a universe containing momatrix and orbital</span>
+<span class="sd">            mocoefs (str): column name of C matrix in uni.momatrix</span>
+<span class="sd">            orbocc (str): column name of occupation vector in uni.orbital</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (:class:`~exatomic.orbital.DensityMatrix`): The density matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmat</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">momatrix</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">mocoefs</span><span class="o">=</span><span class="n">mocoefs</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">occvec</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">orbital</span><span class="p">[</span><span class="n">orbocc</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span><span class="p">,</span> <span class="n">dens</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">density_from_momatrix</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">occvec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;chi0&#39;</span><span class="p">:</span> <span class="n">chi0</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">:</span> <span class="n">chi1</span><span class="p">,</span>
+                              <span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">dens</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">})</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

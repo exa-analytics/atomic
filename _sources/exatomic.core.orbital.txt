@@ -1,0 +1,7 @@
+exatomic.core.orbital module
+============================
+
+.. automodule:: exatomic.core.orbital
+   :members:
+   :undoc-members:
+   :show-inheritance:

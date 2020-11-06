@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.numerical &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.numerical</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.algorithms.numerical</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Numerical methods and classes</span>
+<span class="sd">###############################</span>
+<span class="sd">Everything in this module is implemented in numba.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="p">(</span><span class="n">jit</span><span class="p">,</span> <span class="n">deferred_type</span><span class="p">,</span>
+                   <span class="n">optional</span><span class="p">,</span> <span class="n">int64</span><span class="p">,</span> <span class="n">float64</span><span class="p">,</span> <span class="n">boolean</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">numba.experimental</span> <span class="kn">import</span> <span class="n">jitclass</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jitclass</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">nbche</span>
+
+<span class="c1">#################</span>
+<span class="c1"># Miscellaneous #</span>
+<span class="c1">#################</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_fac</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">v</span><span class="p">):</span> <span class="k">return</span> <span class="n">_fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">v</span>
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_fac2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">v</span><span class="p">):</span> <span class="k">return</span> <span class="n">_fac2</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">v</span>
+
+<div class="viewcode-block" id="fac"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.fac">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fac</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">_fac</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span></div>
+<div class="viewcode-block" id="fac2"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.fac2">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fac2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">_fac2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">2</span> <span class="k">else</span> <span class="mi">0</span></div>
+<div class="viewcode-block" id="dfac21"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.dfac21">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dfac21</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">fac2</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+<div class="viewcode-block" id="choose"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.choose">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">choose</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span> <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">))</span></div>
+<div class="viewcode-block" id="sdist"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.sdist">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sdist</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">bz</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ax</span> <span class="o">-</span> <span class="n">bx</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">ay</span> <span class="o">-</span> <span class="n">by</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">az</span> <span class="o">-</span> <span class="n">bz</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+<span class="c1">#@vectorize([&#39;int64(int64)&#39;])</span>
+<span class="k">def</span> <span class="nf">_vec_fac</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="c1">#@vectorize([&#39;int64(int64)&#39;])</span>
+<span class="k">def</span> <span class="nf">_vec_fac2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">fac2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="c1">#@vectorize([&#39;int64(int64)&#39;])</span>
+<span class="k">def</span> <span class="nf">_vec_dfac21</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="k">return</span> <span class="n">dfac21</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+
+<span class="c1">################################</span>
+<span class="c1"># Matrix packing and reshaping #</span>
+<span class="c1">################################</span>
+
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_tri_indices</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+    <span class="n">nel</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">chi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nel</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">chi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nel</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">chi0</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">chi1</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_triangle</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="n">nbas</span> <span class="o">*</span> <span class="p">(</span><span class="n">nbas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">tri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">ndim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">tri</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tri</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_square</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nbas</span><span class="p">,</span> <span class="n">nbas</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+            <span class="n">square</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">square</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_flat_square_to_triangle</span><span class="p">(</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">cnt</span><span class="p">,</span> <span class="n">ndim</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">flat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">tri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">ndim</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">tri</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">ndim</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tri</span>
+
+
+<span class="c1">#####################################################################</span>
+<span class="c1"># Numba vectorized operations for Orbital, MOMatrix, Density tables #</span>
+<span class="c1"># These probably belong here but should be made more consistent     #</span>
+<span class="c1"># with the functions above for matrix manipulation.                 #</span>
+<span class="c1">#####################################################################</span>
+
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_square_indices</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Order matters so don&#39;t us nb.prange</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">y</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+
+<div class="viewcode-block" id="density_from_momatrix"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.density_from_momatrix">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">density_from_momatrix</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">occvec</span><span class="p">):</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">occvec</span><span class="p">)</span>
+    <span class="n">arlen</span> <span class="o">=</span> <span class="n">nbas</span> <span class="o">*</span> <span class="p">(</span><span class="n">nbas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">arlen</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">chi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">arlen</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">chi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">arlen</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">arlen</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">dens</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cmat</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">cmat</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">occvec</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">chi0</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">chi1</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span><span class="p">,</span> <span class="n">dens</span><span class="p">,</span> <span class="n">frame</span></div>
+
+
+<div class="viewcode-block" id="density_as_square"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.density_as_square">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">density_as_square</span><span class="p">(</span><span class="n">denvec</span><span class="p">):</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">denvec</span><span class="p">)))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nbas</span><span class="p">,</span> <span class="n">nbas</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">denvec</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+            <span class="n">square</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">denvec</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">square</span></div>
+
+
+<div class="viewcode-block" id="momatrix_as_square"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.momatrix_as_square">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">momatrix_as_square</span><span class="p">(</span><span class="n">movec</span><span class="p">):</span>
+    <span class="n">nbas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movec</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nbas</span><span class="p">,</span> <span class="n">nbas</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbas</span><span class="p">):</span>
+            <span class="n">square</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">movec</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">square</span></div>
+
+
+<span class="c1">############################################</span>
+<span class="c1"># Reordering matrix elements can be useful #</span>
+<span class="c1">############################################</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_index_map</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basis functions are uniquely defined by 4 indices;</span>
+<span class="sd">    atomic center, L value, ml value and so-called &quot;shell&quot; index.</span>
+<span class="sd">    shell is defined here as corresponding to a column index in an instance</span>
+<span class="sd">    of a :class:`~exatomic.algorithms.numerical.Shell`. This function</span>
+<span class="sd">    simply finds the mapping between the `old` basis set ordering scheme</span>
+<span class="sd">    and the new one.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        old (np.ndarray): order [center, L, ml, shell]</span>
+<span class="sd">        new (np.ndarray): order [center, L, ml, shell]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mappr (np.ndarray): old -&gt; new indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mappr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ni</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">oi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">old</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">new</span><span class="p">[</span><span class="n">ni</span><span class="p">]</span> <span class="o">==</span> <span class="n">old</span><span class="p">[</span><span class="n">oi</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">mappr</span><span class="p">[</span><span class="n">ni</span><span class="p">]</span> <span class="o">=</span> <span class="n">oi</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">mappr</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_reorder_matrix</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reorders matrix elements according to an old and new basis set order.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        old (np.ndarray): order [center, L, ml, shell]</span>
+<span class="sd">        new (np.ndarray): order [center, L, ml, shell]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        nvals (np.ndarray): reordered matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">mappr</span> <span class="o">=</span> <span class="n">_index_map</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ni</span><span class="p">,</span> <span class="n">oi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mappr</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">nj</span><span class="p">,</span> <span class="n">oj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mappr</span><span class="p">):</span>
+            <span class="n">nvals</span><span class="p">[</span><span class="n">ni</span><span class="p">,</span> <span class="n">nj</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">oi</span><span class="p">,</span> <span class="n">oj</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">nvals</span>
+
+
+<div class="viewcode-block" id="reorder_matrix"><a class="viewcode-back" href="../../../exatomic.algorithms.numerical.html#exatomic.algorithms.numerical.reorder_matrix">[docs]</a><span class="k">def</span> <span class="nf">reorder_matrix</span><span class="p">(</span><span class="n">uni_to_reorder</span><span class="p">,</span> <span class="n">ordered_uni</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;momatrix&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="s1">&#39;coef&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reorders matrix elements in a uni_to_reorder by the basis set order</span>
+<span class="sd">    defined in ordered_uni.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni_to_reorder (:class:`~exatomic.core.universe.Universe`): uni to reorder</span>
+<span class="sd">        ordered_uni (:class:`~exatomic.core.universe.Universe`): ordered uni</span>
+<span class="sd">        attr (str): specify if non-standard matrices (default &quot;momatrix&quot;)</span>
+<span class="sd">        mocoefs (str): column name in gettattr(uni_to_reorder, attr)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        reordered (pd.DataFrame): reordered matrix with labeled columns and indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;ml&#39;</span><span class="p">,</span> <span class="s1">&#39;shell&#39;</span><span class="p">]</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">uni_to_reorder</span><span class="o">.</span><span class="n">current_basis_set_order</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="n">ordered_uni</span><span class="o">.</span><span class="n">current_basis_set_order</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">uni_to_reorder</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">mocoefs</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">cmat</span> <span class="o">=</span> <span class="n">_reorder_matrix</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi&#39;</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;orbital&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">idxs</span><span class="p">)</span></div>
+
+<span class="c1">#######################</span>
+<span class="c1"># Basis set expansion #</span>
+<span class="c1">#######################</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_enum_cartesian</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="c1"># Gen1Int ordering</span>
+    <span class="c1"># for z in range(L + 1):</span>
+    <span class="c1">#     for y in range(L + 1 - z):</span>
+    <span class="c1">#         yield (L - y - z, y, z)</span>
+    <span class="c1"># Double loop CWR</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">L</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">nbche</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_enum_spherical</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">increasing</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">L</span><span class="p">,</span> <span class="n">m</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">L</span><span class="p">,</span> <span class="n">m</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="n">m</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">L</span><span class="p">,</span> <span class="n">i</span>
+
+
+
+<span class="c1">#####################</span>
+<span class="c1"># Basis set classes #</span>
+<span class="c1">#####################</span>
+
+<span class="n">shell_type</span> <span class="o">=</span> <span class="n">deferred_type</span><span class="p">()</span>
+
+<span class="nd">@jitclass</span><span class="p">([(</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;nprim&#39;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ncont&#39;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;spherical&#39;</span><span class="p">,</span> <span class="n">boolean</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">boolean</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;alphas&#39;</span><span class="p">,</span> <span class="n">float64</span><span class="p">[:]),</span> <span class="p">(</span><span class="s1">&#39;_coef&#39;</span><span class="p">,</span> <span class="n">float64</span><span class="p">[:]),</span>
+           <span class="p">(</span><span class="s1">&#39;rs&#39;</span><span class="p">,</span> <span class="n">optional</span><span class="p">(</span><span class="n">int64</span><span class="p">[:])),</span> <span class="p">(</span><span class="s1">&#39;ns&#39;</span><span class="p">,</span> <span class="n">optional</span><span class="p">(</span><span class="n">int64</span><span class="p">[:]))])</span>
+<span class="k">class</span> <span class="nc">Shell</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The primary object used for all things basis set related.</span>
+<span class="sd">    Due to limitations in numba, contraction coefficients are stored</span>
+<span class="sd">    as a 1D-array and reshaped when calling contract methods.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        coef (np.ndarray): 1D-array of contraction coefficients</span>
+<span class="sd">        alphas (np.ndarray): 1D-array of primitive exponents</span>
+<span class="sd">        nprim (int): number of primitives in the shell</span>
+<span class="sd">        ncont (int): number of contracted functions in the shell</span>
+<span class="sd">        L (int): angular momentum quantum number</span>
+<span class="sd">        spherical (bool): whether angular momentum is expanded in linearly independent set</span>
+<span class="sd">        gaussian (bool): whether exponential dependence is r or r2</span>
+<span class="sd">        rs (np.ndarray): 1D-array of radial exponents (default None)</span>
+<span class="sd">        ns (np.ndarray): additional normalization factors (default None)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mimics numpy.ndarray shape property but as a method.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nprim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncont</span>
+
+    <span class="k">def</span> <span class="nf">contract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reshapes contraction coefficients into (nprim, ncont) array.&quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">int64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nprim</span><span class="p">),</span> <span class="n">int64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncont</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nprim</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncont</span><span class="p">):</span>
+                <span class="n">rect</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coef</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">rect</span>
+
+    <span class="k">def</span> <span class="nf">_prim_sphr_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated.&quot;&quot;&quot;</span>
+        <span class="n">Ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">):</span>
+            <span class="n">prefac</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+            <span class="n">numer</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">denom</span> <span class="o">=</span> <span class="n">dfac21</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+            <span class="n">Ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">prefac</span> <span class="o">*</span> <span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="k">return</span> <span class="n">Ns</span>
+
+    <span class="k">def</span> <span class="nf">norm_contract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine the correct normalization procedure and contract.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sto_norm_contract</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spherical</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sphr_norm_contract</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cart_norm_contract</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">enum_cartesian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterate over cartesian powers in L.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_enum_cartesian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">enum_spherical</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterate over ml degeneracy in L.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_enum_spherical</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cart_norm_contract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cartesian gaussian normalization.&quot;&quot;&quot;</span>
+        <span class="c1"># float is (2 * np.pi) ** -0.75</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_cont_kernel</span><span class="p">(</span><span class="mf">0.251979435538381</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_sphr_norm_contract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spherical gaussian normalization.&quot;&quot;&quot;</span>
+        <span class="c1"># float is (2 / np.pi) ** 0.25</span>
+        <span class="n">prefact</span> <span class="o">=</span> <span class="mf">0.893243841738002</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dfac21</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_cont_kernel</span><span class="p">(</span><span class="n">prefact</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_norm_cont_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pre</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gaussian normalization.&quot;&quot;&quot;</span>
+        <span class="n">coef</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span>
+        <span class="n">ltot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">+</span> <span class="mf">1.5</span>
+        <span class="n">lhaf</span> <span class="o">=</span> <span class="n">ltot</span> <span class="o">/</span> <span class="mf">2.</span>
+        <span class="n">prim</span><span class="p">,</span> <span class="n">cont</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="mf">0.</span>
+            <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">prim</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">pj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">prim</span><span class="p">):</span>
+                    <span class="n">ovl</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">pj</span><span class="p">])</span>
+                                     <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">pi</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">pj</span><span class="p">])))</span> <span class="o">**</span> <span class="n">ltot</span>
+                    <span class="n">norm</span> <span class="o">+=</span> <span class="n">coef</span><span class="p">[</span><span class="n">pi</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">coef</span><span class="p">[</span><span class="n">pj</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">ovl</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">norm</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">prim</span><span class="p">):</span>
+                <span class="n">coef</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*=</span> <span class="n">norm</span> <span class="o">*</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="o">**</span> <span class="n">lhaf</span>
+        <span class="k">return</span> <span class="n">coef</span>
+
+    <span class="k">def</span> <span class="nf">_sto_norm_contract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Slater-type orbital normalization and reshaping.&quot;&quot;&quot;</span>
+        <span class="c1"># Assumes no contractions</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sto_norm</span><span class="p">())</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_sto_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Slater-type orbital normalization.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span> <span class="o">*</span> <span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">fac</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,)</span>
+                <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">nprim</span><span class="p">,</span> <span class="n">ncont</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span>
+                 <span class="n">spherical</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spherical</span> <span class="o">=</span> <span class="n">spherical</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span> <span class="o">=</span> <span class="n">gaussian</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">alphas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coef</span> <span class="o">=</span> <span class="n">coef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nprim</span> <span class="o">=</span> <span class="n">nprim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ncont</span> <span class="o">=</span> <span class="n">ncont</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rs</span> <span class="o">=</span> <span class="n">rs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ns</span> <span class="o">=</span> <span class="n">ns</span>
+
+<span class="n">shell_type</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">Shell</span><span class="o">.</span><span class="n">class_type</span><span class="o">.</span><span class="n">instance_type</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

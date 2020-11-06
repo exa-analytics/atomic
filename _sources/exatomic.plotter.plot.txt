@@ -1,0 +1,7 @@
+exatomic.plotter.plot module
+============================
+
+.. automodule:: exatomic.plotter.plot
+   :members:
+   :undoc-members:
+   :show-inheritance:

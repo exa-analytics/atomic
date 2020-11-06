@@ -1,0 +1,7 @@
+exatomic.widgets.widget\_base module
+====================================
+
+.. automodule:: exatomic.widgets.widget_base
+   :members:
+   :undoc-members:
+   :show-inheritance:

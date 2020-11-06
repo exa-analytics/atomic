@@ -1,0 +1,7 @@
+exatomic.qe.pw.classes module
+=============================
+
+.. automodule:: exatomic.qe.pw.classes
+   :members:
+   :undoc-members:
+   :show-inheritance:

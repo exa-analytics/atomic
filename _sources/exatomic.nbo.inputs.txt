@@ -1,0 +1,7 @@
+exatomic.nbo.inputs module
+==========================
+
+.. automodule:: exatomic.nbo.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

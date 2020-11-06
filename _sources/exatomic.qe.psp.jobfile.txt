@@ -1,0 +1,7 @@
+exatomic.qe.psp.jobfile module
+==============================
+
+.. automodule:: exatomic.qe.psp.jobfile
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic package &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.adf package" href="exatomic.adf.html" />
+    <link rel="prev" title="Development" href="contrib.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">exatomic package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#supported-software">Supported Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.base.html">exatomic.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.formula.html">exatomic.formula module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.mpl.html">exatomic.mpl module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.static.html">exatomic.static module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>exatomic package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic">
+<span id="exatomic-package"></span><h1>exatomic package<a class="headerlink" href="#module-exatomic" title="Permalink to this headline">¶</a></h1>
+<p>A unified data anlaysis and visualization platform for computational and
+theoretical chemists, physicists, etc. Support for molecular geometry and
+orbital visualization is provided via the <a class="reference external" href="https://jupyter.org">Jupyter</a> notebook, a web-browser
+based interactive (multi-programming language) environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This package uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Atomic_units">atomic</a> unit system (Hartree) by default.</p>
+</div>
+<div class="section" id="supported-software">
+<h2>Supported Software<a class="headerlink" href="#supported-software" title="Permalink to this headline">¶</a></h2>
+<p>The list below contains third-party software that is supported by this package.
+For specific features supported (per software), see the appropriate description
+below.</p>
+<ul class="simple">
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="https://www.scm.com">Amsterdam Density Functional</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="http://gaussian.com/">Gaussian</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="https://gitlab.com/Molcas/OpenMolcas">OpenMolcas</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="http://nbo6.chem.wisc.edu/">NBO</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="http://www.nwchem-sw.org/index.php/Main_Page">NWChem</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: <a class="reference external" href="http://www.quantum-espresso.org/">Quantum ESPRESSO</a></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">__init__</span></code>: Additional 3rd party support</p></li>
+</ul>
+<dl class="py function">
+<dt id="exatomic.func_log">
+<code class="sig-prename descclassname">exatomic.</code><code class="sig-name descname">func_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic.html#func_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.func_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.adf.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.adf.html">exatomic.adf.adf package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.adf.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.dirac.html">exatomic.adf.dirac package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.dirac.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.nmr.html">exatomic.adf.nmr package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.nmr.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.adf.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.editor.html">exatomic.adf.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.editor.html#base-adf-editor">Base ADF editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.inputs.html">exatomic.adf.inputs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.inputs.html#input-generator-and-parser">Input Generator and Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.output.html">exatomic.adf.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.adf.output.html#adf-composite-output">ADF Composite Output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.algorithms.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.angles.html">exatomic.algorithms.angles module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.angles.html#two-body-properties-computations">Two Body Properties Computations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.basis.html">exatomic.algorithms.basis module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.basis.html#basis-function-manipulation">Basis Function Manipulation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.car2sph.html">exatomic.algorithms.car2sph module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.delocalization.html">exatomic.algorithms.delocalization module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.delocalization.html#delocalization">Delocalization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.diffusion.html">exatomic.algorithms.diffusion module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.diffusion.html#diffusion-coefficients">Diffusion Coefficients</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.displacement.html">exatomic.algorithms.displacement module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.displacement.html#computation-of-displacement">Computation of Displacement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.distance.html">exatomic.algorithms.distance module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.distance.html#two-body-properties-computations">Two Body Properties Computations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.geometry.html">exatomic.algorithms.geometry module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.geometry.html#geometry">Geometry</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.harmonics.html">exatomic.algorithms.harmonics module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.harmonics.html#spherical-and-solid-harmonics">Spherical and Solid Harmonics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.indexing.html">exatomic.algorithms.indexing module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.indexing.html#indexing">Indexing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.interpolation.html">exatomic.algorithms.interpolation module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.interpolation.html#interpolation">Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.neighbors.html">exatomic.algorithms.neighbors module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.neighbors.html#neighbor-selection-algorithms">Neighbor Selection Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.numerical.html">exatomic.algorithms.numerical module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.numerical.html#numerical-methods-and-classes">Numerical methods and classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.orbital.html">exatomic.algorithms.orbital module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.orbital.html#numerical-orbital-functions">Numerical Orbital Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.orbital_util.html">exatomic.algorithms.orbital_util module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.orbital_util.html#molecular-orbital-utilities">Molecular Orbital Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.overlap.html">exatomic.algorithms.overlap module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.overlap.html#overlap-computation">Overlap computation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.packing.html">exatomic.algorithms.packing module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.pcf.html">exatomic.algorithms.pcf module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.algorithms.pcf.html#pair-correlation-functions">Pair Correlation Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.core.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.atom.html">exatomic.core.atom module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.atom.html#atomic-position-data">Atomic Position Data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.basis.html">exatomic.core.basis module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.basis.html#basis-set-representations">Basis Set Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.editor.html">exatomic.core.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.editor.html#atomic-editor">Atomic Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.error.html">exatomic.core.error module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.error.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.field.html">exatomic.core.field module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.field.html#atomic-field">Atomic Field</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.frame.html">exatomic.core.frame module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.frame.html#frame-data">Frame Data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.gradient.html">exatomic.core.gradient module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.matrices.html">exatomic.core.matrices module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.matrices.html#matrices">Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.molecule.html">exatomic.core.molecule module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.molecule.html#molecule-table">Molecule Table</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.orbital.html">exatomic.core.orbital module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.orbital.html#orbital-dataframe">Orbital DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.tensor.html">exatomic.core.tensor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.two.html">exatomic.core.two module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.two.html#atomic-two-body">Atomic Two Body</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.universe.html">exatomic.core.universe module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.core.universe.html#the-atomic-universe">The Atomic Universe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.gaussian.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.editor.html">exatomic.gaussian.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.gaussian.editor.html#gaussian-editor">Gaussian Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.inputs.html">exatomic.gaussian.inputs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.gaussian.inputs.html#gaussian-input-generator">Gaussian Input Generator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.output.html">exatomic.gaussian.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.gaussian.output.html#gaussian-output-editor">Gaussian Output Editor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.interfaces.html#interfaces">Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.interfaces.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.cclib.html">exatomic.interfaces.cclib module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.interfaces.cclib.html#interface-to-cclib">Interface to cclib</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.cube.html">exatomic.interfaces.cube module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.interfaces.cube.html#cube-file-support">Cube File Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.pdb.html">exatomic.interfaces.pdb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.xyz.html">exatomic.interfaces.xyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.interfaces.xyz.html#xyz-file-editor">XYZ File Editor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.molcas.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.editor.html">exatomic.molcas.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.molcas.editor.html#base-molcas-editor">Base Molcas Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.inputs.html">exatomic.molcas.inputs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.molcas.inputs.html#input-generator-and-parser">Input Generator and Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.output.html">exatomic.molcas.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.molcas.output.html#molcas-output-parser">Molcas Output Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.nbo.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.editor.html">exatomic.nbo.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nbo.editor.html#gaussian-editor">Gaussian Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.inputs.html">exatomic.nbo.inputs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nbo.inputs.html#exnbo-input-generator-and-parser">exnbo Input Generator and Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.output.html">exatomic.nbo.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nbo.output.html#exnbo-output-editor">exnbo Output Editor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.nwchem.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.basis.html">exatomic.nwchem.basis module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nwchem.basis.html#basis-set-support">Basis Set Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.editor.html">exatomic.nwchem.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nwchem.editor.html#nwchem-editor">NWChem Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.inputs.html">exatomic.nwchem.inputs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nwchem.inputs.html#input-generator-and-parser">Input Generator and Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.output.html">exatomic.nwchem.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.nwchem.output.html#nwchem-output">NWChem Output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.plotter.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.plot.html">exatomic.plotter.plot module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.plotter.plot.html#plotter">Plotter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.qchem.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.editor.html">exatomic.qchem.editor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qchem.editor.html#q-chem-editor">Q-Chem Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.inputs.html">exatomic.qchem.inputs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.output.html">exatomic.qchem.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qchem.output.html#q-chem-ouput-editor">Q-Chem Ouput Editor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.qe.html#quantum-espresso">Quantum ESPRESSO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.qe.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.core.html">exatomic.qe.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.core.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.cp.html">exatomic.qe.cp package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.cp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.psp.html">exatomic.qe.psp package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.psp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.pw.html">exatomic.qe.pw package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.pw.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.qe.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.types.html">exatomic.qe.types module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.qe.types.html#qe-type-conversions">QE Type Conversions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.util.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.builder.html">exatomic.util.builder module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.util.builder.html#construction-of-molecules">Construction of Molecules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.va.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.inputs.html">exatomic.va.inputs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.plot.html">exatomic.va.plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.va.html">exatomic.va.va module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.va.va.html#vibrational-averaging">Vibrational Averaging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.vroa_funcs.html">exatomic.va.vroa_funcs module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.va.vroa_funcs.html#vroa-functions">VROA functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.widgets.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.traits.html">exatomic.widgets.traits module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.traits.html#universe-trait-functions">Universe trait functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.widget.html">exatomic.widgets.widget module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.widget.html#universe-notebook-widget">Universe Notebook Widget</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.widget_base.html">exatomic.widgets.widget_base module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.widget_base.html#lower-level-widgets">Lower Level Widgets</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.widget_df.html">exatomic.widgets.widget_df module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.widget_df.html#a-dataframe-widget">A dataframe widget</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.widget_utils.html">exatomic.widgets.widget_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exatomic.widgets.widget_utils.html#widget-utilities">Widget Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.base.html">exatomic.base module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.base.html#base-functionality">Base Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.formula.html">exatomic.formula module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.formula.html#simple-formula">Simple Formula</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.mpl.html">exatomic.mpl module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.mpl.html#custom-axes">Custom Axes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exatomic.static.html">exatomic.static module</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.adf.html" class="btn btn-neutral float-right" title="exatomic.adf package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contrib.html" class="btn btn-neutral float-left" title="Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

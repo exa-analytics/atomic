@@ -1,0 +1,7 @@
+exatomic.nwchem.editor module
+=============================
+
+.. automodule:: exatomic.nwchem.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

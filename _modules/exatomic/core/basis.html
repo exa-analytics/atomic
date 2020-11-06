@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.basis &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.basis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.basis</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Basis Set Representations</span>
+<span class="sd">##############################</span>
+<span class="sd">This module provides classes that support representations of various basis sets.</span>
+<span class="sd">There are a handful of basis sets in computational chemistry, the most common of</span>
+<span class="sd">which are Gaussian type functions, Slater type functions, and plane waves. The</span>
+<span class="sd">classes provided by this module support not only storage of basis set data, but</span>
+<span class="sd">also analytical and discrete manipulations of the basis set.</span>
+
+<span class="sd">See Also:</span>
+<span class="sd">    For symbolic and discrete manipulations see :mod:`~exatomic.algorithms.basis`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.basis</span> <span class="kn">import</span> <span class="n">cart_lml_count</span><span class="p">,</span> <span class="n">spher_lml_count</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.numerical</span> <span class="kn">import</span> <span class="n">_tri_indices</span><span class="p">,</span> <span class="n">_square</span><span class="p">,</span> <span class="n">Shell</span>
+
+
+<div class="viewcode-block" id="BasisSet"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet">[docs]</a><span class="k">class</span> <span class="nc">BasisSet</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stores information about a basis set. Common basis set types in use for</span>
+<span class="sd">    electronic structure calculations usually consist of Gaussians or Slater</span>
+<span class="sd">    Type Orbitals (STOs). Both types usually employ atom-centered basis functions,</span>
+<span class="sd">    where each basis function resides on a given atom with coordinates</span>
+<span class="sd">    :math:`\\left(A_{x}, A_{y}, A_{z}\\right)`. For Gaussian basis sets, the</span>
+<span class="sd">    functional form of :math:`f\\left(x, y, z\\right)` is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        r^{2} = \\left(x - A_{x}\\right)^{2} + \\left(x - A_{y}\\right)^{2} + \\left(z - A_{z}\\right)^{2} \\\\</span>
+<span class="sd">        f\\left(x, y, z\\right) = \\left(x - A_{x}\\right)^{l}\\left(x - A_{y}\\right)^{m}\\left(z - A_{z}\\right)^{n}e^{-\\alpha r^{2}}</span>
+
+<span class="sd">    where :math:`l`, :math:`m`, and :math:`n` are not quantum numbers but positive</span>
+<span class="sd">    integers (including zero) whose sum defines the orbital angular momentum of</span>
+<span class="sd">    each function and :math:`alpha` governs the exponential decay of the given</span>
+<span class="sd">    function. Gaussian basis functions are usually constructed from multiple</span>
+<span class="sd">    primitive Gaussians, with fixed contraction coefficients. Therefore, a basis</span>
+<span class="sd">    function consists of the sum of one or more primitive functions:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        g_{i}\\left(x, y, z\\right) = \\sum_{j=1}^{N_{i}}c_{ij}f_{ij}\\left(x, y, z\\right)</span>
+
+<span class="sd">    Alternatively, STOs are usually not constructed from linear combinations</span>
+<span class="sd">    of multiple primitives, and differ from Gaussian type functions in that they</span>
+<span class="sd">    do not contain an exponent in the :math:`r` term of the exponential decay.</span>
+<span class="sd">    These functions have 2 main benefits; an adequate description of the cusp</span>
+<span class="sd">    in the density at the nucleus, and the appropriate long-range decay behavior.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | alpha             | float    | exponent                                  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | shell             | int      | group of primitives                       |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | set               | int/cat  | unique basis set identifier               |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | d                 | float    | contraction coefficient                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | L                 | int      | orbital angular momentum                  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;shell&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">]</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;function&#39;</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;norm&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lmax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">as_ordered</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BasisSet.shells"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.shells">[docs]</a>    <span class="k">def</span> <span class="nf">shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">spherical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gaussian</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a multi-index series of :class:`~exatomic.algorithms.numerical.Shell`</span>
+<span class="sd">        in the basis set, indexed by set and L.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            program (str): which code the basis set comes from</span>
+<span class="sd">            spherical (bool): expand in ml or cartesian powers</span>
+<span class="sd">            gaussian (bool): exponential dependence of basis functions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            srs (pd.Series): multi-indexed by set and L</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">_shell_gau</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;shell&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+            <span class="n">alphas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">alpha</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+            <span class="n">piv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="o">*</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">alphas</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+            <span class="n">nprim</span><span class="p">,</span> <span class="n">ncont</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">return</span> <span class="n">Shell</span><span class="p">(</span><span class="n">piv</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">nprim</span><span class="p">,</span> <span class="n">ncont</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">L</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="n">df</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gaussian</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_shell_sto</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;shell&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+            <span class="n">alphas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">alpha</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+            <span class="n">piv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="o">*</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">alphas</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+            <span class="n">nprim</span><span class="p">,</span> <span class="n">ncont</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">return</span> <span class="n">Shell</span><span class="p">(</span><span class="n">piv</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">nprim</span><span class="p">,</span> <span class="n">ncont</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">L</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="n">df</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spherical_by_shell</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">spherical</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gaussian</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_shell_gau</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_shell_sto</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BasisSet.spherical_by_shell"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.spherical_by_shell">[docs]</a>    <span class="k">def</span> <span class="nf">spherical_by_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">,</span> <span class="n">spherical</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Allows for some flexibility in treating shells either as</span>
+<span class="sd">        cartesian functions or spherical functions (different normalizations).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            program (str): which code the basis set comes from</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">program</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;molcas&#39;</span><span class="p">,</span> <span class="s1">&#39;nwchem&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">L</span><span class="p">:</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spherical</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BasisSet.functions_by_shell"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.functions_by_shell">[docs]</a>    <span class="k">def</span> <span class="nf">functions_by_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a series of n functions per (set, L).</span>
+<span class="sd">        This does not include degenerate functions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])[</span><span class="s1">&#39;shell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BasisSet.primitives_by_shell"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.primitives_by_shell">[docs]</a>    <span class="k">def</span> <span class="nf">primitives_by_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a series of n primitives per (set, L).</span>
+<span class="sd">        This does not include degenerate primitives.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BasisSet.functions"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.functions">[docs]</a>    <span class="k">def</span> <span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spherical</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a series of n functions per (set, L).</span>
+<span class="sd">        This does include degenerate functions.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_revert_categories</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spherical</span><span class="p">:</span>
+            <span class="n">mapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">spher_lml_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cart_lml_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions_by_shell</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_categories</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BasisSet.primitives"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSet.primitives">[docs]</a>    <span class="k">def</span> <span class="nf">primitives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spherical</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a series of n primitives per (set, L).</span>
+<span class="sd">        This does include degenerate primitives.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_revert_categories</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spherical</span><span class="p">:</span>
+            <span class="n">mapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">spher_lml_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cart_lml_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primitives_by_shell</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_categories</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="deduplicate_basis_sets"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.deduplicate_basis_sets">[docs]</a><span class="k">def</span> <span class="nf">deduplicate_basis_sets</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">sp</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deduplicate identical basis sets on different centers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sets (pd.DataFrame): non-unique basis sets</span>
+<span class="sd">        sp (bool): Whether or not to call _expand_sp (gaussian program only)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tup (tuple): deduplicated basis sets and basis set map for atom table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unique</span><span class="p">,</span> <span class="n">setmap</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">{},</span> <span class="mi">0</span>
+    <span class="n">sets</span> <span class="o">=</span> <span class="n">sets</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">chk</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">center</span><span class="p">,</span> <span class="n">seht</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">other</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">seht</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">other</span><span class="p">[</span><span class="n">chk</span><span class="p">],</span> <span class="n">seht</span><span class="p">[</span><span class="n">chk</span><span class="p">]):</span>
+                <span class="n">setmap</span><span class="p">[</span><span class="n">center</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">unique</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seht</span><span class="p">)</span>
+            <span class="n">setmap</span><span class="p">[</span><span class="n">center</span><span class="p">]</span> <span class="o">=</span> <span class="n">cnt</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="p">:</span> <span class="n">unique</span> <span class="o">=</span> <span class="n">_expand_sp</span><span class="p">(</span><span class="n">unique</span><span class="p">)</span>
+    <span class="n">sets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>    <span class="c1"># sort=False silences warning</span>
+    <span class="k">try</span><span class="p">:</span> <span class="n">sets</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="n">sets</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="s1">&#39;set&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">sets</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sets</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">setmap</span><span class="p">)</span>
+    <span class="n">sets</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">sets</span><span class="p">,</span> <span class="n">setmap</span></div>
+
+<span class="k">def</span> <span class="nf">_expand_sp</span><span class="p">(</span><span class="n">unique</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Currently only used when &#39;program&#39; == &#39;gaussian&#39;.&quot;&quot;&quot;</span>
+    <span class="n">expand</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">seht</span> <span class="ow">in</span> <span class="n">unique</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">seht</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">seht</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">expand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seht</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="n">sps</span> <span class="o">=</span> <span class="n">seht</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">seht</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">shls</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seht</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sps</span><span class="p">][</span><span class="s1">&#39;shell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="n">dupl</span> <span class="o">=</span> <span class="n">seht</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sps</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">sps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">dupl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dupl</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">dupl</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">dupl</span><span class="p">[</span><span class="s1">&#39;shell&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">shls</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">seht</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">last</span><span class="p">[</span><span class="s1">&#39;shell&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">shls</span>
+        <span class="n">expand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">seht</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">sps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+                                 <span class="n">seht</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sps</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">sps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+                                 <span class="n">dupl</span><span class="p">,</span> <span class="n">last</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>   <span class="c1"># Silences warning</span>
+    <span class="k">return</span> <span class="n">expand</span>
+
+
+<div class="viewcode-block" id="BasisSetOrder"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.BasisSetOrder">[docs]</a><span class="k">class</span> <span class="nc">BasisSetOrder</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    BasisSetOrder uniquely determines the basis function ordering scheme for</span>
+<span class="sd">    a given :class:`~exatomic.core.universe.Universe`. This table is provided to</span>
+<span class="sd">    make transparent the characteristic ordering scheme of various quantum</span>
+<span class="sd">    codes. Either (L, ml) or (l, m, n) must be provided to have access to</span>
+<span class="sd">    orbital visualization functionality.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | center            | int      | atomic center                             |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | L                 | int      | orbital angular momentum                  |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | shell             | int      | group of primitives                       |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | ml                | int      | magnetic quantum number                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | l                 | int      | power in x                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | m                 | int      | power in y                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | n                 | int      | power in z                                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | r                 | int      | power in r (optional - for STOs)          |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | prefac            | float    | prefactor (optional - for STOs)           |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">]</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;chi&#39;</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Overlap"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.Overlap">[docs]</a><span class="k">class</span> <span class="nc">Overlap</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Overlap enumerates the overlap matrix elements between basis functions in</span>
+<span class="sd">    a contracted basis set. Currently nothing disambiguates between the</span>
+<span class="sd">    primitive overlap matrix and the contracted overlap matrix. As it is</span>
+<span class="sd">    square symmetric, only n_basis_functions * (n_basis_functions + 1) / 2</span>
+<span class="sd">    rows are stored.</span>
+
+<span class="sd">    See Gramian matrix for more on the general properties of the overlap matrix.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | frame             | int/cat  | non-unique integer                        |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | chi0              | int      | first basis function                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | chi1              | int      | second basis function                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | coef              | float    | overlap matrix element                    |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+
+
+<div class="viewcode-block" id="Overlap.square"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.Overlap.square">[docs]</a>    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="n">mocoefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a &#39;square&#39; matrix DataFrame of the Overlap.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            column (str): column of coefficients to reshape</span>
+<span class="sd">            mocoefs (str): alias for `column`</span>
+<span class="sd">            frame (int): default 0</span>
+<span class="sd">            irrep (int): irreducible representation if symmetrized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mocoefs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">column</span> <span class="o">=</span> <span class="n">mocoefs</span>
+        <span class="k">if</span> <span class="s1">&#39;irrep&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">irrep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">irreps</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="n">norb</span> <span class="o">=</span> <span class="p">(</span><span class="n">irreps</span><span class="o">.</span><span class="n">chi0</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">nchi</span> <span class="o">=</span> <span class="p">(</span><span class="n">irreps</span><span class="o">.</span><span class="n">chi1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">cmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nchi</span><span class="p">,</span> <span class="n">norb</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">irrep</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">:</span>
+                    <span class="n">piv</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+                    <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="n">cmat</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">ii</span><span class="p">,</span> <span class="n">j</span> <span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="n">jj</span><span class="p">]</span> <span class="o">=</span> <span class="n">piv</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="n">ii</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="n">jj</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nchi</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi0&#39;</span><span class="p">)</span>
+                <span class="n">orb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi1&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">orb</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">irrep</span>
+                        <span class="p">)</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;chi&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="n">sq</span> <span class="o">=</span> <span class="n">_square</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">sq</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi0&#39;</span><span class="p">)</span>
+        <span class="n">orb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">sq</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chi1&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sq</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">orb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Overlap.from_column"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.Overlap.from_column">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_column</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create an Overlap from a file with just the array of coefficients or</span>
+<span class="sd">        an array of the values directly.&quot;&quot;&quot;</span>
+        <span class="c1"># Assuming source is a file of triangular elements of the overlap matrix</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span> <span class="n">source</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Without a catchall, _tri_indices may through UnboundLocalError</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid type for source: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)))</span>
+        <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span> <span class="o">=</span> <span class="n">_tri_indices</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;chi0&#39;</span><span class="p">:</span> <span class="n">chi0</span><span class="p">,</span>
+                                           <span class="s1">&#39;chi1&#39;</span><span class="p">:</span> <span class="n">chi1</span><span class="p">,</span>
+                                           <span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">vals</span><span class="p">,</span>
+                                           <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}))</span></div>
+
+<div class="viewcode-block" id="Overlap.from_square"><a class="viewcode-back" href="../../../exatomic.core.basis.html#exatomic.adf.output.Overlap.from_square">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_square</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="n">ndim</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="n">arlen</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">arlen</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;i8&#39;</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="s1">&#39;chi1&#39;</span><span class="p">,</span> <span class="s1">&#39;i8&#39;</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="s1">&#39;i8&#39;</span><span class="p">)])</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

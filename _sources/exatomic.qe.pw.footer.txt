@@ -1,0 +1,7 @@
+exatomic.qe.pw.footer module
+============================
+
+.. automodule:: exatomic.qe.pw.footer
+   :members:
+   :undoc-members:
+   :show-inheritance:

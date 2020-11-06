@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.field module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.core.frame module" href="exatomic.core.frame.html" />
+    <link rel="prev" title="exatomic.core.error module" href="exatomic.core.error.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.core.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.core.html">exatomic.core package</a> &raquo;</li>
+        
+      <li>exatomic.core.field module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.core.field.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.core.field">
+<span id="exatomic-core-field-module"></span><h1>exatomic.core.field module<a class="headerlink" href="#module-exatomic.core.field" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="atomic-field">
+<h2>Atomic Field<a class="headerlink" href="#atomic-field" title="Permalink to this headline">¶</a></h2>
+<p>Essentially a <code class="xref py py-class docutils literal notranslate"><span class="pre">Field3D</span></code> used for storing cube file data
+(see <code class="xref py py-mod docutils literal notranslate"><span class="pre">cube</span></code>). Cube files values are written in a
+csv-like structure with the outer loop going over the x dimension, the middle
+loop going over the y dimension, and the inner loop going over the z dimension.</p>
+<dl class="py class">
+<dt id="exatomic.core.field.AtomicField">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.core.field.</code><code class="sig-name descname">AtomicField</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/field.html#AtomicField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.field.AtomicField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.numerical.Field</span></code></p>
+<p>Class for storing exatomic cube data (scalar field of 3D space). Note that
+this class follows the pattern established by the <a class="reference external" href="http://paulbourke.net/dataformats/cube/">cube file format</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Supports any shape “cube”.</p>
+</div>
+<dl class="py method">
+<dt id="exatomic.core.field.AtomicField.nfields">
+<em class="property">property </em><code class="sig-name descname">nfields</code><a class="headerlink" href="#exatomic.core.field.AtomicField.nfields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.field.AtomicField.compute_final">
+<code class="sig-name descname">compute_final</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/field.html#AtomicField.compute_final"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.field.AtomicField.compute_final" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.field.AtomicField.compute_dv">
+<code class="sig-name descname">compute_dv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/field.html#AtomicField.compute_dv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.field.AtomicField.compute_dv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the volume element for each field.</p>
+<p>Volume of a parallelpiped whose dimensions are <span class="math notranslate nohighlight">\(\mathbf{a}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[v = \left|\mathbf{a}\cdot\left(\mathbf{b}\times\mathbf{c}\right)\right|\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.field.AtomicField.integrate">
+<code class="sig-name descname">integrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/field.html#AtomicField.integrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.field.AtomicField.integrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that field values are normalized.</p>
+<p>Computes the integral of the field values. For normalized fields (e.g
+orbitals), the result should be 1.</p>
+<div class="math notranslate nohighlight">
+\[\int\left|\phi_{i}\right|^{2}dV \equiv 1\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.core.field.AtomicField.rotate">
+<code class="sig-name descname">rotate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">angle</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/core/field.html#AtomicField.rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.core.field.AtomicField.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unitary transformation of the discrete field.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">newfield</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># returns an :class:`~exatomic.core.field.AtomicField`</span>
+<span class="n">uni</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="n">newfield</span><span class="p">)</span>                       <span class="c1"># appends new fields to :class:`~exatomic.core.universe.Universe`</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Index of first field</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Index of second field</p></li>
+<li><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><em>list of floats</em>) – angle(s) of rotation (in radians)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>rotated (<code class="xref py py-class docutils literal notranslate"><span class="pre">AtomicField</span></code>) – positive then negative linear combinations</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.core.frame.html" class="btn btn-neutral float-right" title="exatomic.core.frame module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.core.error.html" class="btn btn-neutral float-left" title="exatomic.core.error module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

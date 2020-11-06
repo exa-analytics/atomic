@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.matrices &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.matrices</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.matrices</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Matrices</span>
+<span class="sd">#############</span>
+<span class="sd">For handling matrices of common dimensionality in QM calcs.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_symmetric_from_square</span><span class="p">(</span><span class="n">square</span><span class="p">):</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+    <span class="n">newdim</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">newdim</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">newdim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">idxs</span><span class="p">[</span><span class="n">cnt</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">arr</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_symmetric_to_square</span><span class="p">(</span><span class="n">ix0</span><span class="p">,</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ndim</span><span class="p">,</span> <span class="n">ndim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ix0</span><span class="p">,</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="n">square</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">square</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_square_from_square</span><span class="p">(</span><span class="n">square</span><span class="p">):</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+    <span class="n">newdim</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">newdim</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">newdim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+            <span class="n">idxs</span><span class="p">[</span><span class="n">cnt</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">square</span>
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_square_to_square</span><span class="p">(</span><span class="n">ix0</span><span class="p">,</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ndim</span><span class="p">,</span> <span class="n">ndim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ix0</span><span class="p">,</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="n">square</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">square</span>
+
+<span class="c1">#</span>
+<span class="c1">#   Basically the only thing that is exatomic specific currently</span>
+<span class="c1">#   is that _symmetric_from_square, _square_from_square return</span>
+<span class="c1">#   indices including &#39;frame&#39; and the from_square methods also</span>
+<span class="c1">#   include &#39;frame&#39; in the generation of the DataFrames.</span>
+<span class="c1">#</span>
+
+<span class="k">class</span> <span class="nc">_Matrix</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for square and symmetric matrices stored in</span>
+<span class="sd">    a DataFrame format with matrix indices as columns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;idx0&#39;</span><span class="p">,</span> <span class="s1">&#39;idx1&#39;</span><span class="p">]</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">}</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return _Matrix</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">defaultcolumn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_data&#39;</span><span class="p">):</span> <span class="k">return</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns_to_order</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns_to_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_data&#39;</span><span class="p">):</span> <span class="k">return</span>
+        <span class="n">notcols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">notcols</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">_Symmetric</span><span class="p">(</span><span class="n">_Matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for symmetric matrices.&quot;&quot;&quot;</span>
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return _Symmetric</span>
+
+    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a square DataFrame of the matrix.&quot;&quot;&quot;</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultcolumn</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">column</span>
+        <span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">_symmetric_to_square</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">values</span><span class="p">]))</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">idx0</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">idx1</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_square</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">square</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a symmetric matrix DataFrame from a square array.&quot;&quot;&quot;</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;coef&#39;</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">column</span>
+        <span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">indices</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">square</span> <span class="o">=</span> <span class="n">square</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">idxs</span><span class="p">,</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">_symmetric_from_square</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="n">idx0</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">idx1</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span>
+                                         <span class="n">column</span><span class="p">:</span> <span class="n">arr</span><span class="p">}))</span>
+
+
+<span class="k">class</span> <span class="nc">_Square</span><span class="p">(</span><span class="n">_Matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for square matrices.&quot;&quot;&quot;</span>
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return _Square</span>
+
+    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a square DataFrame of the square matrix.&quot;&quot;&quot;</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultcolumn</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">column</span>
+        <span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">_square_to_square</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">idx0</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">idx1</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_square</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">square</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a square matrix DataFrame from a square array.&quot;&quot;&quot;</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;coef&#39;</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">column</span>
+        <span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">indices</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">square</span> <span class="o">=</span> <span class="n">square</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">idxs</span><span class="p">,</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">_square_from_square</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="n">idx0</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">idx1</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span>
+                                         <span class="n">column</span><span class="p">:</span> <span class="n">arr</span><span class="p">}))</span>
+
+<span class="c1">#</span>
+<span class="c1"># This is mainly exatomic specific but I suppose the merge</span>
+<span class="c1"># could be useful in the general case.</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="Triangle"><a class="viewcode-back" href="../../../exatomic.core.matrices.html#exatomic.core.matrices.Triangle">[docs]</a><span class="k">class</span> <span class="nc">Triangle</span><span class="p">(</span><span class="n">_Symmetric</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Triangular matrices having dimensions N * (N + 1) // 2</span>
+<span class="sd">    sharing natural indices all belong in the same table.</span>
+<span class="sd">    As applied to exatomic that includes but is not limited to:</span>
+
+<span class="sd">        - one-electron integrals (overlap, kinetic, nuclear attraction energies,</span>
+<span class="sd">                                  multipole integrals, etc.)</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        When parsing matrices like these, it may be more efficient</span>
+<span class="sd">        to have indices chi0 and chi1 not in the same order as they</span>
+<span class="sd">        may be for other matrices of the same dimensions. This can</span>
+<span class="sd">        be dangerous if one then adds a column expecting different</span>
+<span class="sd">        index ordering. Therefore, it is recommended to only add</span>
+<span class="sd">        columns to this table by using the merge bound method and</span>
+<span class="sd">        instances of this class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">]</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Triangle</span>
+
+<div class="viewcode-block" id="Triangle.merge"><a class="viewcode-back" href="../../../exatomic.core.matrices.html#exatomic.core.matrices.Triangle.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Correctly adds a column, ensuring that if index ordering</span>
+<span class="sd">        is not the same between two instances, that it is remedied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Triangle</span><span class="p">):</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">Triangle</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span>
+        <span class="n">ocol</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">defaultcolumn</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">column</span>
+        <span class="k">if</span> <span class="n">ocol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;column </span><span class="si">{}</span><span class="s2"> is already in self.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ocol</span><span class="p">))</span>
+        <span class="c1"># The easy case when both sets of indices match</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span> <span class="n">other</span><span class="p">[</span><span class="n">idx0</span><span class="p">])</span> \
+        <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">ocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span><span class="p">[</span><span class="n">ocol</span><span class="p">]</span>
+            <span class="k">return</span>
+        <span class="c1"># The sort of easy case when self&#39;s indices are already</span>
+        <span class="c1"># in the same order that comes out of the numba func</span>
+        <span class="n">osquare</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">ocol</span><span class="p">)</span>
+        <span class="n">oidxs</span><span class="p">,</span> <span class="n">oarr</span> <span class="o">=</span> <span class="n">_symmetric_from_square</span><span class="p">(</span><span class="n">osquare</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span> <span class="n">oidxs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> \
+        <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">],</span> <span class="n">oidxs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">ocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">oarr</span>
+            <span class="k">return</span>
+        <span class="c1"># The case when self is not ordered correctly</span>
+        <span class="c1"># relative to the ordering of the numba func or other</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns_to_order</span><span class="p">):</span>
+            <span class="n">square</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">idxs</span><span class="p">,</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">_symmetric_from_square</span><span class="p">(</span><span class="n">square</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">ocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">oarr</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

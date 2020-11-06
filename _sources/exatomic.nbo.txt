@@ -1,0 +1,17 @@
+exatomic.nbo package
+====================
+
+.. automodule:: exatomic.nbo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.nbo.editor
+   exatomic.nbo.inputs
+   exatomic.nbo.output

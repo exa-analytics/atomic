@@ -1,0 +1,7 @@
+exatomic.static module
+======================
+
+.. automodule:: exatomic.static
+   :members:
+   :undoc-members:
+   :show-inheritance:

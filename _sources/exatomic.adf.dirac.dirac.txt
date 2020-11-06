@@ -1,0 +1,7 @@
+exatomic.adf.dirac.dirac module
+===============================
+
+.. automodule:: exatomic.adf.dirac.dirac
+   :members:
+   :undoc-members:
+   :show-inheritance:

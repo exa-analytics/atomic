@@ -1,0 +1,7 @@
+exatomic.qe.psp.upf module
+==========================
+
+.. automodule:: exatomic.qe.psp.upf
+   :members:
+   :undoc-members:
+   :show-inheritance:

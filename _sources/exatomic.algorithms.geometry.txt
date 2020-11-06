@@ -1,0 +1,7 @@
+exatomic.algorithms.geometry module
+===================================
+
+.. automodule:: exatomic.algorithms.geometry
+   :members:
+   :undoc-members:
+   :show-inheritance:

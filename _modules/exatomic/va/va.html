@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.va.va &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.va.va</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.va.va</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Vibrational Averaging</span>
+<span class="sd">#########################</span>
+<span class="sd">Collection of classes for VA program</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">exa.util.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">speed_of_light_in_vacuum</span> <span class="k">as</span> <span class="n">C</span><span class="p">,</span> <span class="n">Planck_constant</span> <span class="k">as</span> <span class="n">H</span><span class="p">,</span>
+                               <span class="n">Boltzmann_constant</span> <span class="k">as</span> <span class="n">boltzmann</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Length</span><span class="p">,</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">Mass</span><span class="p">,</span> <span class="n">Time</span>
+<span class="kn">from</span> <span class="nn">exatomic.core</span> <span class="kn">import</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">Gradient</span><span class="p">,</span> <span class="n">Polarizability</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">sym2z</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">TypedMeta</span>
+<span class="kn">from</span> <span class="nn">.vroa_funcs</span> <span class="kn">import</span> <span class="n">_sum</span><span class="p">,</span> <span class="n">_make_derivatives</span><span class="p">,</span> <span class="n">_forwscat</span><span class="p">,</span> <span class="n">_backscat</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_data"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.get_data">[docs]</a><span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">soft</span><span class="p">,</span> <span class="n">f_end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">f_start</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This script is made to be able to extract data from many different files and</span>
+<span class="sd">    compile them all into one dataframe. You can pass wildcards as an input in the</span>
+<span class="sd">    path variable. We use the glob.glob package to get an array of the file that</span>
+<span class="sd">    match the given f_start and f_end strings.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        There is nothing built in to handle returning an empty dataframe at the</span>
+<span class="sd">        moment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): String pointing to location of files</span>
+<span class="sd">        attr (str): The attribute that you want to extract</span>
+<span class="sd">        soft (class): Class that you want to use to extract the data</span>
+<span class="sd">        f_end (str): String to match to the end of the filename</span>
+<span class="sd">        f_start (str): String to match to the start of the filename</span>
+<span class="sd">        sort_index (list): List of strings that are to be used to sort the compiled dataframe</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        cdf (pandas.DataFrame): Dataframe that has all of the compiled data</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">sort_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">sort_index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sort_index</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Variable sort_index must be of type list&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">soft</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;parse_</span><span class="si">{}</span><span class="s2"> is not a method of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">soft</span><span class="p">))</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">f_end</span><span class="p">)</span> <span class="ow">and</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">f_start</span><span class="p">):</span>
+            <span class="n">ed</span> <span class="o">=</span> <span class="n">soft</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ed</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The property </span><span class="si">{}</span><span class="s2"> cannot be found in output </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="c1"># We assume that the file identifier is an integer</span>
+            <span class="n">fdx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                                                                   <span class="n">f_start</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">f_end</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))))</span>
+            <span class="c1">#fdx = float(file.split(os.sep)[-1].replace(f_start, &#39;&#39;).replace(f_end, &#39;&#39;))</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fdx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">cdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="c1"># TODO: check if this just absolute overkill in error handling</span>
+    <span class="k">if</span> <span class="n">sort_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;file&#39;</span> <span class="ow">in</span> <span class="n">cdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;label&#39;</span> <span class="ow">in</span> <span class="n">cdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="ow">or</span> <span class="s1">&#39;atom&#39;</span> <span class="ow">in</span> <span class="n">cdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cdf</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">cdf</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Sorting only by file label on DataFrame. Be careful if there is &quot;</span><span class="o">+</span> \
+                              <span class="s2">&quot;some order dependent function that is being used later based off&quot;</span><span class="o">+</span> \
+                              <span class="s2">&quot; this output.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span>
+                <span class="n">cdf</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cdf</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">sort_index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Please make sure that the keys </span><span class="si">{}</span><span class="s2"> exist in the dataframe created by </span><span class="si">{}</span><span class="s2">.parse_</span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sort_values</span><span class="p">,</span> <span class="n">soft</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+    <span class="n">cdf</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cdf</span></div>
+
+<div class="viewcode-block" id="VAMeta"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VAMeta">[docs]</a><span class="k">class</span> <span class="nc">VAMeta</span><span class="p">(</span><span class="n">TypedMeta</span><span class="p">):</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">Gradient</span>
+    <span class="n">roa</span> <span class="o">=</span> <span class="n">Polarizability</span>
+    <span class="n">eff_coord</span> <span class="o">=</span> <span class="n">Atom</span></div>
+
+<div class="viewcode-block" id="VA"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA">[docs]</a><span class="k">class</span> <span class="nc">VA</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">VAMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that contains all of the Vibrational Averaging methods. Currently we have implemented:</span>
+<span class="sd">    Vibrational Raman Optical Activity (vroa), Zero-Point Vibrational Corrections (zpvc).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        We do not have any code that will get the class attributes that are needed to execute</span>
+<span class="sd">        the respective methods. We only check to make sure that the class attributes exist.</span>
+<span class="sd">        The vroa method will look for the gradient and roa class attributes. The zpvc method will</span>
+<span class="sd">        look for the gradient and property class attibutes. We recommend using the</span>
+<span class="sd">        exatomic.va.va.get_data function to get the data as it will compress everything into</span>
+<span class="sd">        one dataframe as is expected for the zpvc and vroa methods</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: can probably use jit for this but it may not provide a significant speed up</span>
+<div class="viewcode-block" id="VA.raman_int_units"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA.raman_int_units">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">raman_int_units</span><span class="p">(</span><span class="n">lambda_0</span><span class="p">,</span> <span class="n">lambda_p</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Function to calculate the K_p value as given in equation 2 on J. Chem. Phys. 2007, 127, 134101.</span>
+<span class="sd">        We assume the temperature to be 298.15 as a hard coded value. Must get rid of this in future</span>
+<span class="sd">        iterations. The final units of the equation are in cm^2/sr which are said to be the units for</span>
+<span class="sd">        the Raman intensities.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Input values lambda_0 and lambda_p must be in the units of m^-1</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lambda_0 (float): Wavenumber value of the incident light</span>
+<span class="sd">            lambda_1 (numpy.array): Wavenumber values of the vibrational modes</span>
+<span class="sd">            temp (float): Value of the temperature of the experiment</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            kp (numpy.array): Array with the values of the conversion units of length lambda_1.shape[0]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">temp</span><span class="o">=</span><span class="mf">298.15</span>
+        <span class="n">boltz</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">H</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">lambda_p</span><span class="o">/</span><span class="p">(</span><span class="n">boltzmann</span><span class="o">*</span><span class="n">temp</span><span class="p">)))</span>
+        <span class="n">constants</span> <span class="o">=</span> <span class="n">H</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">C</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">(</span><span class="n">lambda_0</span> <span class="o">-</span> <span class="n">lambda_p</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="n">lambda_p</span>
+        <span class="n">kp</span> <span class="o">=</span> <span class="n">variables</span> <span class="o">*</span> <span class="n">constants</span> <span class="o">*</span> <span class="n">boltz</span> <span class="o">*</span> <span class="p">(</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="n">Mass</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;kg&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">/</span> <span class="mf">45.</span> <span class="o">*</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">kp</span><span class="p">,</span> <span class="n">boltz</span><span class="p">,</span> <span class="n">lambda_p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">kp</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_file_continuity</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">):</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="n">pos_file</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">files</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))]</span>
+        <span class="n">neg_file</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">files</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))]</span><span class="o">-</span><span class="n">nmodes</span>
+        <span class="n">intersect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span><span class="n">pos_file</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">neg_file</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">pos_file</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">intersect</span><span class="p">),</span>
+                                         <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">neg_file</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">intersect</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">rdf</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seems that we are missing one of the </span><span class="si">{}</span><span class="s2"> outputs for frequency </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span><span class="o">+</span> \
+                  <span class="s2">&quot;we will ignore the </span><span class="si">{}</span><span class="s2"> data for these frequencies.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prop</span><span class="p">))</span>
+            <span class="n">rdf</span> <span class="o">=</span> <span class="n">rdf</span><span class="p">[</span><span class="o">~</span><span class="n">rdf</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">diff</span><span class="p">)]</span>
+            <span class="n">rdf</span> <span class="o">=</span> <span class="n">rdf</span><span class="p">[</span><span class="o">~</span><span class="n">rdf</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">diff</span><span class="o">+</span><span class="n">nmodes</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">rdf</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_temp_factor</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="n">freq</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;Ha&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">boltzmann</span> <span class="o">*</span> <span class="n">temp</span><span class="p">)</span>
+                <span class="n">temp_fac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+            <span class="c1"># this should be taken care of by the conditional but always good to</span>
+            <span class="c1"># take care of explicitly</span>
+            <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Something seems to have gone wrong with the sinh function&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp_fac</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="k">return</span> <span class="n">temp_fac</span>
+
+<div class="viewcode-block" id="VA.get_pos_neg_gradients"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA.get_pos_neg_gradients">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_pos_neg_gradients</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Here we get the gradients of the equilibrium, positive and negative displaced structures.</span>
+<span class="sd">        We extract them from the gradient dataframe and convert them into normal coordinates</span>
+<span class="sd">        by multiplying them by the frequency normal mode displacement values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            grad (:class:`exatomic.gradient.Gradient`): DataFrame containing all of the gradient data</span>
+<span class="sd">            freq (:class:`exatomic.atom.Frquency`): DataFrame containing all of the frequency data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            delfq_zero (pandas.DataFrame): Normal mode converted gradients of equilibrium structure</span>
+<span class="sd">            delfq_plus (pandas.DataFrame): Normal mode converted gradients of positive displaced structure</span>
+<span class="sd">            delfq_minus (pandas.DataFrame): Normal mode converted gradients of negative displaced structure</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+        <span class="c1"># generate delta dataframe</span>
+        <span class="c1"># TODO: make something so delta can be set</span>
+        <span class="c1">#       possible issues are a user using a different type of delta</span>
+        <span class="n">nmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="c1"># get gradient of the equilibrium coordinates</span>
+        <span class="n">grad_0</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># get gradients of the displaced coordinates in the positive direction</span>
+        <span class="n">grad_plus</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="ow">in</span>
+                                                                        <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">snmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grad_plus</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="c1"># get gradients of the displaced coordinates in the negative direction</span>
+        <span class="n">grad_minus</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="ow">in</span>
+                                                                        <span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># TODO: Check if we can make use of numba to speed up this code</span>
+        <span class="n">delfq_zero</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                                    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">grad_0</span><span class="p">[[</span><span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">)))</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># we extend the size of this 1d array as we will perform some matrix summations with the</span>
+        <span class="c1"># other outputs from this method</span>
+        <span class="n">delfq_zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">delfq_zero</span><span class="p">,</span> <span class="n">snmodes</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+
+        <span class="n">delfq_plus</span> <span class="o">=</span> <span class="n">grad_plus</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)[[</span><span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                                <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span>
+                                    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">))))</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">delfq_minus</span> <span class="o">=</span> <span class="n">grad_minus</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)[[</span><span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                                <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span>
+                                    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">))))</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">delfq_zero</span><span class="p">,</span> <span class="n">delfq_plus</span><span class="p">,</span> <span class="n">delfq_minus</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="VA.calculate_frequencies"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA.calculate_frequencies">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_frequencies</span><span class="p">(</span><span class="n">delfq_0</span><span class="p">,</span> <span class="n">delfq_plus</span><span class="p">,</span> <span class="n">delfq_minus</span><span class="p">,</span> <span class="n">redmass</span><span class="p">,</span> <span class="n">select_freq</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Here we calculated the frequencies from the gradients calculated for each of the</span>
+<span class="sd">        displaced structures along the normal mode. In principle this should give the same or</span>
+<span class="sd">        nearly the same frequency value as that from a frequency calculation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            delfq_0 (numpy.ndarray): Array that holds all of the information about the gradient</span>
+<span class="sd">                                     derivative of the equlilibrium coordinates</span>
+<span class="sd">            delfq_plus (numpy.ndarray): Array that holds all of the information about the gradient</span>
+<span class="sd">                                        derivative of the positive displaced coordinates</span>
+<span class="sd">            delfq_minus (numpy.ndarray): Array that holds all of the information about the gradient</span>
+<span class="sd">                                         derivative of the negative displaced coordinates</span>
+<span class="sd">            redmass (numpy.ndarray): Array that holds all of the reduced masses. We can handle both</span>
+<span class="sd">                                     a subset of the entire values or all of the values</span>
+<span class="sd">            select_freq (numpy.ndarray): Array that holds the selected frequency indexes</span>
+<span class="sd">            delta (numpy.ndarray): Array that has the delta values used in the displaced structures</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            frequencies (numpy.ndarray): Frequency array from the calculation</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No delta has been given. Assume delta_type to be 2.&quot;</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">va</span><span class="o">.</span><span class="n">gen_delta</span><span class="p">(</span><span class="n">delta_type</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="o">.</span><span class="n">copy</span><span class="p">())[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># get number of selected normal modes</span>
+        <span class="c1"># TODO: check stability of using this parameter</span>
+        <span class="n">snmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">select_freq</span><span class="p">)</span>
+        <span class="c1">#print(&quot;select_freq.shape: {}&quot;.format(select_freq.shape))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">redmass</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">snmodes</span><span class="p">:</span>
+            <span class="n">redmass_sel</span> <span class="o">=</span> <span class="n">redmass</span><span class="p">[</span><span class="n">select_freq</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">redmass_sel</span> <span class="o">=</span> <span class="n">redmass</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">snmodes</span><span class="p">:</span>
+            <span class="n">delta_sel</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[</span><span class="n">select_freq</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delta_sel</span> <span class="o">=</span> <span class="n">delta</span>
+        <span class="c1"># calculate force constants</span>
+        <span class="n">kqi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">select_freq</span><span class="p">))</span>
+        <span class="c1">#print(redmass_sel.shape)</span>
+        <span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">sval</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">select_freq</span><span class="p">):</span>
+            <span class="n">kqi</span><span class="p">[</span><span class="n">fdx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">delfq_plus</span><span class="p">[</span><span class="n">fdx</span><span class="p">][</span><span class="n">sval</span><span class="p">]</span> <span class="o">-</span> <span class="n">delfq_minus</span><span class="p">[</span><span class="n">fdx</span><span class="p">][</span><span class="n">sval</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">delta_sel</span><span class="p">[</span><span class="n">fdx</span><span class="p">])</span>
+
+        <span class="n">vqi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">kqi</span><span class="p">,</span> <span class="n">redmass_sel</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,))</span>
+        <span class="c1"># TODO: Check if we want to exit the program if we get a negative force constant</span>
+        <span class="n">n_force_warn</span> <span class="o">=</span> <span class="n">vqi</span><span class="p">[</span><span class="n">vqi</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">n_force_warn</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># TODO: point to exactly which frequencies are negative</span>
+            <span class="n">negative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vqi</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="c1"># frequencies are base 0</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">negative</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">text</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, &#39;</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">negative</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Negative force constants have been calculated for frequencies </span><span class="si">{}</span><span class="s2"> be wary of results&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">),</span>
+                            <span class="ne">Warning</span><span class="p">)</span>
+        <span class="c1"># return calculated frequencies</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vqi</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,)</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;Ha&#39;</span><span class="p">,</span> <span class="s1">&#39;cm^-1&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">frequencies</span></div>
+
+<div class="viewcode-block" id="VA.vroa"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA.vroa">[docs]</a>    <span class="k">def</span> <span class="nf">vroa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;nm&#39;</span><span class="p">,</span> <span class="n">raman_units</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">assume_real</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Here we implement the Vibrational Raman Optical Activity (VROA) equations as outlined in</span>
+<span class="sd">        the paper J. Chem. Phys. 2007, 127,</span>
+<span class="sd">        134101. The general workflow is that we must read in the data from a Raman Optical Activity</span>
+<span class="sd">        calculation with your software of choice and this script will take that data and generate</span>
+<span class="sd">        the forward and back scattering intensities for VROA. From here you will be able to plot</span>
+<span class="sd">        the spectra with another method in this same class.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            It is extremely important that the delta values that you pass into the function are the</span>
+<span class="sd">            exact same as the ones that were used to generate the displaced structures. We do not</span>
+<span class="sd">            currently have a method to do this automatically but we are working on it.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uni (:class:`~exatomic.Universe`): Universe containing all dataframes from the</span>
+<span class="sd">                                               frequency calculation</span>
+<span class="sd">            delta (numpy.ndarray): Array containing all of the delta values used for the generation</span>
+<span class="sd">                                of the displaced structures.</span>
+<span class="sd">            units (str): Units of the excitation frequencies. Default to nm.</span>
+<span class="sd">            temp (float): Temperature value for the calculation</span>
+<span class="sd">            raman_units (bool): Convert from atomic units to the Raman intensity units see raman_int_units for more information</span>
+<span class="sd">            assume_real (bool): Neglect the contribution from the imaginary tensor values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;roa&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please set roa attribute.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;gradient&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please set gradient attribute.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frequency_ext&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please compute frequency_ext dataframe.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please compute frequency dataframe.&quot;</span><span class="p">)</span>
+        <span class="c1"># we must remove the 0 index file as by default our displaced coordinate generator will</span>
+        <span class="c1"># include these values and they have no significane in this code as of yet</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">roa_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roa</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">roa_0</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">roa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roa</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">roa</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">idxs</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">roa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roa</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># number of normal modes</span>
+        <span class="n">nmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">frequency_ext</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="c1"># initialize scatter array</span>
+        <span class="n">scatter</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">raman</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># set some variables that will be used throughout</span>
+        <span class="c1"># speed of light in au</span>
+        <span class="n">C_au</span> <span class="o">=</span> <span class="n">C</span><span class="o">*</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;au&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">Time</span><span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;au&#39;</span><span class="p">]</span>
+        <span class="c1"># a conversion factor for the beta_g beta_A and alpha_g tensor invariants</span>
+        <span class="c1"># TODO: make the conversion for the alha_squared and beta_alpha invariants</span>
+        <span class="n">au2angs</span> <span class="o">=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;Angstrom&#39;</span><span class="p">]</span>
+        <span class="c1">#conver = 1/C_au</span>
+        <span class="c1"># get the square roots of the reduced masses</span>
+        <span class="n">rmass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">frequency_ext</span><span class="p">[</span><span class="s1">&#39;r_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="c1"># generate a Levi Civita 3x3x3 tensor</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="c1"># some dictionaries to replace the string labels with integers</span>
+        <span class="c1"># this is important so we can speed up the code with jit</span>
+        <span class="n">rep_label</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Ax&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Ay&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Az&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;g_prime&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+        <span class="n">rep_type</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;real&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;imag&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="c1"># replace the columns</span>
+        <span class="n">roa</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">rep_label</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">roa</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">rep_type</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># get rid of the frame column serves no purpose here</span>
+        <span class="n">roa</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># the excitation frequencies</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">exc_freq</span> <span class="o">=</span> <span class="n">roa</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exc_freq</span><span class="p">:</span> <span class="n">text</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, &#39;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found excitation frequencies: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">exc_freq</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">roa</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">roa</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No excitation frequency column (exc_freq) found in va_corr.roa.&quot;</span><span class="o">+</span> \
+                         <span class="s2">&quot;Continuing assuming single excitation frequency.&quot;</span><span class="p">)</span>
+        <span class="c1"># loop over all of the excitation frequencies performing the needed calculations</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">exc_freq</span><span class="p">:</span>
+            <span class="c1"># omega parameter</span>
+            <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;nm&#39;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">omega</span> <span class="o">=</span> <span class="n">H</span><span class="o">*</span><span class="n">C</span><span class="o">/</span><span class="p">(</span><span class="n">val</span><span class="o">*</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;Ha&#39;</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+                    <span class="n">omega</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Omega parameter has been set to 0. beta(A)**2 will be zero by extension.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">omega</span> <span class="o">=</span> <span class="n">val</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="n">units</span><span class="p">,</span> <span class="s1">&#39;Ha&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">omega</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Omega parameter has been set to 0. beta(A)**2 will be zero by extension.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span>
+            <span class="c1">#print(omega)</span>
+            <span class="n">sel_roa</span> <span class="o">=</span> <span class="n">roa</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="c1"># check for any missing files</span>
+            <span class="n">sel_roa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_continuity</span><span class="p">(</span><span class="n">sel_roa</span><span class="p">,</span> <span class="s2">&quot;ROA&quot;</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_continuity</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="s2">&quot;gradient&quot;</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+            <span class="c1"># get the frequencies that have been calculated</span>
+            <span class="c1"># our code allows the user to calculate the roa of certain normal modes</span>
+            <span class="c1"># this allows the user to decrease the computational cost significantly</span>
+            <span class="n">select_freq</span> <span class="o">=</span> <span class="n">sel_roa</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">select_freq</span> <span class="o">&gt;</span> <span class="n">nmodes</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">select_freq</span> <span class="o">=</span> <span class="n">select_freq</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
+            <span class="c1">#print(select_freq)</span>
+            <span class="c1">#print(select_freq)</span>
+            <span class="n">snmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">select_freq</span><span class="p">)</span>
+            <span class="c1"># get the reduced mass and delta parameters of the calculated normal modes</span>
+            <span class="k">if</span> <span class="n">snmodes</span> <span class="o">&lt;</span> <span class="n">nmodes</span><span class="p">:</span>
+                <span class="n">sel_rmass</span> <span class="o">=</span> <span class="n">rmass</span><span class="p">[</span><span class="n">select_freq</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">sel_delta</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[</span><span class="n">select_freq</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sel_rmass</span> <span class="o">=</span> <span class="n">rmass</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">sel_delta</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># create a numpy array with the necessary dimensions</span>
+            <span class="c1"># number_of_files/2 x 9</span>
+            <span class="n">value_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sel_roa</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="mi">9</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sel_roa</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sel_roa</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="c1">#print(sel_delta)</span>
+            <span class="c1">#start = time.time()</span>
+            <span class="c1"># combine the real and imaginary values</span>
+            <span class="c1"># passed through jitted code</span>
+            <span class="n">_sum</span><span class="p">(</span><span class="n">sel_roa</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">value_complex</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
+            <span class="c1">#print(&quot;Completed sum: {}&quot;.format(time.time()-start))</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+            <span class="c1"># replace the integer labels with the strings again</span>
+            <span class="c1"># TODO: is this really necessary?</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rep_label</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">complex_roa</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">value_complex</span><span class="p">)</span>
+            <span class="n">complex_roa</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">labels</span>
+            <span class="n">complex_roa</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">snmodes</span><span class="p">),</span><span class="mi">5</span><span class="p">)</span>
+            <span class="c1">#print(complex_roa)</span>
+            <span class="c1">#complex_roa[&#39;exc_freq&#39;] = np.repeat(exc_freq, 10*nmodes)</span>
+            <span class="c1"># because I could not use range(9)............ugh</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+            <span class="c1"># splice the data into the respective tensor dataframes</span>
+            <span class="c1"># we want all of the tensors in a 1d vector like form</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">complex_roa</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;Ax&#39;</span><span class="p">,</span><span class="s1">&#39;Ay&#39;</span><span class="p">,</span><span class="s1">&#39;Az&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span>
+                                       <span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                                 <span class="n">x</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span>
+                                       <span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">complex_roa</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span>
+                                           <span class="n">to_dict</span><span class="p">())</span>
+            <span class="n">g_prime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">complex_roa</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;g_prime&#39;</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span><span class="o">.</span>
+                                             <span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+            <span class="c1">#***********DEBUG***********#</span>
+            <span class="c1">#self.A = A</span>
+            <span class="c1">#self.alpha = alpha</span>
+            <span class="c1">#self.g_prime = g_prime</span>
+            <span class="c1">#for i in g_prime.values.reshape(snmodes*9*2):</span>
+            <span class="c1">#    print(&quot;{} {}&quot;.format(i.real, i.imag))</span>
+            <span class="c1">#********END DEBUG**********#</span>
+
+            <span class="c1"># get gradient calculated frequencies</span>
+            <span class="c1"># this is just to make sure that we are calculating the right frequency</span>
+            <span class="c1"># this comes from the init_va code</span>
+            <span class="n">grad_derivs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pos_neg_gradients</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_frequencies</span><span class="p">(</span><span class="o">*</span><span class="n">grad_derivs</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Mass</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;au_mass&#39;</span><span class="p">],</span>
+                                                     <span class="n">select_freq</span><span class="p">,</span> <span class="n">sel_delta</span><span class="p">)</span>
+
+            <span class="c1"># TODO: here we could compare the real frequencies to the ones calculated from the gradients</span>
+            <span class="c1">#       need to look into how stable this is.</span>
+            <span class="c1">#if not np.allclose(np.sort(frequencies), uni.frequency.loc[select_freq, &#39;frequency&#39;].values):</span>
+            <span class="c1">#    warnings.warn(&quot;The calculated frequencies are not within a relative tolerance of 1e-6 to the real frequencies.&quot;, Warning)</span>
+
+            <span class="c1"># separate tensors into positive and negative displacements</span>
+            <span class="c1"># highly dependent on the value of the index</span>
+            <span class="c1"># we neglect the equilibrium coordinates</span>
+            <span class="c1"># 0 corresponds to equilibrium coordinates</span>
+            <span class="c1"># 1 - nmodes corresponds to positive displacements</span>
+            <span class="c1"># nmodes+1 - 2*nmodes corresponds to negative displacements</span>
+            <span class="n">alpha_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">alpha</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+            <span class="n">alpha_minus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">alpha</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+            <span class="n">g_prime_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">g_prime</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+            <span class="n">g_prime_minus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">g_prime</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+            <span class="n">A_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+            <span class="n">A_minus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">snmodes</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">)</span>
+
+            <span class="c1"># generate derivatives by two point difference method</span>
+            <span class="n">dalpha_dq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">((</span><span class="n">alpha_plus</span> <span class="o">-</span> <span class="n">alpha_minus</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sel_delta</span><span class="p">)</span>
+            <span class="n">dg_dq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">((</span><span class="n">g_prime_plus</span> <span class="o">-</span> <span class="n">g_prime_minus</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sel_delta</span><span class="p">)</span>
+            <span class="n">dA_dq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">((</span><span class="n">A_plus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">A_minus</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sel_delta</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                                                                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">)])</span>
+            <span class="c1">#***********DEBUG***********#</span>
+            <span class="c1">#self.dalpha_dq = dalpha_dq</span>
+            <span class="c1">#self.dg_dq = dg_dq</span>
+            <span class="c1">#self.dA_dq = dA_dq</span>
+            <span class="c1">#print(&quot;#################{}################&quot;.format(val))</span>
+            <span class="c1">#for i in dg_dq:</span>
+            <span class="c1">#    for k in i:</span>
+            <span class="c1">#        print(&quot;{:.6f} {:.6f}&quot;.format(k.real, k.imag))</span>
+            <span class="c1">#********END DEBUG**********#</span>
+
+            <span class="c1"># generate properties as shown on equations 5-9 in paper</span>
+            <span class="c1"># J. Chem. Phys. 2007, 127, 134101</span>
+            <span class="n">alpha_squared</span><span class="p">,</span> <span class="n">beta_alpha</span><span class="p">,</span> <span class="n">beta_g</span><span class="p">,</span> <span class="n">beta_A</span><span class="p">,</span> <span class="n">alpha_g</span> <span class="o">=</span> <span class="n">_make_derivatives</span><span class="p">(</span><span class="n">dalpha_dq</span><span class="p">,</span>
+                                  <span class="n">dg_dq</span><span class="p">,</span> <span class="n">dA_dq</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">snmodes</span><span class="p">,</span> <span class="n">au2angs</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span> <span class="n">C_au</span><span class="p">,</span> <span class="n">assume_real</span><span class="p">)</span>
+
+            <span class="c1">#********************************DEBUG**************************************************#</span>
+            <span class="c1">#self.alpha_squared = pd.Series(alpha_squared*Length[&#39;au&#39;, &#39;Angstrom&#39;]**4)</span>
+            <span class="c1">#self.beta_alpha = pd.Series(beta_alpha*Length[&#39;au&#39;, &#39;Angstrom&#39;]**4)</span>
+            <span class="c1">#self.beta_g = pd.Series(beta_g*Length[&#39;au&#39;, &#39;Angstrom&#39;]**4/</span>
+            <span class="c1">#                                                    (C*Length[&#39;m&#39;, &#39;au&#39;]/Time[&#39;s&#39;,&#39;au&#39;]))</span>
+            <span class="c1">#self.beta_A = pd.Series(beta_A*Length[&#39;au&#39;, &#39;Angstrom&#39;]**4/</span>
+            <span class="c1">#                                                    (C*Length[&#39;m&#39;, &#39;au&#39;]/Time[&#39;s&#39;,&#39;au&#39;]))</span>
+            <span class="c1">#self.alpha_g = pd.Series(alpha_g*Length[&#39;au&#39;, &#39;Angstrom&#39;]**4/</span>
+            <span class="c1">#                                                    (C*Length[&#39;m&#39;, &#39;au&#39;]/Time[&#39;s&#39;,&#39;au&#39;]))</span>
+            <span class="c1">#*******************************END DEBUG***********************************************#</span>
+
+            <span class="c1"># calculate Raman intensities</span>
+            <span class="n">raman_int</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">45</span> <span class="o">*</span> <span class="n">alpha_squared</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">beta_alpha</span><span class="p">)</span>
+
+            <span class="c1"># calculate VROA back scattering and forward scattering intensities</span>
+            <span class="n">backscat_vroa</span> <span class="o">=</span> <span class="n">_backscat</span><span class="p">(</span><span class="n">beta_g</span><span class="p">,</span> <span class="n">beta_A</span><span class="p">)</span>
+            <span class="c1">#backscat_vroa *= 1e4</span>
+            <span class="c1"># TODO: check the units of this because we convert the invariants from</span>
+            <span class="c1">#       au to Angstrom and here we convert again from au to Angstrom</span>
+            <span class="c1">#backscat_vroa *= Length[&#39;au&#39;, &#39;Angstrom&#39;]**4*Mass[&#39;u&#39;, &#39;au_mass&#39;]</span>
+            <span class="c1">#backscat_vroa *= Mass[&#39;u&#39;, &#39;au_mass&#39;]</span>
+            <span class="n">forwscat_vroa</span> <span class="o">=</span> <span class="n">_forwscat</span><span class="p">(</span><span class="n">alpha_g</span><span class="p">,</span> <span class="n">beta_g</span><span class="p">,</span> <span class="n">beta_A</span><span class="p">)</span>
+            <span class="c1">#forwscat_vroa *= 1e4</span>
+            <span class="k">if</span> <span class="n">raman_units</span><span class="p">:</span>
+                <span class="n">lambda_0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">val</span><span class="o">*</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span>
+                <span class="n">lambda_p</span> <span class="o">=</span> <span class="n">frequencies</span><span class="o">/</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;cm&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span>
+                <span class="n">kp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raman_int_units</span><span class="p">(</span><span class="n">lambda_0</span><span class="o">=</span><span class="n">lambda_0</span><span class="p">,</span> <span class="n">lambda_p</span><span class="o">=</span><span class="n">lambda_p</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="p">)</span><span class="o">*</span><span class="n">Length</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+                <span class="n">raman_int</span> <span class="o">*=</span> <span class="n">kp</span>
+                <span class="n">backscat_vroa</span> <span class="o">*=</span> <span class="n">kp</span>
+                <span class="n">forwscat_vroa</span> <span class="o">*=</span> <span class="n">kp</span>
+            <span class="c1"># TODO: check the units of this because we convert the invariants from</span>
+            <span class="c1">#       au to Angstrom and here we convert again from au to Angstrom</span>
+            <span class="c1">#forwscat_vroa *=Length[&#39;au&#39;, &#39;Angstrom&#39;]**4*Mass[&#39;u&#39;, &#39;au_mass&#39;]</span>
+            <span class="c1"># we set this just so it is easier to view the data</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+            <span class="c1"># generate dataframe with all pertinent data for vroa scatter</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;freq&quot;</span><span class="p">:</span> <span class="n">frequencies</span><span class="p">,</span> <span class="s2">&quot;freqdx&quot;</span><span class="p">:</span> <span class="n">select_freq</span><span class="p">,</span> <span class="s2">&quot;beta_g*1e6&quot;</span><span class="p">:</span><span class="n">beta_g</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span>
+                                        <span class="s2">&quot;beta_A*1e6&quot;</span><span class="p">:</span> <span class="n">beta_A</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> <span class="s2">&quot;alpha_g*1e6&quot;</span><span class="p">:</span> <span class="n">alpha_g</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span>
+                                        <span class="s2">&quot;backscatter&quot;</span><span class="p">:</span> <span class="n">backscat_vroa</span><span class="p">,</span> <span class="s2">&quot;forwardscatter&quot;</span><span class="p">:</span><span class="n">forwscat_vroa</span><span class="p">})</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+            <span class="n">rdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;freq&quot;</span><span class="p">:</span> <span class="n">frequencies</span><span class="p">,</span> <span class="s2">&quot;freqdx&quot;</span><span class="p">:</span> <span class="n">select_freq</span><span class="p">,</span>
+                                          <span class="s2">&quot;alpha_squared&quot;</span><span class="p">:</span> <span class="n">alpha_squared</span><span class="p">,</span>
+                                          <span class="s2">&quot;beta_alpha&quot;</span><span class="p">:</span> <span class="n">beta_alpha</span><span class="p">,</span> <span class="s2">&quot;raman_int&quot;</span><span class="p">:</span> <span class="n">raman_int</span><span class="p">})</span>
+            <span class="n">rdf</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rdf</span><span class="p">))</span>
+            <span class="n">scatter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">raman</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rdf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatter</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">scatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatter</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">,</span><span class="s1">&#39;freq&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># added this as there seems to be some issues with the indexing when there are</span>
+        <span class="c1"># nearly degenerate modes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatter</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># check ordering of the freqdx column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raman</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">raman</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raman</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exc_freq&#39;</span><span class="p">,</span> <span class="s1">&#39;freq&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatter</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scatter</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scatter</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Found an ordering issue with the calculated frequencies. Make sure to check the frequency values.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VA.zpvc"><a class="viewcode-back" href="../../../exatomic.va.va.html#exatomic.va.va.VA.zpvc">[docs]</a>    <span class="k">def</span> <span class="nf">zpvc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">print_results</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to compute the Zero-Point Vibrational Corrections. We implement the equations as</span>
+<span class="sd">        outlined in the paper J. Phys. Chem. A 2005, 109, 8617-8623 (doi:10.1021/jp051685y).</span>
+<span class="sd">        Here we compute the effect of vibrations on a specified property given as a n x 2 array</span>
+<span class="sd">        where one of the columns are the file indexes and the other is the property.</span>
+<span class="sd">        We use a two and three point difference method to calculate the first and second derivatives</span>
+<span class="sd">        respectively.</span>
+
+<span class="sd">        We have also implemented a way to calculate the ZPVC and effective geometries at</span>
+<span class="sd">        different temperatures given in Kelvin.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The code has been designed such that the property input array must have one column</span>
+<span class="sd">            labeled file corresponding to the file indexes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uni (:class:`exatomic.Universe`): Universe containing all pertinent data</span>
+<span class="sd">            delta (numpy.array): Array of the delta displacement parameters</span>
+<span class="sd">            temperature (list): List object containing all of the temperatures of interest</span>
+<span class="sd">            geometry (bool): Bool value that tells the program to also calculate the effective geometry</span>
+<span class="sd">            print_results(bool): Bool value to print the results from the zpvc calcualtion to stdout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;gradient&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please set gradient attribute.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;property&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please set property attribute.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Property dataframe must have a second dimension of 2 not </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                                                                    <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frequency_ext&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please compute frequency_ext dataframe.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please compute frequency dataframe.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">temperature</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">temperature</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># get the total number of normal modes</span>
+        <span class="n">nmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">frequency_ext</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="c1"># check for any missing files and remove the respective counterpart</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_continuity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="s1">&#39;gradient&#39;</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_continuity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">,</span> <span class="s1">&#39;property&#39;</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+        <span class="c1"># check that the equlibrium coordinates are included</span>
+        <span class="c1"># these are required for the three point difference methods</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Equilibrium coordinate gradients not found&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Equilibrium coordinate property not found&quot;</span><span class="p">)</span>
+        <span class="c1"># check that the gradient and property dataframe have the same length of data</span>
+        <span class="n">grad_files</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="n">grad</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))][</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="n">prop_files</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">prop</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))][</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="c1"># compare lengths</span>
+        <span class="c1"># TODO: make sure the minus 1 is in the right place</span>
+        <span class="c1">#       we suppose that it is because we grab the file number 0 as an extra</span>
+        <span class="k">if</span> <span class="n">grad_files</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">prop_files</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Length mismatch of gradient and property arrays.&quot;</span><span class="p">)</span>
+            <span class="c1"># we create a dataframe to make use of the existing file continuity checker</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">grad_files</span><span class="p">,</span> <span class="n">prop_files</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_continuity</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;grad/prop&#39;</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">)</span>
+            <span class="c1"># overwrite the property and gradient dataframes</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="n">grad</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])]</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">prop</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])]</span>
+        <span class="c1"># get the gradients multiplied by the normal modes</span>
+        <span class="n">delfq_zero</span><span class="p">,</span> <span class="n">delfq_plus</span><span class="p">,</span> <span class="n">delfq_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pos_neg_gradients</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="c1"># get the selected frequencies</span>
+        <span class="n">select_freq</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="n">grad</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))]</span>
+        <span class="n">select_freq</span> <span class="o">=</span> <span class="n">select_freq</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">snmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">select_freq</span><span class="p">)</span>
+        <span class="c1">#print(select_freq, snmodes)</span>
+        <span class="c1"># get the actual frequencies</span>
+        <span class="c1"># TODO: check if we should use the real or calculated frequencies</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency_ext</span><span class="p">[</span><span class="s1">&#39;freq&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;cm^-1&#39;</span><span class="p">,</span><span class="s1">&#39;Ha&#39;</span><span class="p">]</span>
+        <span class="n">rmass</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency_ext</span><span class="p">[</span><span class="s1">&#39;r_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">*</span><span class="n">Mass</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;au_mass&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">snmodes</span> <span class="o">&lt;</span> <span class="n">nmodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;We do not currently have support to handle missing frequencies&quot;</span><span class="p">)</span>
+            <span class="c1">#sel_delta = delta[select_freq]</span>
+            <span class="c1">#sel_rmass = uni.frequency_ext[&#39;r_mass&#39;].values[select_freq]*Mass[&#39;u&#39;, &#39;au_mass&#39;]</span>
+            <span class="c1">#sel_freq = uni.frequency_ext[&#39;freq&#39;].values[select_freq]*Energy[&#39;cm^-1&#39;,&#39;Ha&#39;]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sel_delta</span> <span class="o">=</span> <span class="n">delta</span>
+            <span class="n">sel_rmass</span> <span class="o">=</span> <span class="n">rmass</span>
+            <span class="n">sel_freq</span> <span class="o">=</span> <span class="n">frequencies</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_frequencies</span><span class="p">(</span><span class="n">delfq_zero</span><span class="p">,</span> <span class="n">delfq_plus</span><span class="p">,</span> <span class="n">delfq_minus</span><span class="p">,</span> <span class="n">sel_rmass</span><span class="p">,</span> <span class="n">select_freq</span><span class="p">,</span>
+                                                 <span class="n">sel_delta</span><span class="p">)</span>
+        <span class="c1"># calculate cubic force constant</span>
+        <span class="c1"># we use a for loop because we need the diagonal values</span>
+        <span class="c1"># if we select a specific number of modes then the diagonal elements</span>
+        <span class="c1"># are tricky</span>
+        <span class="n">kqiii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">select_freq</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">sval</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">select_freq</span><span class="p">):</span>
+            <span class="n">kqiii</span><span class="p">[</span><span class="n">fdx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">delfq_plus</span><span class="p">[</span><span class="n">fdx</span><span class="p">][</span><span class="n">sval</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">delfq_zero</span><span class="p">[</span><span class="n">fdx</span><span class="p">][</span><span class="n">sval</span><span class="p">]</span> <span class="o">+</span> \
+                                                <span class="n">delfq_minus</span><span class="p">[</span><span class="n">fdx</span><span class="p">][</span><span class="n">sval</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">sel_delta</span><span class="p">[</span><span class="n">fdx</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># calculate anharmonic cubic force constant</span>
+        <span class="c1"># this will have nmodes rows and snmodes cols</span>
+        <span class="n">kqijj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">delfq_plus</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">delfq_zero</span> <span class="o">+</span> <span class="n">delfq_minus</span><span class="p">,</span>
+                          <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">sel_delta</span><span class="p">,</span> <span class="n">sel_delta</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># get property values</span>
+        <span class="n">prop_grouped</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+        <span class="c1"># get the property value for the equilibrium coordinate</span>
+        <span class="n">prop_zero</span> <span class="o">=</span> <span class="n">prop_grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">prop_zero</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prop_zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">prop_zero</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">snmodes</span><span class="p">)</span>
+        <span class="c1"># get the property values for the positive displaced structures</span>
+        <span class="n">prop_plus</span> <span class="o">=</span> <span class="n">prop_grouped</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">prop_plus</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prop_plus</span> <span class="o">=</span> <span class="n">prop_plus</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,)</span>
+        <span class="c1"># get the property values for the negative displaced structures</span>
+        <span class="n">prop_minus</span><span class="o">=</span> <span class="n">prop_grouped</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="ow">in</span>
+                                                                              <span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">prop_minus</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prop_minus</span> <span class="o">=</span> <span class="n">prop_minus</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,)</span>
+        <span class="c1"># generate the derivatives of the property</span>
+        <span class="n">dprop_dq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">prop_plus</span> <span class="o">-</span> <span class="n">prop_minus</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">sel_delta</span><span class="p">)</span>
+        <span class="n">d2prop_dq2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">prop_plus</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">prop_zero</span> <span class="o">+</span> <span class="n">prop_minus</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">sel_delta</span><span class="p">,</span> <span class="n">sel_delta</span><span class="p">))</span>
+        <span class="c1"># done with setting up everything</span>
+        <span class="c1"># moving on to the actual calculations</span>
+
+        <span class="n">atom_frames</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">eqcoord</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">atom_frames</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">atom_order</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
+        <span class="n">coor_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">zpvc_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">va_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># calculate the ZPVC&#39;s at different temperatures by iterating over them</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperature</span><span class="p">:</span>
+            <span class="c1"># calculate anharmonicity in the potential energy surface</span>
+            <span class="n">anharm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">snmodes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">):</span>
+                <span class="n">temp1</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="p">):</span>
+                    <span class="c1"># calculate the contribution of each vibration</span>
+                    <span class="n">temp_fac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_temp_factor</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                    <span class="c1"># TODO: check the snmodes and nmodes indexing for kqijj</span>
+                    <span class="c1">#       pretty sure that the rows are nmodes and the columns are snmodes</span>
+                    <span class="c1"># TODO: check which is in the sqrt</span>
+                    <span class="c1"># sum over the first index</span>
+                    <span class="n">temp1</span> <span class="o">+=</span> <span class="n">kqijj</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">rmass</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sel_rmass</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">*</span><span class="n">temp_fac</span>
+                <span class="c1"># sum over the second index and set anharmonicity at each vibrational mode</span>
+                <span class="n">anharm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">dprop_dq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">sel_freq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sel_rmass</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">*</span><span class="n">temp1</span>
+            <span class="c1"># calculate curvature of property</span>
+            <span class="n">curva</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">snmodes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">):</span>
+                <span class="c1"># calculate the contribution of each vibration</span>
+                <span class="n">temp_fac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_temp_factor</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">sel_freq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="c1"># set the curvature at each vibrational mode</span>
+                <span class="n">curva</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">d2prop_dq2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">sel_freq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">sel_rmass</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="n">temp_fac</span>
+
+            <span class="c1"># generate one of the zpvc dataframes</span>
+            <span class="n">va_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;freq&#39;</span><span class="p">:</span> <span class="n">sel_freq</span><span class="o">*</span><span class="n">Energy</span><span class="p">[</span><span class="s1">&#39;Ha&#39;</span><span class="p">,</span><span class="s1">&#39;cm^-1&#39;</span><span class="p">],</span> <span class="s1">&#39;freqdx&#39;</span><span class="p">:</span> <span class="n">select_freq</span><span class="p">,</span>
+                                                    <span class="s1">&#39;anharm&#39;</span><span class="p">:</span> <span class="n">anharm</span><span class="p">,</span> <span class="s1">&#39;curva&#39;</span><span class="p">:</span> <span class="n">curva</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="n">anharm</span><span class="o">+</span><span class="n">curva</span><span class="p">,</span>
+                                                    <span class="s1">&#39;temp&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">snmodes</span><span class="p">)}))</span>
+            <span class="n">zpvc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">anharm</span><span class="o">+</span><span class="n">curva</span><span class="p">)</span>
+            <span class="n">tot_anharm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">anharm</span><span class="p">)</span>
+            <span class="n">tot_curva</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">curva</span><span class="p">)</span>
+            <span class="n">zpvc_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">prop_zero</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">zpvc</span><span class="p">,</span> <span class="n">prop_zero</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">zpvc</span><span class="p">,</span> <span class="n">tot_anharm</span><span class="p">,</span> <span class="n">tot_curva</span><span class="p">,</span> <span class="n">t</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">print_results</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;========Results from Vibrational Averaging at </span><span class="si">{}</span><span class="s2"> K==========&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+                <span class="c1"># print results to stdout</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----Result of ZPVC calculation for </span><span class="si">{}</span><span class="s2"> of </span><span class="si">{}</span><span class="s2"> frequencies&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">snmodes</span><span class="p">,</span> <span class="n">nmodes</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    - Total Anharmonicity:   </span><span class="si">{:+.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tot_anharm</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    - Total Curvature:       </span><span class="si">{:+.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tot_curva</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    - Zero Point Vib. Corr.: </span><span class="si">{:+.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zpvc</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    - Zero Point Vib. Avg.:  </span><span class="si">{:+.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prop_zero</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">zpvc</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
+                <span class="c1"># calculate the effective geometry</span>
+                <span class="c1"># we do not check this at the beginning as it will not always be computed</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please set the atom dataframe&quot;</span><span class="p">)</span>
+                <span class="n">sum_to_eff_geo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">eqcoord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snmodes</span><span class="p">):</span>
+                    <span class="n">temp1</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmodes</span><span class="p">):</span>
+                        <span class="c1"># calculate the contribution of each vibration</span>
+                        <span class="n">temp_fac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_temp_factor</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                        <span class="n">temp1</span> <span class="o">+=</span> <span class="n">kqijj</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">rmass</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sel_rmass</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">*</span> <span class="n">temp_fac</span>
+                    <span class="c1"># get the temperature correction to the geometry in Bohr</span>
+                    <span class="n">sum_to_eff_geo</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">temp1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sel_freq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sel_rmass</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">*</span> \
+                                        <span class="n">uni</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">i</span><span class="p">)[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span><span class="s1">&#39;dy&#39;</span><span class="p">,</span><span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+                <span class="c1"># get the effective geometry</span>
+                <span class="n">tmp_coord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">eqcoord</span> <span class="o">+</span> <span class="n">sum_to_eff_geo</span><span class="p">)</span>
+                <span class="c1"># generate one of the coordinate dataframes</span>
+                <span class="c1"># we write the frame to be the same as the temp column so that one can take</span>
+                <span class="c1"># advantage of the exatomic.core.atom.Atom.to_xyz method</span>
+                <span class="n">coor_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">))),</span>
+                                                        <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="n">atom_order</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2z</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">tmp_coord</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">tmp_coord</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">tmp_coord</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                                        <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">atom_order</span><span class="p">,</span>
+                                                        <span class="s1">&#39;temp&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">eqcoord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                                        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">))}))</span>
+                <span class="c1"># print out the effective geometry in Angstroms</span>
+                <span class="k">if</span> <span class="n">print_results</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----Effective geometry in Angstroms&quot;</span><span class="p">)</span>
+                    <span class="n">xyz</span> <span class="o">=</span> <span class="n">coor_dfs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;Angstrom&#39;</span><span class="p">]</span>
+                    <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;Angstrom&#39;</span><span class="p">]</span>
+                    <span class="n">xyz</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Length</span><span class="p">[</span><span class="s1">&#39;au&#39;</span><span class="p">,</span> <span class="s1">&#39;Angstrom&#39;</span><span class="p">]</span>
+                    <span class="n">stargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                              <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:&lt;5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">},</span> <span class="s1">&#39;float_format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">}</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">xyz</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="o">**</span><span class="n">stargs</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eff_coord</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">coor_dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zpvc_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">zpvc_dfs</span><span class="p">,</span>
+                                         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;property&#39;</span><span class="p">,</span> <span class="s1">&#39;zpvc&#39;</span><span class="p">,</span> <span class="s1">&#39;zpva&#39;</span><span class="p">,</span> <span class="s1">&#39;tot_anharm&#39;</span><span class="p">,</span> <span class="s1">&#39;tot_curva&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vib_average</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">va_dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

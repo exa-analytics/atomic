@@ -1,0 +1,7 @@
+exatomic.va.vroa\_funcs module
+==============================
+
+.. automodule:: exatomic.va.vroa_funcs
+   :members:
+   :undoc-members:
+   :show-inheritance:

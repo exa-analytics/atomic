@@ -1,0 +1,7 @@
+exatomic.algorithms.pcf module
+==============================
+
+.. automodule:: exatomic.algorithms.pcf
+   :members:
+   :undoc-members:
+   :show-inheritance:

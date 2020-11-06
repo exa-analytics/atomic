@@ -1,0 +1,7 @@
+exatomic.algorithms.diffusion module
+====================================
+
+.. automodule:: exatomic.algorithms.diffusion
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+exatomic.algorithms.indexing module
+===================================
+
+.. automodule:: exatomic.algorithms.indexing
+   :members:
+   :undoc-members:
+   :show-inheritance:

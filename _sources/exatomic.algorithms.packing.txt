@@ -1,0 +1,7 @@
+exatomic.algorithms.packing module
+==================================
+
+.. automodule:: exatomic.algorithms.packing
+   :members:
+   :undoc-members:
+   :show-inheritance:

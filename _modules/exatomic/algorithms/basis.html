@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.basis &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.basis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.algorithms.basis</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Basis Function Manipulation</span>
+<span class="sd">################################</span>
+<span class="sd">Functions for managing and manipulating basis set data.</span>
+<span class="sd">Many of the ordering schemes used in computational codes can be</span>
+<span class="sd">generated programmatically with the right numerical function.</span>
+<span class="sd">This is preferred to an explicit parsing and storage of a given</span>
+<span class="sd">basis set ordering scheme.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">mul</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations_with_replacement</span> <span class="k">as</span> <span class="n">cwr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">numexpr</span> <span class="kn">import</span> <span class="n">evaluate</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">symengine</span> <span class="kn">import</span> <span class="n">var</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Float</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span> <span class="k">as</span> <span class="n">var</span>
+    <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Float</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">Series</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.overlap</span> <span class="kn">import</span> <span class="n">_cartesian_shell_pairs</span><span class="p">,</span> <span class="n">_iter_atom_shells</span>
+<span class="kn">from</span> <span class="nn">exatomic.algorithms.numerical</span> <span class="kn">import</span> <span class="n">fac</span><span class="p">,</span> <span class="n">_tri_indices</span><span class="p">,</span> <span class="n">_triangle</span><span class="p">,</span> <span class="n">_enum_spherical</span>
+
+
+<span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">,</span> <span class="n">_z</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s2">&quot;_x _y _z&quot;</span><span class="p">)</span>
+<span class="n">_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">_x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">_y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">_z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+<span class="n">lorder</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span>
+<span class="n">lmap</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">rlmap</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">spher_ml_count</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">cart_ml_count</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">spher_lml_count</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">cart_lml_count</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">enum_cartesian</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lorder</span><span class="p">):</span>
+    <span class="n">lmap</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">rlmap</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span>
+    <span class="n">spher_ml_count</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">cart_ml_count</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">spher_lml_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">spher_ml_count</span><span class="p">[</span><span class="n">L</span><span class="p">]</span>
+    <span class="n">cart_lml_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cart_ml_count</span><span class="p">[</span><span class="n">L</span><span class="p">]</span>
+    <span class="n">enum_cartesian</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cnts</span> <span class="o">=</span> <span class="p">[</span><span class="n">Counter</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cwr</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span>
+    <span class="n">enum_cartesian</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cnts</span> \
+                        <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;xyz&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts</span><span class="p">])</span>
+<span class="n">lmap</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;pz&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="n">gaussian_cartesian</span> <span class="o">=</span> <span class="n">enum_cartesian</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">gaussian_cartesian</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+
+<span class="k">def</span> <span class="nf">_hermite_gaussians</span><span class="p">(</span><span class="n">lmax</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symbolic hermite gaussians up to order lmax.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lmax (int): highest order angular momentum quantum number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">hgs</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">der</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">_x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t</span><span class="p">:</span> <span class="n">der</span> <span class="o">=</span> <span class="n">der</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">_x</span><span class="p">)</span>
+        <span class="n">hgs</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">t</span> <span class="o">*</span> <span class="n">der</span>
+    <span class="k">return</span> <span class="n">hgs</span>
+
+
+<div class="viewcode-block" id="gen_enum_cartesian"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.gen_enum_cartesian">[docs]</a><span class="k">def</span> <span class="nf">gen_enum_cartesian</span><span class="p">(</span><span class="n">lmax</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cartesian powers in the order expected for overlap</span>
+<span class="sd">    computation up to order lmax.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lmax (int): highest order angular momentum quantum number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">l</span><span class="p">,</span> <span class="n">L</span> <span class="o">-</span> <span class="n">l</span> <span class="o">-</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span>
+                                      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                                      <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">l</span><span class="p">)]))</span>
+                        <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="spherical_harmonics"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.spherical_harmonics">[docs]</a><span class="k">def</span> <span class="nf">spherical_harmonics</span><span class="p">(</span><span class="n">lmax</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symbolic real spherical harmonics up to order lmax.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        sh = spherical_harmonics(6)  # Inclusive, so computes up to l = 6</span>
+<span class="sd">        sh[3][-3]                    # symbolic f-phi angular function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lmax (int): highest order angular momentum quantum number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="p">{</span><span class="n">m</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)}</span>
+    <span class="n">facts</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)}</span>
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">rac</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span>
+        <span class="n">der</span> <span class="o">=</span> <span class="p">(</span><span class="n">_x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">L</span>
+        <span class="n">den</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">L</span> <span class="o">*</span> <span class="n">facts</span><span class="p">[</span><span class="n">L</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="n">der</span> <span class="o">=</span> <span class="n">der</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">_x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">pol</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">_x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">:</span> <span class="n">der</span> <span class="o">=</span> <span class="n">der</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">_x</span><span class="p">)</span>
+            <span class="n">leg</span> <span class="o">=</span> <span class="n">phase</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">/</span> <span class="n">den</span> <span class="o">*</span> <span class="p">(</span><span class="n">pol</span> <span class="o">*</span> <span class="n">der</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">_x</span><span class="p">:</span> <span class="n">_z</span> <span class="o">/</span> <span class="n">_r</span><span class="p">})</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+                <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">rac</span> <span class="o">*</span> <span class="n">leg</span>
+                <span class="k">continue</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">phase</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+            <span class="n">facs</span> <span class="o">=</span> <span class="n">facts</span><span class="p">[</span><span class="n">L</span> <span class="o">-</span> <span class="n">m</span><span class="p">]</span> <span class="o">/</span> <span class="n">facts</span><span class="p">[</span><span class="n">L</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">facs</span> <span class="o">**</span> <span class="mf">0.5</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">_x</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">_x</span><span class="p">:</span> <span class="s1">&#39;arctan2(_y, _x)&#39;</span><span class="p">})</span>
+            <span class="n">fun</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+            <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">rac</span> <span class="o">*</span> <span class="n">norm</span> <span class="o">*</span> <span class="n">leg</span> <span class="o">*</span> <span class="n">fun</span>
+            <span class="n">fun</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+            <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="o">-</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">rac</span> <span class="o">*</span> <span class="n">norm</span> <span class="o">*</span> <span class="n">leg</span> <span class="o">*</span> <span class="n">fun</span>
+    <span class="k">return</span> <span class="n">sh</span></div>
+
+
+<div class="viewcode-block" id="solid_harmonics"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.solid_harmonics">[docs]</a><span class="k">def</span> <span class="nf">solid_harmonics</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Symbolic real solid harmonics up to order lmax.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        sh = solid_harmonics(6)  # Inclusive, so computes up to l = 6</span>
+<span class="sd">        sh[3][-3]                # symbolic f-phi angular function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lmax (int): highest order angular momentum quantum number</span>
+<span class="sd">        scaled (bool): if scaled, includes factor of 1 / (2 * np.pi ** 0.5)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_top_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="mi">2</span> <span class="o">**</span> <span class="n">kr</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">*</span>
+                <span class="p">(</span><span class="n">_x</span> <span class="o">*</span> <span class="n">sp</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kr</span><span class="p">)</span> <span class="o">*</span> <span class="n">_y</span> <span class="o">*</span> <span class="n">sm</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">_mid_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">smm</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_z</span> <span class="o">*</span> <span class="n">sm</span> <span class="o">-</span> <span class="p">((</span><span class="n">lp</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">lp</span> <span class="o">-</span> <span class="n">m</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">*</span>
+                <span class="p">(</span><span class="n">_x</span><span class="o">*</span><span class="n">_x</span> <span class="o">+</span> <span class="n">_y</span><span class="o">*</span><span class="n">_y</span> <span class="o">+</span> <span class="n">_z</span><span class="o">*</span><span class="n">_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">smm</span><span class="p">)</span> <span class="o">/</span>
+                <span class="p">(((</span><span class="n">lp</span> <span class="o">+</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">lp</span> <span class="o">-</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">_bot_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="mi">2</span> <span class="o">**</span> <span class="n">kr</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">*</span>
+                <span class="p">(</span><span class="n">_y</span> <span class="o">*</span> <span class="n">sp</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kr</span><span class="p">)</span> <span class="o">*</span> <span class="n">_x</span> <span class="o">*</span> <span class="n">sm</span><span class="p">))</span>
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">l</span><span class="p">,</span> <span class="n">OrderedDict</span><span class="p">([]))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+    <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">lp</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">kr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">lp</span><span class="p">)</span>
+        <span class="n">mls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">mls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">_bot_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="n">lp</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="o">-</span><span class="n">lp</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">ml</span> <span class="ow">in</span> <span class="n">mls</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span>
+            <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mid_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">ml</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="n">ml</span><span class="p">],</span> <span class="n">rec</span><span class="p">)</span>
+        <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">mls</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">_top_sh</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="n">lp</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="n">lp</span><span class="p">][</span><span class="o">-</span><span class="n">lp</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">scaled</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ml</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sh</span></div>
+
+
+<div class="viewcode-block" id="car2sph"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.car2sph">[docs]</a><span class="k">def</span> <span class="nf">car2sph</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">cart</span><span class="p">,</span> <span class="n">orderedp</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cartesian to spherical transform matrices.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        sh = solid_harmonics(8)        # symbolic solid harmonics</span>
+<span class="sd">        cart = gen_enum_cartesian(8)   # cartesian powers in a defined order</span>
+<span class="sd">        c2s = car2sph(sh, cart)        # dictionary of {l: transform_matrix}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sh (OrderedDict): symbolic solid harmonics</span>
+<span class="sd">        cart (OrderedDict): cartesian powers in a defined order</span>
+<span class="sd">        orderedp (bool): order l=1 as [&#39;x&#39;, &#39;y&#39;, &#39;z&#39;], not [-1, 0, 1] (default True)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        c2s (OrderedDict): cartesian to spherical transform matrices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c2s</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(((</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+                      <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+    <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">mls</span> <span class="ow">in</span> <span class="n">sh</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">L</span> <span class="ow">or</span> <span class="p">(</span><span class="n">L</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">orderedp</span><span class="p">):</span>
+            <span class="n">c2s</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cart</span><span class="p">[</span><span class="n">L</span><span class="p">])</span>
+            <span class="k">continue</span>
+        <span class="n">cdxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">reduce</span><span class="p">(</span><span class="n">mul</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="n">cwr</span><span class="p">((</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">,</span> <span class="n">_z</span><span class="p">),</span> <span class="n">L</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">ml</span><span class="p">,</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">mls</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">mli</span> <span class="o">=</span> <span class="n">ml</span> <span class="o">+</span> <span class="n">L</span>
+            <span class="n">coefs</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span><span class="o">.</span><span class="n">as_coefficients_dict</span><span class="p">()</span>
+            <span class="c1">#for crt, coef in coefs.items():</span>
+            <span class="k">for</span> <span class="n">crt</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">coefs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">crt</span><span class="p">,</span> <span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">Float</span><span class="p">)):</span> <span class="k">continue</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">cdxs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">crt</span><span class="p">)</span>
+                <span class="n">c2s</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">idx</span><span class="p">,</span> <span class="n">mli</span><span class="p">]</span> <span class="o">=</span> <span class="n">coefs</span><span class="p">[</span><span class="n">cdxs</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">c2s</span></div>
+
+
+<div class="viewcode-block" id="diff_expr"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.diff_expr">[docs]</a><span class="k">def</span> <span class="nf">diff_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the nth order derivative symbolically with respect to cart.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        expr (symbolic): sympy or symengine expression</span>
+<span class="sd">        cart (str): &#39;x&#39;, &#39;y&#39;, or &#39;z&#39;</span>
+<span class="sd">        order (int): order of differentiation</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        expr (symbolic): The symbolic derivative</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cart</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cart must be in &quot;xyz&quot;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">order</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;order must be non-negative integer.&#39;</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">expr</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="p">):</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">cart</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">diff</span></div>
+
+
+<div class="viewcode-block" id="evaluate_expr"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.evaluate_expr">[docs]</a><span class="k">def</span> <span class="nf">evaluate_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Evaluate symbolic expression on a numerical grid.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        expr (symbolic): sympy or symengine expression</span>
+<span class="sd">        xs (np.ndarray): 1D-array of x values</span>
+<span class="sd">        ys (np.ndarray): 1D-array of y values</span>
+<span class="sd">        zs (np.ndarray): 1D-array of z values</span>
+<span class="sd">        arr (np.ndarray): additional 1D-array to multiply expression by</span>
+<span class="sd">        alpha (float): multiply expression by gaussian with exponent alpha</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        See :meth:`exatomic.algorithms.orbital_util.numerical_grid_from_field_params`</span>
+<span class="sd">        for grid construction details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">subs</span> <span class="o">=</span> <span class="p">{</span><span class="n">_x</span><span class="p">:</span> <span class="s1">&#39;xs&#39;</span><span class="p">,</span> <span class="n">_y</span><span class="p">:</span> <span class="s1">&#39;ys&#39;</span><span class="p">,</span> <span class="n">_z</span><span class="p">:</span> <span class="s1">&#39;zs&#39;</span><span class="p">}</span>
+    <span class="c1"># Multiply with an additional array (angular term)</span>
+    <span class="k">if</span> <span class="n">arr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;arr * (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">))))</span>
+    <span class="c1"># Multiply by an exponential decay factor</span>
+    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">expr</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">_r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="c1"># Just evaluate the expression numerically</span>
+    <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="BasisFunctions"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.BasisFunctions">[docs]</a><span class="k">class</span> <span class="nc">BasisFunctions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Composition wrapper class that leverages symbolic expressions using</span>
+<span class="sd">    symengine and numexpr, using values extracted from the numerical Shell</span>
+<span class="sd">    jitclasses, to evaluate basis functions on a numerical grid.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`exatomic.core.universe.Universe`): a universe with basis set</span>
+<span class="sd">        frame (int): frame corresponding to basis set (default 0)</span>
+<span class="sd">        cartp (bool): forces p function ordering as (x, y, z) not (-1, 0, 1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="BasisFunctions.integrals"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.BasisFunctions.integrals">[docs]</a>    <span class="k">def</span> <span class="nf">integrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the overlap matrix using primitive cartesian integrals.&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">exatomic.core.basis</span> <span class="kn">import</span> <span class="n">Overlap</span>
+        <span class="n">ovl</span> <span class="o">=</span> <span class="n">_cartesian_shell_pairs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">)</span>
+        <span class="n">ovl</span> <span class="o">=</span> <span class="n">_triangle</span><span class="p">(</span><span class="n">ovl</span><span class="p">)</span>
+        <span class="n">chi0</span><span class="p">,</span> <span class="n">chi1</span> <span class="o">=</span> <span class="n">_tri_indices</span><span class="p">(</span><span class="n">ovl</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Overlap</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;chi0&#39;</span><span class="p">:</span> <span class="n">chi0</span><span class="p">,</span> <span class="s1">&#39;chi1&#39;</span><span class="p">:</span> <span class="n">chi1</span><span class="p">,</span>
+                                  <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">ovl</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="BasisFunctions.enum_shell"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.BasisFunctions.enum_shell">[docs]</a>    <span class="k">def</span> <span class="nf">enum_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator over angular momentum degrees of freedom.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shl (:class:`exatomic.algorithms.numerical.Shell`): basis set shell</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">shl</span><span class="o">.</span><span class="n">enum_spherical</span><span class="p">()</span> <span class="k">if</span> <span class="n">shl</span><span class="o">.</span><span class="n">spherical</span> <span class="k">else</span> <span class="n">shl</span><span class="o">.</span><span class="n">enum_cartesian</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BasisFunctions.evaluate"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.BasisFunctions.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate basis functions on a numerical grid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xs (np.ndarray): 1D-array of x values</span>
+<span class="sd">            ys (np.ndarray): 1D-array of y values</span>
+<span class="sd">            zs (np.ndarray): 1D-array of z values</span>
+<span class="sd">            verbose (bool): print code pathway</span>
+<span class="sd">            irrep (int,OrderedDict): irrep or {irrep: [vectors] for irrep in irreps}</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Default behavior returns symbolic expressions if xs is None.</span>
+<span class="sd">            See :meth:`exatomic.algorithms.orbital_util.numerical_grid_from_field_params`</span>
+<span class="sd">            for grid construction details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;symmetrized&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_gau_bso_sym</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;molcas&#39;</span><span class="p">]:</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_gau_mag</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_gau_bso</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_sto</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">xs</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="o">=</span><span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="o">=</span><span class="n">zs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="n">irrep</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BasisFunctions.evaluate_diff"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.BasisFunctions.evaluate_diff">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate basis function derivatives on a numerical grid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xs (np.ndarray): 1D-array of x values</span>
+<span class="sd">            ys (np.ndarray): 1D-array of y values</span>
+<span class="sd">            zs (np.ndarray): 1D-array of z values</span>
+<span class="sd">            cart (str): derivative with respect to cart (in [&#39;x&#39;, &#39;y&#39;, &#39;z&#39;])</span>
+<span class="sd">            verbose (bool): print code pathway</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            See :meth:`~exatomic.algorithms.orbital_util.numerical_grid_from_field_params`</span>
+<span class="sd">            for grid construction details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nwchem&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Code up _evaluate_diff_gau_bso.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Verify symbolic differentiation of STOs.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_diff_sto</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">cart</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;molcas&#39;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Should you be using this functionality?&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_diff_gau</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">cart</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_radial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates the symbolic radial portion of a basis function.</span>
+<span class="sd">        Substitutes symbolic (_i) -&gt; (_i - iA) for i in [x, y, z].&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pre</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="n">pre</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expnt</span> <span class="o">**</span> <span class="n">r</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expnt</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">rs</span><span class="p">))</span>
+                        <span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">_x</span><span class="p">:</span> <span class="n">_x</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">_y</span><span class="p">:</span> <span class="n">_y</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">_z</span><span class="p">:</span> <span class="n">_z</span> <span class="o">-</span> <span class="n">z</span><span class="p">})</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="n">c</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expnt</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">alphas</span><span class="p">))</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">_x</span><span class="p">:</span> <span class="n">_x</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">_y</span><span class="p">:</span> <span class="n">_y</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">_z</span><span class="p">:</span> <span class="n">_z</span> <span class="o">-</span> <span class="n">z</span><span class="p">})</span>
+
+
+    <span class="k">def</span> <span class="nf">_angular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shl</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">*</span><span class="n">ang</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates the symbolic angular portion of a basis function.</span>
+<span class="sd">        Substitutes symbolic (_i) -&gt; (_i - iA) for i in [x, y, z].&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="n">sym</span> <span class="o">=</span> <span class="n">_x</span> <span class="o">**</span> <span class="n">ang</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">_y</span> <span class="o">**</span> <span class="n">ang</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">_z</span> <span class="o">**</span> <span class="n">ang</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">sym</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sh</span><span class="p">[</span><span class="n">ang</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">ang</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">sym</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">_x</span><span class="p">:</span> <span class="n">_x</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">_y</span><span class="p">:</span> <span class="n">_y</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">_z</span><span class="p">:</span> <span class="n">_z</span> <span class="o">-</span> <span class="n">z</span><span class="p">})</span>
+
+
+    <span class="k">def</span> <span class="nf">_evaluate_gau_bso_sym</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates a symmetrized Gaussian basis set and returns a numpy array.</span>
+<span class="sd">        Currently the implementation only relies on the format most easily</span>
+<span class="sd">        obtained from the Molcas basis set order format. It is possible that</span>
+<span class="sd">        for other codes a different method would be preferred.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: symmetrized basis set evaluation is pre-alpha.&quot;</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Slice the basis set order if irrep is provided</span>
+        <span class="n">bso</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bso</span> <span class="k">if</span> <span class="n">irrep</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bso</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;irrep&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">irrep</span><span class="p">)</span>
+        <span class="n">nbf</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bso</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nbf</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbf</span><span class="p">)])</span>
+        <span class="c1"># cache remembers how many contracted functions are used</span>
+        <span class="c1"># in each instance of Shell so we can access them out of order</span>
+        <span class="c1"># but since basis functions can span multiple irreps, must</span>
+        <span class="c1"># outer index by irrep.</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span>
+                <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">))))</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;shldx&#39;</span><span class="p">))</span>
+        <span class="n">p</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">L</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;shldx&#39;</span><span class="p">]]</span>
+        <span class="n">shls</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])</span>
+        <span class="n">norms</span> <span class="o">=</span> <span class="p">[</span><span class="n">shl</span><span class="o">.</span><span class="n">norm_contract</span><span class="p">()</span> <span class="k">for</span> <span class="n">shl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">]</span>
+        <span class="n">ocens</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">bso</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ocen&#39;</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;ocen&#39;</span><span class="p">,</span> <span class="s1">&#39;sign&#39;</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">,</span> <span class="n">irrep</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span>
+                                                    <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">],</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;ml&#39;</span><span class="p">],</span>
+                                                    <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;irrep&#39;</span><span class="p">])):</span>
+            <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">[</span><span class="n">cen</span><span class="p">]</span>
+            <span class="n">shldx</span> <span class="o">=</span> <span class="n">shls</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">))</span><span class="o">.</span><span class="n">shldx</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ishl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">[</span><span class="n">shldx</span><span class="p">]</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">norms</span><span class="p">[</span><span class="n">shldx</span><span class="p">]</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span>
+                             <span class="n">norm</span><span class="p">[:,</span><span class="n">cache</span><span class="p">[</span><span class="n">irrep</span><span class="p">][</span><span class="n">cen</span><span class="p">][</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]])</span>
+            <span class="n">oterm</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">oc</span><span class="p">,</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ocens</span><span class="p">[::</span><span class="mi">2</span><span class="p">],</span> <span class="n">ocens</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                <span class="n">ocen</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="n">oc</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">sign</span> <span class="o">=</span> <span class="n">bso</span><span class="p">[</span><span class="n">si</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ocen</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">[</span><span class="n">ocen</span><span class="p">]</span>
+                    <span class="n">ao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">)</span>
+                    <span class="n">ro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span>
+                                      <span class="n">norm</span><span class="p">[:,</span><span class="n">cache</span><span class="p">[</span><span class="n">irrep</span><span class="p">][</span><span class="n">cen</span><span class="p">][</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]])</span>
+                    <span class="k">if</span> <span class="n">oterm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">oterm</span> <span class="o">=</span> <span class="n">sign</span> <span class="o">*</span> <span class="p">(</span><span class="n">ao</span> <span class="o">*</span> <span class="n">ro</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="n">oterm</span> <span class="o">+=</span> <span class="n">sign</span> <span class="o">*</span> <span class="p">(</span><span class="n">ao</span> <span class="o">*</span> <span class="n">ro</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">oterm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">oterm</span>
+                <span class="k">else</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">oterm</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span>
+                <span class="k">else</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+            <span class="n">cache</span><span class="p">[</span><span class="n">irrep</span><span class="p">][</span><span class="n">cen</span><span class="p">][</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">flds</span>
+
+
+    <span class="k">def</span> <span class="nf">_evaluate_gau_bso</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates a Gaussian basis set according to the order specified</span>
+<span class="sd">        by the :class:`~exatomic.core.basis.BasisSetOrder` and returns a</span>
+<span class="sd">        numpy array of numerical basis function values.&quot;&quot;&quot;</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))])</span>
+        <span class="c1"># cache remembers how many contracted functions are used</span>
+        <span class="c1"># in each instance of Shell so we can access them out of order</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)))</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;shelldx&#39;</span><span class="p">))</span>
+        <span class="n">p</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">L</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;shelldx&#39;</span><span class="p">]]</span>
+        <span class="n">grps</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">])</span>
+        <span class="c1"># Just normalize each Shell once instead of on each access</span>
+        <span class="n">norms</span> <span class="o">=</span> <span class="p">[</span><span class="n">shl</span><span class="o">.</span><span class="n">norm_contract</span><span class="p">()</span> <span class="k">for</span> <span class="n">shl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">_bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">_bso</span><span class="p">[</span><span class="s1">&#39;ml&#39;</span><span class="p">]):</span>
+            <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">[</span><span class="n">cen</span><span class="p">]</span>
+            <span class="n">shldx</span> <span class="o">=</span> <span class="n">grps</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">))[</span><span class="s1">&#39;shelldx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ishl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">[</span><span class="n">shldx</span><span class="p">]</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">norms</span><span class="p">[</span><span class="n">shldx</span><span class="p">]</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span>
+                             <span class="n">norm</span><span class="p">[:,</span><span class="n">cache</span><span class="p">[</span><span class="n">cen</span><span class="p">][</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]])</span>
+            <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+            <span class="n">cache</span><span class="p">[</span><span class="n">cen</span><span class="p">][</span><span class="n">L</span><span class="p">][</span><span class="n">ml</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">flds</span>
+
+
+    <span class="k">def</span> <span class="nf">_evaluate_sto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates a STO basis set and returns a numpy array.&quot;&quot;&quot;</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))])</span>
+        <span class="n">sphr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;spherical&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span> <span class="ow">in</span> <span class="n">_iter_atom_shells</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">,</span>
+                                                     <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">):</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">ishl</span><span class="o">.</span><span class="n">norm_contract</span><span class="p">()</span>
+            <span class="n">ang</span> <span class="o">=</span> <span class="n">ishl</span><span class="o">.</span><span class="n">enum_spherical</span><span class="p">()</span> <span class="k">if</span> <span class="n">sphr</span> <span class="k">else</span> <span class="n">ishl</span><span class="o">.</span><span class="n">enum_cartesian</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">mag</span> <span class="ow">in</span> <span class="n">ang</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="o">*</span><span class="n">mag</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ishl</span><span class="o">.</span><span class="n">ncont</span><span class="p">):</span>
+                    <span class="n">pre</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;spherical&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span> <span class="n">norm</span><span class="p">[:,</span> <span class="n">c</span><span class="p">],</span>
+                                     <span class="n">rs</span><span class="o">=</span><span class="n">ishl</span><span class="o">.</span><span class="n">rs</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="n">pre</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+                    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">flds</span>
+
+
+    <span class="k">def</span> <span class="nf">_evaluate_gau_mag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates a Gaussian basis set according to (apparently) only</span>
+<span class="sd">        Molcas ordering and returns a numpy array.&quot;&quot;&quot;</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">flds</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))])</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span> <span class="ow">in</span> <span class="n">_iter_atom_shells</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">,</span>
+                                                     <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">):</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">ishl</span><span class="o">.</span><span class="n">norm_contract</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">mag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enum_shell</span><span class="p">(</span><span class="n">ishl</span><span class="p">):</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="o">*</span><span class="n">mag</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ishl</span><span class="o">.</span><span class="n">ncont</span><span class="p">):</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span> <span class="n">norm</span><span class="p">[:,</span><span class="n">c</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+                    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">flds</span>
+
+
+    <span class="k">def</span> <span class="nf">_evaluate_diff_gau</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">cart</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates the derivatives of a full Gaussian basis</span>
+<span class="sd">        set and returns a numpy array.&quot;&quot;&quot;</span>
+        <span class="n">cnt</span><span class="p">,</span> <span class="n">flds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span> <span class="ow">in</span> <span class="n">_iter_atom_shells</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span><span class="p">,</span>
+                                                     <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">):</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">ishl</span><span class="o">.</span><span class="n">norm_contract</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">mag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enum_shell</span><span class="p">(</span><span class="n">ishl</span><span class="p">):</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angular</span><span class="p">(</span><span class="n">ishl</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="o">*</span><span class="n">mag</span><span class="p">)</span>
+                <span class="n">da</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">diff_expr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="n">cart</span><span class="p">),</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ishl</span><span class="o">.</span><span class="n">ncont</span><span class="p">):</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radial</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">ishl</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span> <span class="n">norm</span><span class="p">[:,</span> <span class="n">c</span><span class="p">])</span>
+                    <span class="n">dr</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">diff_expr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="n">cart</span><span class="p">),</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">evaluate_expr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+                    <span class="n">flds</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;da * r + a * dr&#39;</span><span class="p">)</span>
+                    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">flds</span>
+
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ncs</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;spherical&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ncc</span>
+
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">chk</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">spherical</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span><span class="p">)</span>
+        <span class="n">_repr</span> <span class="o">=</span> <span class="s1">&#39;BasisFunctions(</span><span class="si">{}</span><span class="s1">,{{}})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span><span class="o">.</span><span class="n">format</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">chk</span><span class="p">):</span> <span class="k">return</span> <span class="n">_repr</span><span class="p">(</span><span class="s1">&#39;spherical&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">chk</span><span class="p">):</span> <span class="k">return</span> <span class="n">_repr</span><span class="p">(</span><span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_repr</span><span class="p">(</span><span class="s1">&#39;mixed&#39;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cartp</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># Attach relevant uni attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">meta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bso</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">current_basis_set_order</span>
+        <span class="n">ptrs</span><span class="p">,</span> <span class="n">xyzs</span><span class="p">,</span> <span class="n">shells</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">enumerate_shells</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ptrs</span> <span class="o">=</span> <span class="n">ptrs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xyzs</span> <span class="o">=</span> <span class="n">xyzs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shells</span> <span class="o">=</span> <span class="n">shells</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ncc</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_dims</span><span class="p">[</span><span class="s1">&#39;ncc&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ncs</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_dims</span><span class="p">[</span><span class="s1">&#39;ncs&#39;</span><span class="p">]</span>
+        <span class="c1"># Scaled or unscaled solid harmonics</span>
+        <span class="n">lmax</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_set</span><span class="o">.</span><span class="n">lmax</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">solid_harmonics</span><span class="p">(</span><span class="n">lmax</span><span class="p">)</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;molcas&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">scaled</span> <span class="ow">and</span> <span class="n">lmax</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">ssh</span> <span class="o">=</span> <span class="n">solid_harmonics</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">sh</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">[</span><span class="n">L</span><span class="p">]</span>
+        <span class="c1"># Re-order p functions as &#39;x&#39;, &#39;y&#39;, &#39;z&#39; rather than -1, 0, 1</span>
+        <span class="k">if</span> <span class="n">cartp</span><span class="p">:</span>
+            <span class="n">ptmp</span> <span class="o">=</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">ml</span><span class="p">,</span> <span class="n">ptmp</span><span class="p">[</span><span class="n">ml</span><span class="p">])</span> <span class="k">for</span> <span class="n">ml</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sh</span> <span class="o">=</span> <span class="n">sh</span>
+        <span class="c1"># Exponential dependence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expnt</span> <span class="o">=</span> <span class="n">_r</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expnt</span> <span class="o">=</span> <span class="n">_r</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pre</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">current_basis_set_order</span><span class="p">[</span><span class="s1">&#39;prefac&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="compute_uncontracted_basis_set_order"><a class="viewcode-back" href="../../../exatomic.algorithms.basis.html#exatomic.algorithms.basis.compute_uncontracted_basis_set_order">[docs]</a><span class="k">def</span> <span class="nf">compute_uncontracted_basis_set_order</span><span class="p">(</span><span class="n">uni</span><span class="p">):</span>
+    <span class="n">bso</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_set_order</span>
+    <span class="n">prims</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">basis_set</span><span class="o">.</span><span class="n">primitives_by_shell</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pcen</span><span class="p">,</span> <span class="n">pL</span><span class="p">,</span> <span class="n">pml</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">uni</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;molcas&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bso</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">],</span> <span class="n">bso</span><span class="p">[</span><span class="s1">&#39;ml&#39;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">c</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="n">pcen</span><span class="p">,</span> <span class="n">pL</span><span class="p">,</span> <span class="n">pml</span><span class="p">),</span> <span class="p">(</span><span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">))):</span>
+                <span class="n">seht</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cen</span><span class="p">][</span><span class="s1">&#39;set&#39;</span><span class="p">]</span>
+                <span class="n">nprim</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">seht</span><span class="p">,</span> <span class="n">L</span><span class="p">)]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nprim</span><span class="p">):</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cen</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">pcen</span> <span class="o">=</span> <span class="n">cen</span>
+            <span class="n">pL</span> <span class="o">=</span> <span class="n">L</span>
+            <span class="n">pml</span> <span class="o">=</span> <span class="n">ml</span>
+    <span class="k">elif</span> <span class="n">uni</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;program&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nwchem&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uni</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;spherical&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Sorry.&#39;</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">exatomic.nwchem.basis</span> <span class="kn">import</span> <span class="n">spherical_ordering_function</span> <span class="k">as</span> <span class="n">func</span>
+        <span class="n">prims</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">seht</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]):</span>
+            <span class="n">shls</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">seht</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">seht</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">nprim</span> <span class="ow">in</span> <span class="n">shls</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nprim</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">ml</span> <span class="ow">in</span> <span class="n">func</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ml</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;ml&#39;</span><span class="p">,</span> <span class="s1">&#39;shell&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;uncontracted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

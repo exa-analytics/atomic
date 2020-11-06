@@ -1,0 +1,7 @@
+exatomic.nbo.editor module
+==========================
+
+.. automodule:: exatomic.nbo.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

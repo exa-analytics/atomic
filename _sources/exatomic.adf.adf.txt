@@ -1,0 +1,18 @@
+exatomic.adf.adf package
+========================
+
+.. automodule:: exatomic.adf.adf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.adf.adf.adf
+   exatomic.adf.adf.geometry
+   exatomic.adf.adf.output
+   exatomic.adf.adf.scf

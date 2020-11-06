@@ -1,0 +1,7 @@
+exatomic.core.basis module
+==========================
+
+.. automodule:: exatomic.core.basis
+   :members:
+   :undoc-members:
+   :show-inheritance:

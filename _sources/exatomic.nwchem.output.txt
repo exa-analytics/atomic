@@ -1,0 +1,7 @@
+exatomic.nwchem.output module
+=============================
+
+.. automodule:: exatomic.nwchem.output
+   :members:
+   :undoc-members:
+   :show-inheritance:

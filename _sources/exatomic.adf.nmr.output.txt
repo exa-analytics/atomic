@@ -1,0 +1,7 @@
+exatomic.adf.nmr.output module
+==============================
+
+.. automodule:: exatomic.adf.nmr.output
+   :members:
+   :undoc-members:
+   :show-inheritance:

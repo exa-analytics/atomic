@@ -1,0 +1,7 @@
+exatomic.core.frame module
+==========================
+
+.. automodule:: exatomic.core.frame
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,22 @@
+exatomic.qe.pw package
+======================
+
+.. automodule:: exatomic.qe.pw
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.qe.pw.classes
+   exatomic.qe.pw.composer
+   exatomic.qe.pw.footer
+   exatomic.qe.pw.header
+   exatomic.qe.pw.input
+   exatomic.qe.pw.output
+   exatomic.qe.pw.parsers
+   exatomic.qe.pw.scf

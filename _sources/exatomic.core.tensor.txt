@@ -1,0 +1,7 @@
+exatomic.core.tensor module
+===========================
+
+.. automodule:: exatomic.core.tensor
+   :members:
+   :undoc-members:
+   :show-inheritance:

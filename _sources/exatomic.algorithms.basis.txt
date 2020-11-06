@@ -1,0 +1,7 @@
+exatomic.algorithms.basis module
+================================
+
+.. automodule:: exatomic.algorithms.basis
+   :members:
+   :undoc-members:
+   :show-inheritance:

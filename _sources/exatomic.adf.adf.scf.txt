@@ -1,0 +1,7 @@
+exatomic.adf.adf.scf module
+===========================
+
+.. automodule:: exatomic.adf.adf.scf
+   :members:
+   :undoc-members:
+   :show-inheritance:

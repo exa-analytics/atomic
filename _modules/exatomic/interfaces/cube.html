@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.interfaces.cube &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.interfaces.cube</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.interfaces.cube</h1><div class="highlight"><pre>
+<span></span> <span class="c1">#-*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Cube File Support</span>
+<span class="sd">##########################</span>
+<span class="sd">Cube files contain an atomic geometry and scalar field values corresponding to</span>
+<span class="sd">a physical quantity.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">TypedMeta</span>
+<span class="kn">from</span> <span class="nn">exatomic</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">Editor</span><span class="p">,</span> <span class="n">AtomicField</span><span class="p">,</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Universe</span>
+<span class="kn">from</span> <span class="nn">exatomic.base</span> <span class="kn">import</span> <span class="n">z2sym</span><span class="p">,</span> <span class="n">sym2z</span>
+
+<div class="viewcode-block" id="Meta"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.Meta">[docs]</a><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">TypedMeta</span><span class="p">):</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">Atom</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">AtomicField</span></div>
+
+
+<div class="viewcode-block" id="Cube"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.Cube">[docs]</a><span class="k">class</span> <span class="nc">Cube</span><span class="p">(</span><span class="n">six</span><span class="o">.</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">Meta</span><span class="p">,</span> <span class="n">Editor</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An editor for handling cube files. Assumes scalar field values are arranged</span>
+<span class="sd">    with the x axis as the outer loop and the z axis as the inner loop.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        cube = Cube(&#39;my.cube&#39;)</span>
+<span class="sd">        cube.atom                # Displays the atom dataframe</span>
+<span class="sd">        cube.field               # Displays the field dataframe</span>
+<span class="sd">        cube.field.field_values  # Displays the list of field values</span>
+<span class="sd">        uni = cube.to_universe() # Converts the cube file editor to a universe</span>
+<span class="sd">        UniverseWidget(uni)      # Renders the cube file</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        Be sure your cube is in atomic units.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Cube.parse_atom"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.Cube.parse_atom">[docs]</a>    <span class="k">def</span> <span class="nf">parse_atom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the :class:`~exatomic.atom.Atom` object from the cube file in place.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nat</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;Zeff&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pandas_dataframe</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">nat</span> <span class="o">+</span> <span class="mi">6</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">z2sym</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atom</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Cube.parse_field"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.Cube.parse_field">[docs]</a>    <span class="k">def</span> <span class="nf">parse_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the scalar field into an :class:`~exatomic.core.field.AtomicField`.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The :class:`~exatomic.core.field.AtomicField` tracks both the</span>
+<span class="sd">            field parameters (i.e. information about the discretization and shape of</span>
+<span class="sd">            the field&#39;s spatial points) as well as the field values (at each of</span>
+<span class="sd">            those points in space). See :meth:`~exatomic.algorithms.orbital_util.make_fps`</span>
+<span class="sd">            for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">[:</span><span class="mi">2</span><span class="p">]}</span>
+        <span class="n">typs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+        <span class="n">nat</span><span class="p">,</span> <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="p">[</span><span class="n">typ</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">typ</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">typs</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())]</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">dxi</span><span class="p">,</span> <span class="n">dxj</span><span class="p">,</span> <span class="n">dxk</span> <span class="o">=</span> <span class="p">[</span><span class="n">typ</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">typ</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">typs</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())]</span>
+        <span class="n">ny</span><span class="p">,</span> <span class="n">dyi</span><span class="p">,</span> <span class="n">dyj</span><span class="p">,</span> <span class="n">dyk</span> <span class="o">=</span> <span class="p">[</span><span class="n">typ</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">typ</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">typs</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())]</span>
+        <span class="n">nz</span><span class="p">,</span> <span class="n">dzi</span><span class="p">,</span> <span class="n">dzj</span><span class="p">,</span> <span class="n">dzk</span> <span class="o">=</span> <span class="p">[</span><span class="n">typ</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">typ</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">typs</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())]</span>
+        <span class="n">nat</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nat</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ny</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nz</span><span class="p">)</span>
+        <span class="n">volstart</span> <span class="o">=</span> <span class="n">nat</span> <span class="o">+</span> <span class="mi">6</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">volstart</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">volstart</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="n">volstart</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">ncol</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">volstart</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pandas_dataframe</span><span class="p">(</span><span class="n">volstart</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">ncol</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s1">&#39;ox&#39;</span><span class="p">:</span> <span class="n">ox</span><span class="p">,</span> <span class="s1">&#39;oy&#39;</span><span class="p">:</span> <span class="n">oy</span><span class="p">,</span> <span class="s1">&#39;oz&#39;</span><span class="p">:</span> <span class="n">oz</span><span class="p">,</span>
+                        <span class="s1">&#39;nx&#39;</span><span class="p">:</span> <span class="n">nx</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">:</span> <span class="n">ny</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">:</span> <span class="n">nz</span><span class="p">,</span>
+                        <span class="s1">&#39;dxi&#39;</span><span class="p">:</span> <span class="n">dxi</span><span class="p">,</span> <span class="s1">&#39;dxj&#39;</span><span class="p">:</span> <span class="n">dxj</span><span class="p">,</span> <span class="s1">&#39;dxk&#39;</span><span class="p">:</span> <span class="n">dxk</span><span class="p">,</span>
+                        <span class="s1">&#39;dyi&#39;</span><span class="p">:</span> <span class="n">dyi</span><span class="p">,</span> <span class="s1">&#39;dyj&#39;</span><span class="p">:</span> <span class="n">dyj</span><span class="p">,</span> <span class="s1">&#39;dyk&#39;</span><span class="p">:</span> <span class="n">dyk</span><span class="p">,</span>
+                        <span class="s1">&#39;dzi&#39;</span><span class="p">:</span> <span class="n">dzi</span><span class="p">,</span> <span class="s1">&#39;dzj&#39;</span><span class="p">:</span> <span class="n">dzj</span><span class="p">,</span> <span class="s1">&#39;dzk&#39;</span><span class="p">:</span> <span class="n">dzk</span><span class="p">,</span>
+                        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                        <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_type</span><span class="p">})</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">]:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ox&#39;</span><span class="p">,</span> <span class="s1">&#39;oy&#39;</span><span class="p">,</span> <span class="s1">&#39;oz&#39;</span><span class="p">,</span> <span class="s1">&#39;dxi&#39;</span><span class="p">,</span> <span class="s1">&#39;dxj&#39;</span><span class="p">,</span> <span class="s1">&#39;dxk&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;dyi&#39;</span><span class="p">,</span> <span class="s1">&#39;dyj&#39;</span><span class="p">,</span> <span class="s1">&#39;dyk&#39;</span><span class="p">,</span> <span class="s1">&#39;dzi&#39;</span><span class="p">,</span> <span class="s1">&#39;dzj&#39;</span><span class="p">,</span> <span class="s1">&#39;dzk&#39;</span><span class="p">]:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">AtomicField</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">field_values</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Cube.from_universe"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.Cube.from_universe">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_universe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a cube file format Editor from a given field in a</span>
+<span class="sd">        :class:`~exatomic.core.universe.Universe`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uni (:class:`~exatomic.core.universe.Universe`): a universe</span>
+<span class="sd">            idx (int): field index in :class:`~exatomic.core.field.AtomicField`</span>
+<span class="sd">            name (str): description for comment line</span>
+<span class="sd">            frame (int): frame index in :class:`~exatomic.core.atom.Atom`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">nframes</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">frame</span>
+        <span class="n">hdr</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> -- written by exatomic v</span><span class="si">{}</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+        <span class="n">ffmt</span> <span class="o">=</span> <span class="s1">&#39; </span><span class="si">{:&gt; 12.6f}</span><span class="s1">&#39;</span>
+        <span class="n">flfmt</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&gt;5}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">ffmt</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span>
+        <span class="k">if</span> <span class="s1">&#39;Z&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">:</span>
+            <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sym2z</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;Zeff&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">:</span>
+            <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;Zeff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">]:</span>
+            <span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">volum</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">field_values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">orig</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">field</span><span class="o">.</span><span class="n">ox</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">oy</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">oz</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">nx</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">ny</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">nz</span><span class="p">)</span>
+        <span class="n">xdim</span> <span class="o">=</span> <span class="n">nx</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dxi</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dxj</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dxk</span>
+        <span class="n">ydim</span> <span class="o">=</span> <span class="n">ny</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dyi</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dyj</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dyk</span>
+        <span class="n">zdim</span> <span class="o">=</span> <span class="n">nz</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dzi</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dzj</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">dzk</span>
+        <span class="n">atargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;float_format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%12.6f</span><span class="s1">&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;Zeff&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]}</span>
+        <span class="n">chnk</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nz</span> <span class="o">//</span> <span class="mi">6</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="n">nz</span> <span class="o">%</span> <span class="mi">6</span><span class="p">:</span> <span class="n">chnk</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">nz</span> <span class="o">%</span> <span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">hdr</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">__version__</span><span class="p">)</span>
+                  <span class="o">+</span> <span class="n">flfmt</span><span class="p">(</span><span class="o">*</span><span class="n">orig</span><span class="p">)</span> <span class="o">+</span> <span class="n">flfmt</span><span class="p">(</span><span class="o">*</span><span class="n">xdim</span><span class="p">)</span>
+                  <span class="o">+</span> <span class="n">flfmt</span><span class="p">(</span><span class="o">*</span><span class="n">ydim</span><span class="p">)</span> <span class="o">+</span> <span class="n">flfmt</span><span class="p">(</span><span class="o">*</span><span class="n">zdim</span><span class="p">)</span>
+                  <span class="o">+</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="o">**</span><span class="n">atargs</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                  <span class="o">+</span> <span class="p">(</span><span class="n">chnk</span> <span class="o">*</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">ny</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">volum</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                    <span class="n">ffmt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">field_type</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;field_type&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Cube</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_type</span> <span class="o">=</span> <span class="n">field_type</span></div>
+
+
+
+<div class="viewcode-block" id="uni_from_cubes"><a class="viewcode-back" href="../../../exatomic.interfaces.cube.html#exatomic.interfaces.cube.uni_from_cubes">[docs]</a><span class="k">def</span> <span class="nf">uni_from_cubes</span><span class="p">(</span><span class="n">adir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ncubes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;cube&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Put a bunch of cubes into a universe.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        uni = uni_from_cubes(&#39;/path/to/files/&#39;)       # Parse all cubes matching &#39;files/*cube&#39;</span>
+<span class="sd">        uni = uni_from_cubes(&#39;files/&#39;, ext=&#39;cub&#39;)     # Parse all cubes matching &#39;files/*cub&#39;</span>
+<span class="sd">        uni = uni_from_cubes(&#39;files/&#39;, verbose=True)  # Print file names when parsing</span>
+<span class="sd">        uni = uni_from_cubes(&#39;files/&#39;, ncubes=5)      # Only parse the first 5 cubes</span>
+<span class="sd">                                                      # sorted lexicographically by file name</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        verbose (bool): print file names when reading cubes</span>
+<span class="sd">        ncubes (int): get only the first ncubes</span>
+<span class="sd">        ext (str): file extension of cube files</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        uni (:class:`exatomic.core.universe.Universe`)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">adir</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">):</span> <span class="n">adir</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span>
+    <span class="n">cubes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">adir</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">+</span> <span class="n">ext</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">ncubes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cubes</span> <span class="o">=</span> <span class="n">cubes</span><span class="p">[:</span><span class="n">ncubes</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cub</span> <span class="ow">in</span> <span class="n">cubes</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">cub</span><span class="p">)</span>
+    <span class="n">uni</span> <span class="o">=</span> <span class="n">Universe</span><span class="p">(</span><span class="n">atom</span><span class="o">=</span><span class="n">Cube</span><span class="p">(</span><span class="n">cubes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">atom</span><span class="p">)</span>
+    <span class="n">flds</span> <span class="o">=</span> <span class="p">[</span><span class="n">Cube</span><span class="p">(</span><span class="n">cub</span><span class="p">)</span><span class="o">.</span><span class="n">field</span> <span class="k">for</span> <span class="n">cub</span> <span class="ow">in</span> <span class="n">cubes</span><span class="p">]</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="n">flds</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uni</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

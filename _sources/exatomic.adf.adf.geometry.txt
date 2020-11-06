@@ -1,0 +1,7 @@
+exatomic.adf.adf.geometry module
+================================
+
+.. automodule:: exatomic.adf.adf.geometry
+   :members:
+   :undoc-members:
+   :show-inheritance:

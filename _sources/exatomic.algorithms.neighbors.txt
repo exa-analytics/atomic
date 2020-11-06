@@ -1,0 +1,7 @@
+exatomic.algorithms.neighbors module
+====================================
+
+.. automodule:: exatomic.algorithms.neighbors
+   :members:
+   :undoc-members:
+   :show-inheritance:

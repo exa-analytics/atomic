@@ -1,0 +1,7 @@
+exatomic.qe.pw.scf module
+=========================
+
+.. automodule:: exatomic.qe.pw.scf
+   :members:
+   :undoc-members:
+   :show-inheritance:

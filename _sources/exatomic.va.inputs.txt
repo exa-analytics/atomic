@@ -1,0 +1,7 @@
+exatomic.va.inputs module
+=========================
+
+.. automodule:: exatomic.va.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

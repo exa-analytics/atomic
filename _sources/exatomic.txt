@@ -1,0 +1,39 @@
+exatomic package
+================
+
+.. automodule:: exatomic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.adf
+   exatomic.algorithms
+   exatomic.core
+   exatomic.gaussian
+   exatomic.interfaces
+   exatomic.molcas
+   exatomic.nbo
+   exatomic.nwchem
+   exatomic.plotter
+   exatomic.qchem
+   exatomic.qe
+   exatomic.util
+   exatomic.va
+   exatomic.widgets
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.base
+   exatomic.formula
+   exatomic.mpl
+   exatomic.static

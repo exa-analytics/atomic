@@ -1,0 +1,7 @@
+exatomic.nwchem.inputs module
+=============================
+
+.. automodule:: exatomic.nwchem.inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:

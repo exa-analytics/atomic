@@ -1,0 +1,7 @@
+exatomic.algorithms.displacement module
+=======================================
+
+.. automodule:: exatomic.algorithms.displacement
+   :members:
+   :undoc-members:
+   :show-inheritance:

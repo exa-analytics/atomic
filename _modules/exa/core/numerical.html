@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exa.core.numerical &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>exa.core.numerical</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exa.core.numerical</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Data Objects</span>
+<span class="sd">###################################</span>
+<span class="sd">Data objects are used to store typed data coming from an external source (for</span>
+<span class="sd">example a file on disk). There are three primary data objects provided by</span>
+<span class="sd">this module, :class:`~exa.core.numerical.Series`, :class:`~exa.core.numerical.DataFrame`,</span>
+<span class="sd">and :class:`~exa.core.numerical.Field`. The purpose of these objects is to facilitate</span>
+<span class="sd">conversion of data into &quot;traits&quot; used in visualization and enforce relationships</span>
+<span class="sd">between data objects in a given container. Any of the objects provided by this</span>
+<span class="sd">module may be extended.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exa.core.error</span> <span class="kn">import</span> <span class="n">RequiredColumnError</span>
+
+
+<span class="k">class</span> <span class="nc">Numerical</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for :class:`~exa.core.numerical.Series`,</span>
+<span class="sd">    :class:`~exa.core.numerical.DataFrame`, and :class:`~exa.numerical.Field`</span>
+<span class="sd">    objects, providing default trait functionality and clean representations</span>
+<span class="sd">    when present as part of containers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">slice_naive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slice a data object based on its index, either by value (.loc) or</span>
+<span class="sd">        position (.iloc).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: Single index value, slice, tuple, or list of indices/positionals</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data: Slice of self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">check_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BaseSeries</span><span class="p">(</span><span class="n">Numerical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for dense and sparse series objects (labeled arrays).</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _sname (str): May have a required name (default None)</span>
+<span class="sd">        _iname (str: May have a required index name</span>
+<span class="sd">        _stype (type): May have a required value type</span>
+<span class="sd">        _itype (type): May have a required index type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_metadata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+    <span class="c1"># These attributes may be set when subclassing Series</span>
+    <span class="n">_sname</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># Series may have a required name</span>
+    <span class="n">_iname</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># Series may have a required index name</span>
+    <span class="n">_stype</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># Series may have a required value type</span>
+    <span class="n">_itype</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># Series may have a required index type</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;meta&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseSeries</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_sname&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_iname&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sname</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Object&#39;s name changed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sname</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iname</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Object&#39;s index name changed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+
+<span class="k">class</span> <span class="nc">BaseDataFrame</span><span class="p">(</span><span class="n">Numerical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for dense and sparse dataframe objects (labeled matrices).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If the _cardinal attribute is populated, it will automatically be added</span>
+<span class="sd">        to the _categories and _columns attributes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _cardinal (tuple): Tuple of column name and raw type that acts as foreign key to index of another table</span>
+<span class="sd">        _index (str): Name of index (may be used as foreign key in another table)</span>
+<span class="sd">        _columns (list): Required columns</span>
+<span class="sd">        _categories (dict): Dict of column names, raw types that if present will be converted to and from categoricals automatically</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_metadata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+    <span class="n">_cardinal</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Tuple of column name and raw type that acts as foreign key to index of another table</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># Name of index (may be used as foreign key in another table)</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[]</span>      <span class="c1"># Required columns</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c1"># Dict of column names, raw types that if present will be converted to and from categoricals automatically</span>
+
+    <span class="k">def</span> <span class="nf">cardinal_groupby</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group this object on it cardinal dimension (_cardinal).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            grpby: Pandas groupby object (grouped on _cardinal)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">grpby</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grpby</span>
+
+    <span class="k">def</span> <span class="nf">slice_cardinal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the slice of this object by the value or values of the cardinal</span>
+<span class="sd">        dimension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">check_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cardinal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">key</span><span class="p">)])</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;meta&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseDataFrame</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+
+<span class="k">class</span> <span class="nc">Series</span><span class="p">(</span><span class="n">BaseSeries</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A labeled array.</span>
+
+<span class="sd">    .. code-block:: Python</span>
+
+<span class="sd">        class MySeries(exa.core.numerical.Series):</span>
+<span class="sd">            _sname = &#39;data&#39;        # series default name</span>
+<span class="sd">            _iname = &#39;data_index&#39;  # series default index name</span>
+
+<span class="sd">        seri = MySeries(np.random.rand(10**5))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Series</span>
+
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a copy of this object.</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            For arguments and description of behavior see `pandas docs`_.</span>
+
+<span class="sd">        .. _pandas docs: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.copy.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>    <span class="c1"># Note that type conversion does not perform copy</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">DataFrame</span><span class="p">(</span><span class="n">BaseDataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data table</span>
+
+<span class="sd">    .. code-block:: Python</span>
+
+<span class="sd">        class MyDF(exa.core.numerical.DataFrame):</span>
+<span class="sd">            _cardinal = (&#39;cardinal&#39;, int)</span>
+<span class="sd">            _index = &#39;mydf_index&#39;</span>
+<span class="sd">            _columns = [&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;symbol&#39;]</span>
+<span class="sd">            _categories = {&#39;symbol&#39;: str}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_constructor_sliced</span> <span class="o">=</span> <span class="n">Series</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataFrame</span>
+
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a copy of this object.</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            For arguments and description of behavior see `pandas docs`_.</span>
+
+<span class="sd">        .. _pandas docs: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.copy.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>    <span class="c1"># Note that type conversion does not perform copy</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_revert_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inplace conversion to categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inplace conversion from categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;shape: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cardinal</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_categories</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="p">:</span>
+                <span class="n">missing</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">RequiredColumnError</span><span class="p">(</span><span class="n">missing</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Object&#39;s index name changed from </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span>
+
+
+<span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A field is defined by field data and field values. Field data defines the</span>
+<span class="sd">    discretization of the field (i.e. its origin in a given space, number of</span>
+<span class="sd">    steps/step spaceing, and endpoint for example). Field values can be scalar</span>
+<span class="sd">    (series) and/or vector (dataframe) data defining the magnitude and/or direction</span>
+<span class="sd">    at each given point.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The convention for generating the discrete field data and ordering of</span>
+<span class="sd">        the field values must be the same (e.g. discrete field points are</span>
+<span class="sd">        generated x, y, then z and scalar field values are a series object</span>
+<span class="sd">        ordered looping first over x then y, then z).</span>
+
+<span class="sd">    In addition to the :class:`~exa.core.numerical.DataFrame` attributes, this object</span>
+<span class="sd">    has the following:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Field</span>
+
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a copy of this object.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Copies both field data and field values.</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            For arguments and description of behavior see `pandas docs`_.</span>
+
+<span class="sd">        .. _pandas docs: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.copy.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>    <span class="c1"># Note that type conversion does not perform copy</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">field_values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">memory_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the combined memory usage of the field data and field values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Field</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">+=</span> <span class="n">value</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;field_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">slice_naive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Naively (on index) slice the field data and values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: Int, slice, or iterable to select data and values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            field: Sliced field object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">check_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">enum</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+        <span class="n">enum</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">[</span><span class="n">enum</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">field_values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c1">#def slice_cardinal(self, key):</span>
+    <span class="c1">#    cls = self.__class__</span>
+    <span class="c1">#    grpby = self.cardinal_groupby()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># The following check allows creation of a single field (whose field data</span>
+        <span class="c1"># comes from a series object and field values from another series object).</span>
+        <span class="n">field_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;field_values&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Field</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;field_values&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_values</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">Series</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">field_values</span><span class="p">]</span>    <span class="c1"># Convert type for nice repr</span>
+        <span class="k">elif</span> <span class="n">field_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_values</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">Series</span><span class="p">(</span><span class="n">field_values</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Wrong type for field_values with type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">field_values</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;contains </span><span class="si">{}</span><span class="s1"> fields&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_values</span><span class="p">)))</span>
+
+
+<span class="k">class</span> <span class="nc">Field3D</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dataframe for storing dimensions of a scalar or vector field of 3D space.</span>
+
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | Column            | Type     | Description                               |</span>
+<span class="sd">    +===================+==========+===========================================+</span>
+<span class="sd">    | nx                | int      | number of grid points in x                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | ny                | int      | number of grid points in y                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | nz                | int      | number of grid points in z                |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | ox                | float    | field origin point in x                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | oy                | float    | field origin point in y                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | oz                | float    | field origin point in z                   |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | xi                | float    | First component in x                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | xj                | float    | Second component in x                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | xk                | float    | Third component in x                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | yi                | float    | First component in y                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | yj                | float    | Second component in y                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | yk                | float    | Third component in y                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | zi                | float    | First component in z                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | zj                | float    | Second component in z                     |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+<span class="sd">    | zk                | float    | Third component in z                      |</span>
+<span class="sd">    +-------------------+----------+-------------------------------------------+</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Each field should be flattened into an N x 1 (scalar) or N x 3 (vector)</span>
+<span class="sd">        series or dataframe respectively. The orientation of the flattening</span>
+<span class="sd">        should have x as the outer loop and z values as the inner loop (for both</span>
+<span class="sd">        cases). This is sometimes called C-major or C-style order, and has</span>
+<span class="sd">        the last index changing the fastest and the first index changing the</span>
+<span class="sd">        slowest.</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        :class:`~exa.core.numerical.Field`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;nz&#39;</span><span class="p">,</span> <span class="s1">&#39;ox&#39;</span><span class="p">,</span> <span class="s1">&#39;oy&#39;</span><span class="p">,</span> <span class="s1">&#39;oz&#39;</span><span class="p">,</span> <span class="s1">&#39;xi&#39;</span><span class="p">,</span> <span class="s1">&#39;xj&#39;</span><span class="p">,</span> <span class="s1">&#39;xk&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;yi&#39;</span><span class="p">,</span> <span class="s1">&#39;yj&#39;</span><span class="p">,</span> <span class="s1">&#39;yk&#39;</span><span class="p">,</span> <span class="s1">&#39;zi&#39;</span><span class="p">,</span> <span class="s1">&#39;zj&#39;</span><span class="p">,</span> <span class="s1">&#39;zk&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Field3D</span>
+
+
+<span class="k">def</span> <span class="nf">check_key</span><span class="p">(</span><span class="n">data_object</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cardinal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the value of an index key by matching values or getting positionals.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">itype</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">itype</span> <span class="o">+</span> <span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Unknown key type </span><span class="si">{}</span><span class="s2"> for key </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">key</span><span class="p">))</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">data_object</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="n">cardinal</span> <span class="ow">and</span> <span class="n">data_object</span><span class="o">.</span><span class="n">_cardinal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">data_object</span><span class="p">[</span><span class="n">data_object</span><span class="o">.</span><span class="n">_cardinal</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">itype</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">itype</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">itype</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">key</span>
+
+
+<span class="k">class</span> <span class="nc">SparseDataFrame</span><span class="p">(</span><span class="n">BaseDataFrame</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SparseDataFrame</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

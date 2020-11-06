@@ -1,0 +1,7 @@
+exatomic.algorithms.numerical module
+====================================
+
+.. automodule:: exatomic.algorithms.numerical
+   :members:
+   :undoc-members:
+   :show-inheritance:

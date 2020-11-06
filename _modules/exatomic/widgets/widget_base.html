@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.widgets.widget_base &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.widgets.widget_base</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.widgets.widget_base</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Lower Level Widgets</span>
+<span class="sd">#########################</span>
+<span class="sd">Lower level support widgets framework.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1">#import numpy as np</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
+<span class="kn">from</span> <span class="nn">traitlets</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Bool</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Unicode</span><span class="p">,</span>
+                       <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Box</span><span class="p">,</span> <span class="n">VBox</span><span class="p">,</span> <span class="n">HBox</span><span class="p">,</span> <span class="n">IntSlider</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">ToggleButton</span><span class="p">,</span>
+    <span class="n">DOMWidget</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Dropdown</span><span class="p">,</span> <span class="n">register</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">exatomic</span> <span class="kn">import</span> <span class="n">__js_version__</span>
+<span class="c1">#from .traits import uni_traits</span>
+<span class="c1">#from .widget_utils import (_glo, _flo, _wlo, _hboxlo,</span>
+<span class="kn">from</span> <span class="nn">.widget_utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">_wlo</span><span class="p">,</span> <span class="n">_hboxlo</span><span class="p">,</span>
+                           <span class="n">_vboxlo</span><span class="p">,</span> <span class="n">_bboxlo</span><span class="p">,</span> <span class="n">_ListDict</span><span class="p">,</span>
+                           <span class="n">Folder</span><span class="p">,</span> <span class="n">GUIBox</span><span class="p">,</span> <span class="n">gui_field_widgets</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ExatomicScene"><a class="viewcode-back" href="../../../exatomic.widgets.widget_base.html#exatomic.widgets.widget_base.ExatomicScene">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">ExatomicScene</span><span class="p">(</span><span class="n">DOMWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A custom scene (three.js scene) used for visualization</span>
+<span class="sd">    of an atomic universe.</span>
+
+<span class="sd">    Custom parameters can be inspected using ``vars``. Parameters</span>
+<span class="sd">    include field dimensions, the universe itself, field colors,</span>
+<span class="sd">    widths, heights for the widget, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_model_module_version</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="n">__js_version__</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_module_version</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="n">__js_version__</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_module</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;exatomic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_model_module</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;exatomic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_model_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;ExatomicSceneModel&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;ExatomicSceneView&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Base controls and GUI</span>
+    <span class="n">savedir</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">imgname</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">Int</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># doesn&#39;t need sync</span>
+    <span class="n">cameras</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">trait</span><span class="o">=</span><span class="n">Dict</span><span class="p">())</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save_cam</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">clear</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_pos</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;#003399&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_neg</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;#FF9900&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_iso</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_o</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_kind</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_ml</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Test containers</span>
+    <span class="c1"># test = Bool(False).tag(sync=True) # doesn&#39;t need sync</span>
+    <span class="n">uni</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># doesn&#39;t need sync</span>
+    <span class="n">field_nx</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_ny</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_nz</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_ox</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_oy</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_oz</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_fx</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_fy</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_fz</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_custom_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom message handler.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;image&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_image</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;camera&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_camera</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Custom msg not handled.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="s1">&#39;type of msg : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="s1">&#39;msg         : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+                                              <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_save_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cache a save state of the current camera.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save a PNG of the scene.&quot;&quot;&quot;</span>
+
+        <span class="n">savedir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">savedir</span>
+        <span class="k">if</span> <span class="n">savedir</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">savedir</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Must supply a valid directory.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">savedir</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">):</span>
+            <span class="n">savedir</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span>
+
+        <span class="n">nxt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:06d}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgname</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">fmt</span><span class="p">(</span><span class="n">nxt</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">savedir</span><span class="p">,</span> <span class="n">fname</span><span class="p">])):</span>
+            <span class="n">nxt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">fmt</span><span class="p">(</span><span class="n">nxt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;-</span><span class="si">{}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">):</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">):</span>
+            <span class="n">fname</span> <span class="o">+=</span> <span class="s1">&#39;.png&#39;</span>
+
+        <span class="n">repl</span> <span class="o">=</span> <span class="s1">&#39;data:image/png;base64,&#39;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">savedir</span><span class="p">,</span> <span class="n">fname</span><span class="p">]),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b64decode</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">repl</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_set_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ship the camera to JS to set a cached camera.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">new</span><span class="p">]})</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close the three.js objects and then close.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;close&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;layout&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+            <span class="n">min_height</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;min_height&#39;</span><span class="p">,</span> <span class="s1">&#39;400px&#39;</span><span class="p">)</span>
+            <span class="n">min_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;min_width&#39;</span><span class="p">,</span> <span class="s1">&#39;300px&#39;</span><span class="p">)</span>
+            <span class="n">flex</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;flex&#39;</span><span class="p">,</span> <span class="s1">&#39;1 1 auto&#39;</span><span class="p">)</span>
+            <span class="n">lo</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">min_height</span><span class="o">=</span><span class="n">min_height</span><span class="p">,</span>
+                        <span class="n">flex</span><span class="o">=</span><span class="n">flex</span><span class="p">,</span> <span class="n">min_width</span><span class="o">=</span><span class="n">min_width</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DOMWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">lo</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TensorScene"><a class="viewcode-back" href="../../../exatomic.widgets.widget_base.html#exatomic.widgets.widget_base.TensorScene">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">TensorScene</span><span class="p">(</span><span class="n">ExatomicScene</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Visualize a cartesian tensor.&quot;&quot;&quot;</span>
+
+    <span class="n">_model_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;TensorSceneModel&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;TensorSceneView&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">txx</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">txy</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">txz</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tyx</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tyy</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tyz</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tzx</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tzy</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tzz</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tdx</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UniverseScene"><a class="viewcode-back" href="../../../exatomic.widgets.widget_base.html#exatomic.widgets.widget_base.UniverseScene">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">UniverseScene</span><span class="p">(</span><span class="n">ExatomicScene</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A scene for viewing quantum systems.&quot;&quot;&quot;</span>
+    <span class="n">_model_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;UniverseSceneModel&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;UniverseSceneView&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Top level index</span>
+    <span class="n">frame_idx</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Atom traits</span>
+    <span class="n">atom_x</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_y</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_z</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_l</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_s</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#    atom_r = Dict().tag(sync=True)</span>
+    <span class="n">atom_vr</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_cr</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_c</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">atom_3d</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Two traits</span>
+    <span class="n">two_b0</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">two_b1</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Field traits</span>
+    <span class="n">field_i</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_v</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_p</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_idx</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_iso</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.03</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">field_show</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cont_show</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cont_axis</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cont_num</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cont_lim</span> <span class="o">=</span> <span class="n">List</span><span class="p">([</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cont_val</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Frame traits</span>
+    <span class="n">frame__a</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Tensor traits</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tensor_d</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tidx</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># View traits</span>
+    <span class="n">fill_idx</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bond_r</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">clear_selected</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="c1"># This block works to print out changes from javascript</span>
+    <span class="c1">#@observe(&#39;selected&#39;)</span>
+    <span class="c1">#def _observe_selected(self, change):</span>
+    <span class="c1">#    print(change[&#39;old&#39;])</span>
+    <span class="c1">#    print(change[&#39;new&#39;])</span>
+
+
+<div class="viewcode-block" id="ExatomicBox"><a class="viewcode-back" href="../../../exatomic.widgets.widget_base.html#exatomic.widgets.widget_base.ExatomicBox">[docs]</a><span class="nd">@register</span>
+<span class="k">class</span> <span class="nc">ExatomicBox</span><span class="p">(</span><span class="n">Box</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for containers of a GUI and scene.&quot;&quot;&quot;</span>
+    <span class="n">_model_module_version</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="n">__js_version__</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_module_version</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="n">__js_version__</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_model_module</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;exatomic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_module</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;exatomic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_model_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;ExatomicBoxModel&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_view_name</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span><span class="s1">&#39;ExatomicBoxView&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">active_scene_indices</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">linked</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Control which scenes are controlled by the GUI.&quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_controls</span><span class="o">.</span><span class="n">items</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_scene_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+                                     <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shut down all active widgets within the container.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">widget</span><span class="o">.</span><span class="n">_close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> <span class="n">widget</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">widget</span><span class="o">.</span><span class="n">_close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> <span class="n">widget</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all the active GUI objects.&quot;&quot;&quot;</span>
+        <span class="n">mit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">mit</span> <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">active</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_active_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses the controls for active scenes.&quot;&quot;&quot;</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;bars&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Active Scenes&#39;</span><span class="p">)</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">scn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">)])</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_active</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">active</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses the controls to save images.&quot;&quot;&quot;</span>
+        <span class="n">saves</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Image&#39;</span><span class="p">)</span>
+        <span class="n">saveopts</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;dir&#39;</span><span class="p">,</span> <span class="n">Text</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())),</span>
+            <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">Text</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Save&#39;</span><span class="p">))</span>
+        <span class="p">])</span>
+        <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">:</span>
+            <span class="n">link</span><span class="p">((</span><span class="n">saveopts</span><span class="p">[</span><span class="s1">&#39;dir&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">scn</span><span class="p">,</span> <span class="s1">&#39;savedir&#39;</span><span class="p">))</span>
+            <span class="n">link</span><span class="p">((</span><span class="n">saveopts</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">scn</span><span class="p">,</span> <span class="s1">&#39;imgname&#39;</span><span class="p">))</span>
+        <span class="k">def</span> <span class="nf">_saves</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">save</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">save</span>
+        <span class="n">saveopts</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_saves</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">saves</span><span class="p">,</span> <span class="n">saveopts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_camera_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses controls for caching and setting cameras.&quot;&quot;&quot;</span>
+        <span class="n">ncams</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">scn</span><span class="o">.</span><span class="n">cameras</span><span class="p">)</span> <span class="k">for</span> <span class="n">scn</span>
+                    <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">))</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">camera</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Camera&#39;</span><span class="p">)</span>
+        <span class="n">camopts</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+             <span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;arrow-circle-down&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Save&#39;</span><span class="p">)),</span>
+             <span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="n">IntSlider</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Load&#39;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                               <span class="nb">max</span><span class="o">=</span><span class="n">ncams</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">))])</span>
+
+        <span class="k">def</span> <span class="nf">_save_cam</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">save_cam</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">save_cam</span>
+                <span class="n">btn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span>
+                <span class="n">btn</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scn</span><span class="o">.</span><span class="n">cameras</span><span class="p">)</span>
+
+        <span class="n">camopts</span><span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_save_cam</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">:</span>
+            <span class="n">camopts</span><span class="p">[</span><span class="s1">&#39;set&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">scn</span><span class="o">.</span><span class="n">_set_camera</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">camopts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Link&#39;</span><span class="p">))</span>
+            <span class="k">def</span> <span class="nf">_link</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">linked</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked</span>
+                <span class="n">btn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_controls</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked</span><span class="p">:</span>
+                    <span class="n">btn</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s1">&#39;unlink&#39;</span>
+                    <span class="n">btn</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39; Unlink&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">btn</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s1">&#39;link&#39;</span>
+                    <span class="n">btn</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39; Link&#39;</span>
+            <span class="n">camopts</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_link</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Folder</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">camopts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_field_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Folder that houses controls for viewing scalar fields.&quot;&quot;&quot;</span>
+        <span class="n">uni</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;uni&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="c1">#test = kwargs.pop(&#39;test&#39;, True)</span>
+        <span class="n">fdict</span> <span class="o">=</span> <span class="n">gui_field_widgets</span><span class="p">(</span><span class="n">uni</span><span class="p">)</span><span class="c1">#, test)</span>
+
+        <span class="k">def</span> <span class="nf">_iso</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_iso</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_alpha</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_nx</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_nx</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_ny</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_ny</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">def</span> <span class="nf">_nz</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                <span class="n">scn</span><span class="o">.</span><span class="n">field_nz</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">new</span>
+
+        <span class="n">fdict</span><span class="p">[</span><span class="s1">&#39;iso&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_iso</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">fdict</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_alpha</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">fdict</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_nx</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">fdict</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_ny</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">fdict</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">_nz</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39; Fields&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;cube&#39;</span><span class="p">)</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">fdict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">folder</span>
+
+    <span class="k">def</span> <span class="nf">_init_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize generic GUI controls and observe callbacks.&quot;&quot;&quot;</span>
+        <span class="n">mainopts</span> <span class="o">=</span> <span class="n">_ListDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;trash&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Close&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;clear&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;bomb&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39; Clear&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_wlo</span><span class="p">))])</span>
+        <span class="n">mainopts</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_close</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">scn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+                    <span class="n">scn</span><span class="o">.</span><span class="n">clear</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scn</span><span class="o">.</span><span class="n">clear</span>
+            <span class="n">mainopts</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_close</span><span class="p">)</span>
+            <span class="n">mainopts</span><span class="p">[</span><span class="s1">&#39;clear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">_clear</span><span class="p">)</span>
+        <span class="n">mainopts</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_folder</span><span class="p">()),</span>
+                         <span class="p">(</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_folder</span><span class="p">()),</span>
+                         <span class="p">(</span><span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_camera_folder</span><span class="p">())])</span>
+        <span class="k">return</span> <span class="n">mainopts</span>
+
+<div class="viewcode-block" id="ExatomicBox.active"><a class="viewcode-back" href="../../../exatomic.widgets.widget_base.html#exatomic.widgets.widget_base.ExatomicBox.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_scene_indices</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">objs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">objs</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">objs</span> <span class="k">else</span> <span class="n">objs</span>
+        <span class="n">scenekwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;scenekwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="c1">#test = kwargs.pop(&#39;test&#39;, False)</span>
+        <span class="n">uni</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;uni&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;typ&#39;</span><span class="p">,</span> <span class="n">ExatomicScene</span><span class="p">)</span>
+        <span class="n">mh</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;min_height&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">mw</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;min_width&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">nframes</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;nframes&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tensors&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">,</span> <span class="n">scenes</span> <span class="o">=</span> <span class="n">_scene_grid</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">mh</span><span class="p">,</span> <span class="n">mw</span><span class="p">,</span><span class="c1"># test,</span>
+                                          <span class="n">uni</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">scenekwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_gui</span><span class="p">(</span><span class="n">nframes</span><span class="o">=</span><span class="n">nframes</span><span class="p">,</span>
+                                        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                                        <span class="n">tensors</span><span class="o">=</span><span class="n">tensors</span><span class="p">,</span>
+                                        <span class="c1">#test=test,</span>
+                                        <span class="n">uni</span><span class="o">=</span><span class="n">uni</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controls</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">):</span> <span class="n">obj</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;layout&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">gui</span> <span class="o">=</span> <span class="n">GUIBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">())</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">gui</span><span class="p">,</span> <span class="n">scenes</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenes</span> <span class="k">else</span> <span class="p">[</span><span class="n">gui</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExatomicBox</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+                <span class="n">children</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_bboxlo</span><span class="p">,</span>
+                <span class="n">active_scene_indices</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenes</span><span class="p">))),</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="c1">#def _scene_grid(objs, mh, mw, test, uni, typ, scenekwargs):</span>
+<span class="k">def</span> <span class="nf">_scene_grid</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">mh</span><span class="p">,</span> <span class="n">mw</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">scenekwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Auxiliary function to lay out multiple scenes.&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">objs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Too many scenes&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span> <span class="n">mh</span> <span class="o">=</span> <span class="s1">&#39;500px&#39;</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span> <span class="n">mh</span> <span class="o">=</span> <span class="s1">&#39;400px&#39;</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="n">mh</span> <span class="o">=</span> <span class="s1">&#39;300px&#39;</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span> <span class="n">mh</span> <span class="o">=</span> <span class="s1">&#39;250px&#39;</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">mh</span> <span class="o">=</span> <span class="s1">&#39;200px&#39;</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="n">mod</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">mod</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;min_height&#39;</span><span class="p">:</span> <span class="n">mh</span><span class="p">,</span> <span class="s1">&#39;min_width&#39;</span><span class="p">:</span> <span class="n">mw</span><span class="p">,</span> <span class="s1">&#39;uni&#39;</span><span class="p">:</span> <span class="n">uni</span><span class="p">}</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">scenekwargs</span><span class="p">)</span>
+    <span class="n">flatscns</span><span class="p">,</span> <span class="n">scenes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span> <span class="o">%</span> <span class="n">mod</span><span class="p">:</span> <span class="n">scenes</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DOMWidget</span><span class="p">):</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">objs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">objs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">typ</span><span class="p">(</span><span class="o">**</span><span class="n">objs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">typ</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">typ</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">scenes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">flatscns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">flatscns</span><span class="p">,</span> <span class="n">VBox</span><span class="p">([</span><span class="n">HBox</span><span class="p">(</span><span class="n">scns</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">_hboxlo</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">scns</span> <span class="ow">in</span> <span class="n">scenes</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">_vboxlo</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

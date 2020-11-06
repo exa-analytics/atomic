@@ -1,0 +1,7 @@
+exatomic.core.universe module
+=============================
+
+.. automodule:: exatomic.core.universe
+   :members:
+   :undoc-members:
+   :show-inheritance:

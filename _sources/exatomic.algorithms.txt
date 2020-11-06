@@ -1,0 +1,32 @@
+exatomic.algorithms package
+===========================
+
+.. automodule:: exatomic.algorithms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.algorithms.angles
+   exatomic.algorithms.basis
+   exatomic.algorithms.car2sph
+   exatomic.algorithms.delocalization
+   exatomic.algorithms.diffusion
+   exatomic.algorithms.displacement
+   exatomic.algorithms.distance
+   exatomic.algorithms.geometry
+   exatomic.algorithms.harmonics
+   exatomic.algorithms.indexing
+   exatomic.algorithms.interpolation
+   exatomic.algorithms.neighbors
+   exatomic.algorithms.numerical
+   exatomic.algorithms.orbital
+   exatomic.algorithms.orbital_util
+   exatomic.algorithms.overlap
+   exatomic.algorithms.packing
+   exatomic.algorithms.pcf

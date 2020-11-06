@@ -1,0 +1,567 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.molcas.output module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.nbo package" href="exatomic.nbo.html" />
+    <link rel="prev" title="exatomic.molcas.inputs module" href="exatomic.molcas.inputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.molcas.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.molcas.html">exatomic.molcas package</a> &raquo;</li>
+        
+      <li>exatomic.molcas.output module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.molcas.output.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.molcas.output">
+<span id="exatomic-molcas-output-module"></span><h1>exatomic.molcas.output module<a class="headerlink" href="#module-exatomic.molcas.output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="molcas-output-parser">
+<h2>Molcas Output Parser<a class="headerlink" href="#molcas-output-parser" title="Permalink to this headline">¶</a></h2>
+<p>Multiple frames are not currently supported</p>
+<dl class="py class">
+<dt id="exatomic.molcas.output.OrbMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">OrbMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#OrbMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.OrbMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.OrbMeta.momatrix">
+<code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.molcas.output.OrbMeta.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.MOMatrix" title="exatomic.core.orbital.MOMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.MOMatrix</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.OrbMeta.orbital">
+<code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.molcas.output.OrbMeta.orbital" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.Orbital" title="exatomic.core.orbital.Orbital"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.Orbital</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.molcas.output.Orb">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">Orb</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Orb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Orb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.molcas.editor.html#exatomic.molcas.editor.Editor" title="exatomic.molcas.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.molcas.editor.Editor</span></code></a></p>
+<p>Parser for molcas coefficient matrix dumps (e.g. RasOrb).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This parser assumes the file contains data from a single
+calculation (i.e. a single frame).</p>
+</div>
+<dl class="py method">
+<dt id="exatomic.molcas.output.Orb.to_universe">
+<code class="sig-name descname">to_universe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Orb.to_universe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Orb.to_universe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the editor to a <a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Description of parsed file</p></li>
+<li><p><strong>meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Optional dictionary of metadata</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Verbose information on failed parse methods</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Ignore failed parse methods</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Orb.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Orb.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Orb.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Orb.momatrix">
+<em class="property">property </em><code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.molcas.output.Orb.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Orb.orbital">
+<em class="property">property </em><code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.molcas.output.Orb.orbital" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.molcas.output.OutMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">OutMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#OutMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.OutMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.OutMeta.atom">
+<code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.molcas.output.OutMeta.atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.OutMeta.basis_set">
+<code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.molcas.output.OutMeta.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSet" title="exatomic.core.basis.BasisSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSet</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.OutMeta.basis_set_order">
+<code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.molcas.output.OutMeta.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSetOrder" title="exatomic.core.basis.BasisSetOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSetOrder</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.molcas.output.Output">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="exatomic.molcas.editor.html#exatomic.molcas.editor.Editor" title="exatomic.molcas.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.molcas.editor.Editor</span></code></a></p>
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.add_orb">
+<code class="sig-name descname">add_orb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">mocoefs</span><span class="o">=</span><span class="default_value">'coef'</span></em>, <em class="sig-param"><span class="n">orbocc</span><span class="o">=</span><span class="default_value">'occupation'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output.add_orb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output.add_orb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a MOMatrix and Orbital table to a molcas.Output. If path is
+an Editor containing momatrix and orbital tables then adds them
+directly, otherwise assumes it is a molcas.Orb file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (str, <a class="reference internal" href="exatomic.core.editor.html#exatomic.core.editor.Editor" title="exatomic.core.editor.Editor"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.editor.Editor</span></code></a>) – path to file or Editor object</p></li>
+<li><p><strong>mocoefs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – rename coefficients</p></li>
+<li><p><strong>orbocc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – rename occupations</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.add_overlap">
+<code class="sig-name descname">add_overlap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output.add_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output.add_overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.parse_atom">
+<code class="sig-name descname">parse_atom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output.parse_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output.parse_atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the atom list generated in SEWARD.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.parse_basis_set_order">
+<code class="sig-name descname">parse_basis_set_order</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output.parse_basis_set_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output.parse_basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the shell ordering scheme if BSSHOW specified in SEWARD.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.parse_basis_set">
+<code class="sig-name descname">parse_basis_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#Output.parse_basis_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.Output.parse_basis_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the primitive exponents, coefficients and
+shell if BSSHOW specified in SEWARD.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.molcas.output.Output.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.basis_set">
+<em class="property">property </em><code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.molcas.output.Output.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.Output.basis_set_order">
+<em class="property">property </em><code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.molcas.output.Output.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.molcas.output.HDFMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">HDFMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDFMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDFMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.atom">
+<code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.overlap">
+<code class="sig-name descname">overlap</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.Overlap" title="exatomic.core.basis.Overlap"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.Overlap</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.orbital">
+<code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.orbital" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.Orbital" title="exatomic.core.orbital.Orbital"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.Orbital</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.momatrix">
+<code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.orbital.html#exatomic.core.orbital.MOMatrix" title="exatomic.core.orbital.MOMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.orbital.MOMatrix</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.basis_set">
+<code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSet" title="exatomic.core.basis.BasisSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSet</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.molcas.output.HDFMeta.basis_set_order">
+<code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.molcas.output.HDFMeta.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.basis.html#exatomic.core.basis.BasisSetOrder" title="exatomic.core.basis.BasisSetOrder"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.basis.BasisSetOrder</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.molcas.output.HDF">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">HDF</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.to_universe">
+<code class="sig-name descname">to_universe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.to_universe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.to_universe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_atom">
+<code class="sig-name descname">parse_atom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_basis_set_order">
+<code class="sig-name descname">parse_basis_set_order</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_basis_set_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_orbital">
+<code class="sig-name descname">parse_orbital</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_orbital"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_orbital" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_overlap">
+<code class="sig-name descname">parse_overlap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_basis_set">
+<code class="sig-name descname">parse_basis_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_basis_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_basis_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.parse_momatrix">
+<code class="sig-name descname">parse_momatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#HDF.parse_momatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.HDF.parse_momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#exatomic.molcas.output.HDF.atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.basis_set">
+<em class="property">property </em><code class="sig-name descname">basis_set</code><a class="headerlink" href="#exatomic.molcas.output.HDF.basis_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.basis_set_order">
+<em class="property">property </em><code class="sig-name descname">basis_set_order</code><a class="headerlink" href="#exatomic.molcas.output.HDF.basis_set_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.momatrix">
+<em class="property">property </em><code class="sig-name descname">momatrix</code><a class="headerlink" href="#exatomic.molcas.output.HDF.momatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.orbital">
+<em class="property">property </em><code class="sig-name descname">orbital</code><a class="headerlink" href="#exatomic.molcas.output.HDF.orbital" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.molcas.output.HDF.overlap">
+<em class="property">property </em><code class="sig-name descname">overlap</code><a class="headerlink" href="#exatomic.molcas.output.HDF.overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.molcas.output.parse_molcas">
+<code class="sig-prename descclassname">exatomic.molcas.output.</code><code class="sig-name descname">parse_molcas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fp</span></em>, <em class="sig-param"><span class="n">momatrix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overlap</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">occvec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/molcas/output.html#parse_molcas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.molcas.output.parse_molcas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will parse a Molcas output file. Optionally it will attempt
+to parse additional information obtained from the same directory
+from specified Orb files or the AO overlap matrix and density matrix.
+If density keyword is specified, the momatrix keyword is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Path to output file</p></li>
+<li><p><strong>momatrix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – file name of the C matrix of interest</p></li>
+<li><p><strong>overlap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – file name of the overlap matrix</p></li>
+<li><p><strong>occvec</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – an occupation vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>parsed (Editor)</em> –</p>
+<dl class="simple">
+<dt>contains many attributes similar to the</dt><dd><p>exatomic universe</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.nbo.html" class="btn btn-neutral float-right" title="exatomic.nbo package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.molcas.inputs.html" class="btn btn-neutral float-left" title="exatomic.molcas.inputs module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

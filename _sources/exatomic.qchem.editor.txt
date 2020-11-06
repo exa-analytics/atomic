@@ -1,0 +1,7 @@
+exatomic.qchem.editor module
+============================
+
+.. automodule:: exatomic.qchem.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

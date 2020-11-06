@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.core.tensor &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.core.tensor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.core.tensor</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">exatomic</span> <span class="kn">import</span> <span class="n">plotter</span>
+
+<span class="c1"># changing this so that tensor refers to a base class of attributes that all</span>
+<span class="c1"># tensor property dataframes should have</span>
+<div class="viewcode-block" id="Tensor"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.Tensor">[docs]</a><span class="k">class</span> <span class="nc">Tensor</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The tensor dataframe.</span>
+
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | Column        | Type     | Description                             |</span>
+<span class="sd">    +===============+==========+=========================================+</span>
+<span class="sd">    | xx            | float    | 0,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xy            | float    | 1,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xz            | float    | 2,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yx            | float    | 0,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yy            | float    | 1,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yz            | float    | 2,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zx            | float    | 0,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zy            | float    | 1,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zz            | float    | 2,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | frame         | category | frame value to which atach tensor       |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | atom          | int      | atom index of molecule to place tensor  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | label         | category | label of the type of tensor             |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;tensor&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="s1">&#39;xz&#39;</span><span class="p">,</span><span class="s1">&#39;yx&#39;</span><span class="p">,</span><span class="s1">&#39;yy&#39;</span><span class="p">,</span><span class="s1">&#39;yz&#39;</span><span class="p">,</span><span class="s1">&#39;zx&#39;</span><span class="p">,</span><span class="s1">&#39;zy&#39;</span><span class="p">,</span><span class="s1">&#39;zz&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;frame&#39;</span><span class="p">,</span><span class="s1">&#39;atom&#39;</span><span class="p">,</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
+
+    <span class="c1">#@property</span>
+    <span class="c1">#def _constructor(self):</span>
+    <span class="c1">#    return Tensor</span>
+
+<div class="viewcode-block" id="Tensor.from_file"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.Tensor.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A file reader that will take a tensor file and extract all</span>
+<span class="sd">        necessary information. There is a specific file format in place</span>
+<span class="sd">        and is as follows</span>
+
+<span class="sd">        frame label atom</span>
+<span class="sd">        xx xy xz</span>
+<span class="sd">        yx yy yz</span>
+<span class="sd">        zx zy zz</span>
+
+<span class="sd">        For multiple tensors just append the same format as above without</span>
+<span class="sd">        whitespace unless leaving the frame, label, atom attributes as empty.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): file pathname</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tens (:class:`~exatomic.tensor.Tensor`): Tensor table with the tensor attributes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">skip_blank_lines</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">df</span><span class="p">[::</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">idxs</span><span class="p">)]</span>
+        <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;grp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;grp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                     <span class="n">x</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                     <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="s1">&#39;xz&#39;</span><span class="p">,</span><span class="s1">&#39;yx&#39;</span><span class="p">,</span><span class="s1">&#39;yy&#39;</span><span class="p">,</span><span class="s1">&#39;yz&#39;</span><span class="p">,</span><span class="s1">&#39;zx&#39;</span><span class="p">,</span><span class="s1">&#39;zy&#39;</span><span class="p">,</span><span class="s1">&#39;zz&#39;</span><span class="p">])</span>
+<span class="c1">#        scale = []</span>
+<span class="c1">#        for i in df.index.values:</span>
+<span class="c1">#            scale.append(5./abs(df.loc[i,:]).max().astype(np.float64))</span>
+        <span class="n">meta</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">meta</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;atom&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">meta</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;atom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;atom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbols&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="c1">#        df[&#39;scale&#39;] = scale</span>
+<span class="c1">#        print(df)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Polarizability"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.Polarizability">[docs]</a><span class="k">class</span> <span class="nc">Polarizability</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;polarizability&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span> <span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="s1">&#39;xz&#39;</span><span class="p">,</span> <span class="s1">&#39;yx&#39;</span><span class="p">,</span> <span class="s1">&#39;yy&#39;</span><span class="p">,</span> <span class="s1">&#39;yz&#39;</span><span class="p">,</span> <span class="s1">&#39;zx&#39;</span><span class="p">,</span> <span class="s1">&#39;zy&#39;</span><span class="p">,</span> <span class="s1">&#39;zz&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;frame&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">]</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="NMRShielding"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.NMRShielding">[docs]</a><span class="k">class</span> <span class="nc">NMRShielding</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The NMR Shielding tensor dataframe.</span>
+
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | Column        | Type     | Description                             |</span>
+<span class="sd">    +===============+==========+=========================================+</span>
+<span class="sd">    | xx            | float    | 0,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xy            | float    | 1,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xz            | float    | 2,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yx            | float    | 0,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yy            | float    | 1,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yz            | float    | 2,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zx            | float    | 0,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zy            | float    | 1,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zz            | float    | 2,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | frame         | category | frame value to which atach tensor       |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | atom          | int      | atom index of molecule to place tensor  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | label         | category | label of the type of tensor             |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | symbol        | category | atom symbol the tensor is attached to   |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | isotropic     | float    | isotropic shift value of the tensor     |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;nmr_shielding&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="s1">&#39;xz&#39;</span><span class="p">,</span><span class="s1">&#39;yx&#39;</span><span class="p">,</span><span class="s1">&#39;yy&#39;</span><span class="p">,</span><span class="s1">&#39;yz&#39;</span><span class="p">,</span><span class="s1">&#39;zx&#39;</span><span class="p">,</span><span class="s1">&#39;zy&#39;</span><span class="p">,</span><span class="s1">&#39;zz&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;frame&#39;</span><span class="p">,</span><span class="s1">&#39;atom&#39;</span><span class="p">,</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span><span class="s1">&#39;isotropic&#39;</span><span class="p">]</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
+
+<div class="viewcode-block" id="NMRShielding.nmr_spectra"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.NMRShielding.nmr_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">nmr_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atom</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">lineshape</span><span class="o">=</span><span class="s1">&#39;lorentzian&#39;</span><span class="p">,</span>
+                    <span class="n">xrange</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">invert_x</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Generate NMR spectra with the plotter class. We can define a gaussian or lorentzian</span>
+<span class="sd">        lineshape function. For the most part we pass all of the kwargs directly into the</span>
+<span class="sd">        plotter.Plot class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fwhm (float): Full-width at half-maximum</span>
+<span class="sd">            ref (float): Isotropic shift of the reference compound</span>
+<span class="sd">            atom (str): Atom that we want to display the spectra for</span>
+<span class="sd">            lineshape (str): Switch beteen the different lineshape functions available</span>
+<span class="sd">            xrange (list): X-bounds for the plot</span>
+<span class="sd">            res (float): Resolution for the plot line</span>
+<span class="sd">            invert_x (bool): Invert x-axis</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># define the lineshape and store the function call in the line variable</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span> <span class="n">lineshape</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Sorry we have not yet implemented the lineshape </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lineshape</span><span class="p">))</span>
+        <span class="c1"># define a default parameter for the plot width</span>
+        <span class="c1"># we did this for a full-screen jupyter notebook on a 1920x1080 monitor</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;plot_width&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span>
+        <span class="c1"># define the class</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># this is designed for a single frame</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;We have not yet expanded to include multiple frames&quot;</span><span class="p">)</span>
+        <span class="c1"># grab the locations of the peaks</span>
+        <span class="n">shifts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">atom</span><span class="p">)[</span><span class="s1">&#39;isotropic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># we just try to take care of any possible types for the ref variable</span>
+            <span class="c1"># its a bit of overkill but just want to make sure we can deal with them</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">shifts</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">-</span> <span class="n">shifts</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">shifts</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">shifts</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Could not understand type ref type </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ref</span><span class="p">)))</span>
+        <span class="c1"># define xbounds</span>
+        <span class="n">xrange</span> <span class="o">=</span> <span class="p">[</span><span class="n">shifts</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mi">10</span><span class="o">*</span><span class="n">fwhm</span><span class="p">,</span> <span class="n">shifts</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mi">10</span><span class="o">*</span><span class="n">fwhm</span><span class="p">]</span> <span class="k">if</span> <span class="n">xrange</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xrange</span>
+        <span class="c1"># deal with inverted bounds</span>
+        <span class="k">if</span> <span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">xrange</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">xrange</span><span class="p">)</span>
+            <span class="n">invert_x</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">fwhm</span><span class="o">/</span><span class="mi">50</span> <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">res</span>
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">xrange</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+        <span class="n">shifts</span> <span class="o">=</span> <span class="n">shifts</span><span class="p">[</span><span class="n">shifts</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="o">*</span><span class="n">xrange</span><span class="p">)]</span>
+        <span class="n">shifts</span> <span class="o">=</span> <span class="n">shifts</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># get the y data by calling the lineshape function generator</span>
+        <span class="n">y_data</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">shifts</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_data</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm</span><span class="p">)</span>
+        <span class="c1"># plot the lineshape data</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">)</span>
+        <span class="c1"># plot the points on the plot to show were the frequency values are</span>
+        <span class="c1"># more useful when we have nearly degenerate vibrations</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">shifts</span><span class="p">,</span> <span class="n">line</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">shifts</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">shifts</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm</span><span class="p">))</span>
+        <span class="c1"># just to make sure the plot is oriemted correctly</span>
+        <span class="c1"># typically 0 is on the left when we have a reference compound god knows why</span>
+        <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">invert_x</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_xrange</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_xrange</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xrange</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># display the figure with our generated method</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="JCoupling"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.JCoupling">[docs]</a><span class="k">class</span> <span class="nc">JCoupling</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The J-Coupling tensor dataframe</span>
+
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | Column        | Type     | Description                             |</span>
+<span class="sd">    +===============+==========+=========================================+</span>
+<span class="sd">    | xx            | float    | 0,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xy            | float    | 1,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | xz            | float    | 2,0 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yx            | float    | 0,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yy            | float    | 1,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | yz            | float    | 2,1 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zx            | float    | 0,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zy            | float    | 1,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | zz            | float    | 2,3 position in tensor                  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | isotropic     | float    | isotropic shift value of the tensor     |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | atom          | int      | atom index of molecule to place tensor  |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | symbol        | category | atom symbol the tensor is attached to   |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | pt_atom       | int      | atom index of perturbing atom           |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | pt_symbol     | category | atom symbol of perturbing atom          |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | label         | category | label of the type of tensor             |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    | frame         | category | frame value to which atach tensor       |</span>
+<span class="sd">    +---------------+----------+-----------------------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="s1">&#39;j_coupling&#39;</span>
+    <span class="n">_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="s1">&#39;xz&#39;</span><span class="p">,</span><span class="s1">&#39;yx&#39;</span><span class="p">,</span><span class="s1">&#39;yy&#39;</span><span class="p">,</span><span class="s1">&#39;yz&#39;</span><span class="p">,</span><span class="s1">&#39;zx&#39;</span><span class="p">,</span><span class="s1">&#39;zy&#39;</span><span class="p">,</span><span class="s1">&#39;zz&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;isotropic&#39;</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;pt_atom&#39;</span><span class="p">,</span> <span class="s1">&#39;pt_symbol&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">]</span>
+    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;pt_symbol&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="add_tensor"><a class="viewcode-back" href="../../../exatomic.core.tensor.html#exatomic.adf.output.add_tensor">[docs]</a><span class="k">def</span> <span class="nf">add_tensor</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="n">fp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple function to add a tensor object to the universe.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (universe): Universe object</span>
+<span class="sd">        fp (str): file pathname</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">uni</span><span class="o">.</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">Tensor</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span></div>
+<span class="c1">#    if fp != None:</span>
+<span class="c1">#        uni.tensor = Tensor.from_file(fp)</span>
+<span class="c1">#    if any(&#39;tensor&#39; in x for x in vars(uni)):</span>
+<span class="c1">#        tmp = [x for x in vars(uni) if &#39;tensor&#39; in x]</span>
+<span class="c1">#        uni.tensor = pd.concat([uni[i] for i in tmp], sort=False).reset_index(drop=True)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

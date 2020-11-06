@@ -1,0 +1,7 @@
+exatomic.gaussian.output module
+===============================
+
+.. automodule:: exatomic.gaussian.output
+   :members:
+   :undoc-members:
+   :show-inheritance:

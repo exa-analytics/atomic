@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.va.va module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.va.vroa_funcs module" href="exatomic.va.vroa_funcs.html" />
+    <link rel="prev" title="exatomic.va.plot module" href="exatomic.va.plot.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.va.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.va.html">exatomic.va package</a> &raquo;</li>
+        
+      <li>exatomic.va.va module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.va.va.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.va.va">
+<span id="exatomic-va-va-module"></span><h1>exatomic.va.va module<a class="headerlink" href="#module-exatomic.va.va" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="vibrational-averaging">
+<h2>Vibrational Averaging<a class="headerlink" href="#vibrational-averaging" title="Permalink to this headline">¶</a></h2>
+<p>Collection of classes for VA program</p>
+<dl class="py function">
+<dt id="exatomic.va.va.get_data">
+<code class="sig-prename descclassname">exatomic.va.va.</code><code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">soft</span></em>, <em class="sig-param"><span class="n">f_end</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">f_start</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">sort_index</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This script is made to be able to extract data from many different files and
+compile them all into one dataframe. You can pass wildcards as an input in the
+path variable. We use the glob.glob package to get an array of the file that
+match the given f_start and f_end strings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is nothing built in to handle returning an empty dataframe at the
+moment.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – String pointing to location of files</p></li>
+<li><p><strong>attr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The attribute that you want to extract</p></li>
+<li><p><strong>soft</strong> (<em>class</em>) – Class that you want to use to extract the data</p></li>
+<li><p><strong>f_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – String to match to the end of the filename</p></li>
+<li><p><strong>f_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – String to match to the start of the filename</p></li>
+<li><p><strong>sort_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – List of strings that are to be used to sort the compiled dataframe</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>cdf (pandas.DataFrame)</em> – Dataframe that has all of the compiled data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.va.va.VAMeta">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.va.va.</code><code class="sig-name descname">VAMeta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">clsdict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VAMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VAMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exa.core.container.TypedMeta</span></code></p>
+<dl class="py attribute">
+<dt id="exatomic.va.va.VAMeta.gradient">
+<code class="sig-name descname">gradient</code><a class="headerlink" href="#exatomic.va.va.VAMeta.gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.gradient.html#exatomic.core.gradient.Gradient" title="exatomic.core.gradient.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.gradient.Gradient</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.va.va.VAMeta.roa">
+<code class="sig-name descname">roa</code><a class="headerlink" href="#exatomic.va.va.VAMeta.roa" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.tensor.html#exatomic.core.tensor.Polarizability" title="exatomic.core.tensor.Polarizability"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.tensor.Polarizability</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="exatomic.va.va.VAMeta.eff_coord">
+<code class="sig-name descname">eff_coord</code><a class="headerlink" href="#exatomic.va.va.VAMeta.eff_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="exatomic.core.atom.html#exatomic.core.atom.Atom" title="exatomic.core.atom.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.core.atom.Atom</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="exatomic.va.va.VA">
+<em class="property">class </em><code class="sig-prename descclassname">exatomic.va.va.</code><code class="sig-name descname">VA</code><a class="reference internal" href="_modules/exatomic/va/va.html#VA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that contains all of the Vibrational Averaging methods. Currently we have implemented:
+Vibrational Raman Optical Activity (vroa), Zero-Point Vibrational Corrections (zpvc).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We do not have any code that will get the class attributes that are needed to execute
+the respective methods. We only check to make sure that the class attributes exist.
+The vroa method will look for the gradient and roa class attributes. The zpvc method will
+look for the gradient and property class attibutes. We recommend using the
+exatomic.va.va.get_data function to get the data as it will compress everything into
+one dataframe as is expected for the zpvc and vroa methods</p>
+</div>
+<dl class="py method">
+<dt id="exatomic.va.va.VA.raman_int_units">
+<em class="property">static </em><code class="sig-name descname">raman_int_units</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lambda_0</span></em>, <em class="sig-param"><span class="n">lambda_p</span></em>, <em class="sig-param"><span class="n">temp</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VA.raman_int_units"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA.raman_int_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to calculate the K_p value as given in equation 2 on J. Chem. Phys. 2007, 127, 134101.
+We assume the temperature to be 298.15 as a hard coded value. Must get rid of this in future
+iterations. The final units of the equation are in cm^2/sr which are said to be the units for
+the Raman intensities.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input values lambda_0 and lambda_p must be in the units of m^-1</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lambda_0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Wavenumber value of the incident light</p></li>
+<li><p><strong>lambda_1</strong> (<em>numpy.array</em>) – Wavenumber values of the vibrational modes</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Value of the temperature of the experiment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>kp (numpy.array)</em> – Array with the values of the conversion units of length lambda_1.shape[0]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.get_pos_neg_gradients">
+<em class="property">static </em><code class="sig-name descname">get_pos_neg_gradients</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">freq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VA.get_pos_neg_gradients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA.get_pos_neg_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we get the gradients of the equilibrium, positive and negative displaced structures.
+We extract them from the gradient dataframe and convert them into normal coordinates
+by multiplying them by the frequency normal mode displacement values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grad</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.gradient.Gradient</span></code>) – DataFrame containing all of the gradient data</p></li>
+<li><p><strong>freq</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.atom.Frquency</span></code>) – DataFrame containing all of the frequency data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>delfq_zero (pandas.DataFrame)</em> – Normal mode converted gradients of equilibrium structure
+delfq_plus (pandas.DataFrame): Normal mode converted gradients of positive displaced structure
+delfq_minus (pandas.DataFrame): Normal mode converted gradients of negative displaced structure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.calculate_frequencies">
+<em class="property">static </em><code class="sig-name descname">calculate_frequencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">delfq_0</span></em>, <em class="sig-param"><span class="n">delfq_plus</span></em>, <em class="sig-param"><span class="n">delfq_minus</span></em>, <em class="sig-param"><span class="n">redmass</span></em>, <em class="sig-param"><span class="n">select_freq</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VA.calculate_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA.calculate_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we calculated the frequencies from the gradients calculated for each of the
+displaced structures along the normal mode. In principle this should give the same or
+nearly the same frequency value as that from a frequency calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delfq_0</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that holds all of the information about the gradient
+derivative of the equlilibrium coordinates</p></li>
+<li><p><strong>delfq_plus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that holds all of the information about the gradient
+derivative of the positive displaced coordinates</p></li>
+<li><p><strong>delfq_minus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that holds all of the information about the gradient
+derivative of the negative displaced coordinates</p></li>
+<li><p><strong>redmass</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that holds all of the reduced masses. We can handle both
+a subset of the entire values or all of the values</p></li>
+<li><p><strong>select_freq</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that holds the selected frequency indexes</p></li>
+<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array that has the delta values used in the displaced structures</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>frequencies (numpy.ndarray)</em> – Frequency array from the calculation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.vroa">
+<code class="sig-name descname">vroa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="n">delta</span></em>, <em class="sig-param"><span class="n">units</span><span class="o">=</span><span class="default_value">'nm'</span></em>, <em class="sig-param"><span class="n">raman_units</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">temp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">assume_real</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VA.vroa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA.vroa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we implement the Vibrational Raman Optical Activity (VROA) equations as outlined in
+the paper J. Chem. Phys. 2007, 127,
+134101. The general workflow is that we must read in the data from a Raman Optical Activity
+calculation with your software of choice and this script will take that data and generate
+the forward and back scattering intensities for VROA. From here you will be able to plot
+the spectra with another method in this same class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is extremely important that the delta values that you pass into the function are the
+exact same as the ones that were used to generate the displaced structures. We do not
+currently have a method to do this automatically but we are working on it.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code>) – Universe containing all dataframes from the
+frequency calculation</p></li>
+<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Array containing all of the delta values used for the generation
+of the displaced structures.</p></li>
+<li><p><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Units of the excitation frequencies. Default to nm.</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Temperature value for the calculation</p></li>
+<li><p><strong>raman_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Convert from atomic units to the Raman intensity units see raman_int_units for more information</p></li>
+<li><p><strong>assume_real</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Neglect the contribution from the imaginary tensor values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.zpvc">
+<code class="sig-name descname">zpvc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="n">delta</span></em>, <em class="sig-param"><span class="n">temperature</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">geometry</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_results</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/va/va.html#VA.zpvc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.va.va.VA.zpvc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to compute the Zero-Point Vibrational Corrections. We implement the equations as
+outlined in the paper J. Phys. Chem. A 2005, 109, 8617-8623 (doi:10.1021/jp051685y).
+Here we compute the effect of vibrations on a specified property given as a n x 2 array
+where one of the columns are the file indexes and the other is the property.
+We use a two and three point difference method to calculate the first and second derivatives
+respectively.</p>
+<p>We have also implemented a way to calculate the ZPVC and effective geometries at
+different temperatures given in Kelvin.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code has been designed such that the property input array must have one column
+labeled file corresponding to the file indexes.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">exatomic.Universe</span></code>) – Universe containing all pertinent data</p></li>
+<li><p><strong>delta</strong> (<em>numpy.array</em>) – Array of the delta displacement parameters</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – List object containing all of the temperatures of interest</p></li>
+<li><p><strong>geometry</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Bool value that tells the program to also calculate the effective geometry</p></li>
+<li><p><strong>print_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Bool value to print the results from the zpvc calcualtion to stdout</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.eff_coord">
+<em class="property">property </em><code class="sig-name descname">eff_coord</code><a class="headerlink" href="#exatomic.va.va.VA.eff_coord" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.gradient">
+<em class="property">property </em><code class="sig-name descname">gradient</code><a class="headerlink" href="#exatomic.va.va.VA.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="exatomic.va.va.VA.roa">
+<em class="property">property </em><code class="sig-name descname">roa</code><a class="headerlink" href="#exatomic.va.va.VA.roa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.va.vroa_funcs.html" class="btn btn-neutral float-right" title="exatomic.va.vroa_funcs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.va.plot.html" class="btn btn-neutral float-left" title="exatomic.va.plot module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

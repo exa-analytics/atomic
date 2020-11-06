@@ -1,0 +1,7 @@
+exatomic.algorithms.harmonics module
+====================================
+
+.. automodule:: exatomic.algorithms.harmonics
+   :members:
+   :undoc-members:
+   :show-inheritance:

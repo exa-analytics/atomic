@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.plotter.plot &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.plotter.plot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.plotter.plot</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Plotter</span>
+<span class="sd">#################</span>
+<span class="sd">This is supposed to be a collection of classes and functions to aid in plotting</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.ranges</span> <span class="kn">import</span> <span class="n">Range1d</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="lorentzian"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.lorentzian">[docs]</a><span class="k">def</span> <span class="nf">lorentzian</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">inten</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Plot lorentzian lineshapes</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        freq (np.ndarray): Frequencies where the peaks will be located</span>
+<span class="sd">        x (np.ndarray): X-axis data points</span>
+<span class="sd">        fwhm (float): Full-width at half maximum</span>
+<span class="sd">        inten (np.ndarray): Intensities of the peaks</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        y (np.ndarray): Y values of the lorentzian lineshapes</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">inten</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fdx</span> <span class="ow">in</span> <span class="n">freq</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">fwhm</span><span class="o">/</span><span class="p">((</span><span class="n">fdx</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fwhm</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">inten</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">idx</span><span class="o">*</span><span class="n">fwhm</span><span class="o">/</span><span class="p">((</span><span class="n">fdx</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fwhm</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="gaussian"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.gaussian">[docs]</a><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">inten</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Plot gaussian lineshapes</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        freq (np.ndarray): Frequencies where the peaks will be located</span>
+<span class="sd">        x (np.ndarray): X-axis data points</span>
+<span class="sd">        fwhm (float): Full-width at half maximum</span>
+<span class="sd">        inten (np.ndarray): Intensities of the peaks</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        y (np.ndarray): Y values of the gaussian lineshapes</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">fwhm</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">inten</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fdx</span> <span class="ow">in</span> <span class="n">freq</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">fdx</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fdx</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inten</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span><span class="o">*</span><span class="n">idx</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">fdx</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="Plot"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.Plot">[docs]</a><span class="k">class</span> <span class="nc">Plot</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Class that has a collection of methods to make plotting easier. Some of the bokeh functions</span>
+<span class="sd">    require importing specific functions like &#39;show&#39; to display the figure. We want to make</span>
+<span class="sd">    this easier by defining methods like show so we can just import the class and it takes</span>
+<span class="sd">    care of everything.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="Plot.show"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.Plot.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># method just to have simple show function like in matplotlib</span>
+        <span class="n">show</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plot.set_xrange"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.Plot.set_xrange">[docs]</a>    <span class="k">def</span> <span class="nf">set_xrange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">):</span>
+        <span class="c1"># set the xrange</span>
+        <span class="c1"># makes it simple to flip the xaxis by giving the max value as the</span>
+        <span class="c1"># xmin and the min value as the xmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">x_range</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plot.set_yrange"><a class="viewcode-back" href="../../../exatomic.plotter.plot.html#exatomic.plotter.plot.Plot.set_yrange">[docs]</a>    <span class="k">def</span> <span class="nf">set_yrange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">):</span>
+        <span class="c1"># set the yrange</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">y_range</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># this worries me a bit and not sure if this is the proper way to do this</span>
+        <span class="n">output_notebook</span><span class="p">()</span>
+        <span class="c1"># set the title</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># set the plot area parameters</span>
+        <span class="n">plot_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;plot_width&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="n">plot_height</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;plot_height&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="c1"># set the tools to be used</span>
+        <span class="n">tools</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tools&#39;</span><span class="p">,</span> <span class="s1">&#39;hover, crosshair, pan, wheel_zoom, box_zoom, reset, save,&#39;</span><span class="p">)</span>
+        <span class="c1"># create the figure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">plot_height</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="n">plot_width</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span></div>
+
+<span class="c1"># a matplotlib example</span>
+<span class="c1"># maybe we can make some conditional so you can use a bokeh plot or a matplotlib plot</span>
+<span class="c1"># might be useful if we just want to display the plot right on the screen as opposed</span>
+<span class="c1"># to having the plot on the web browser</span>
+<span class="c1">#</span>
+<span class="c1">#import numpy as np</span>
+<span class="c1">#import matplotlib.pyplot as plt</span>
+<span class="c1">#from matplotlib import ticker, rc</span>
+<span class="c1">#</span>
+<span class="c1">#class Plot:</span>
+<span class="c1">#    def lorentz(freq, x, fwhm, inten=None):</span>
+<span class="c1">#        y = np.zeros(len(x))</span>
+<span class="c1">#        if inten is None:</span>
+<span class="c1">#            for fdx in freq:</span>
+<span class="c1">#                y += 1/(2*np.pi)*fwhm/((fdx-x)**2+(0.5*fwhm)**2)</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            for fdx, idx in zip(freq, inten):</span>
+<span class="c1">#                y += 1/(2*np.pi)*idx*fwhm/((fdx-x)**2+(0.5*fwhm)**2)</span>
+<span class="c1">#        return y</span>
+<span class="c1">#</span>
+<span class="c1">#    def __init__(self, *args, **kwargs):</span>
+<span class="c1">#        title = kwargs.pop(&#39;title&#39;, &#39;&#39;)</span>
+<span class="c1">#        xlabel = kwargs.pop(&#39;xlabel&#39;, &#39;&#39;)</span>
+<span class="c1">#        ylabel = kwargs.pop(&#39;ylabel&#39;, &#39;&#39;)</span>
+<span class="c1">#        marker = kwargs.pop(&#39;marker&#39;, &#39;&#39;)</span>
+<span class="c1">#        line = kwargs.pop(&#39;line&#39;, &#39;-&#39;)</span>
+<span class="c1">#        figsize = kwargs.pop(&#39;figsize&#39;, (8,8))</span>
+<span class="c1">#        dpi = kwargs.pop(&#39;dpi&#39;, 50)</span>
+<span class="c1">#        xrange = kwargs.pop(&#39;xrange&#39;, None)</span>
+<span class="c1">#        yrange = kwargs.pop(&#39;yrange&#39;, None)</span>
+<span class="c1">#        fwhm = kwargs.pop(&#39;fwhm&#39;, 15)</span>
+<span class="c1">#        res = kwargs.pop(&#39;res&#39;, 1)</span>
+<span class="c1">#        grid = kwargs.pop(&#39;grid&#39;, False)</span>
+<span class="c1">#        legend = kwargs.pop(&#39;legend&#39;, True)</span>
+<span class="c1">#        invert_x = kwargs.pop(&#39;invert_x&#39;, False)</span>
+<span class="c1">#        font = kwargs.pop(&#39;font&#39;, 10)</span>
+<span class="c1">#        lorentz = kwargs.pop(&#39;lorentz&#39;, True)</span>
+<span class="c1">#        self.fig = plt.figure(figsize=figsize, dpi=dpi)</span>
+<span class="c1">#        rc(&#39;font&#39;, size=font)</span>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

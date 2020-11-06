@@ -1,0 +1,7 @@
+exatomic.algorithms.angles module
+=================================
+
+.. automodule:: exatomic.algorithms.angles
+   :members:
+   :undoc-members:
+   :show-inheritance:

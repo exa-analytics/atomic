@@ -1,0 +1,7 @@
+exatomic.qe.pw.parsers module
+=============================
+
+.. automodule:: exatomic.qe.pw.parsers
+   :members:
+   :undoc-members:
+   :show-inheritance:

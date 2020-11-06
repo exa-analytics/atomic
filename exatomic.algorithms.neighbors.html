@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.algorithms.neighbors module &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exatomic.algorithms.numerical module" href="exatomic.algorithms.numerical.html" />
+    <link rel="prev" title="exatomic.algorithms.interpolation module" href="exatomic.algorithms.interpolation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contrib.html">Development</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="exatomic.html">exatomic package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#supported-software">Supported Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="exatomic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="exatomic.adf.html">exatomic.adf package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="exatomic.algorithms.html">exatomic.algorithms package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exatomic.algorithms.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.core.html">exatomic.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.gaussian.html">exatomic.gaussian package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.interfaces.html">exatomic.interfaces package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.molcas.html">exatomic.molcas package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nbo.html">exatomic.nbo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.nwchem.html">exatomic.nwchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.plotter.html">exatomic.plotter package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qchem.html">exatomic.qchem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.qe.html">exatomic.qe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.util.html">exatomic.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.va.html">exatomic.va package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exatomic.widgets.html">exatomic.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exatomic.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="exatomic.html">exatomic package</a> &raquo;</li>
+        
+          <li><a href="exatomic.algorithms.html">exatomic.algorithms package</a> &raquo;</li>
+        
+      <li>exatomic.algorithms.neighbors module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exatomic.algorithms.neighbors.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-exatomic.algorithms.neighbors">
+<span id="exatomic-algorithms-neighbors-module"></span><h1>exatomic.algorithms.neighbors module<a class="headerlink" href="#module-exatomic.algorithms.neighbors" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="neighbor-selection-algorithms">
+<h2>Neighbor Selection Algorithms<a class="headerlink" href="#neighbor-selection-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>This module provides algoirthms for selecting nearest neighbors, e.g. nearest
+solvent molecules to a solute molecule. Because two body properties do not always
+represent the desired molecules (i.e. bonds appear where they are not desired),
+these algorithms are not completely black box.</p>
+<p>Before performing a search, check that the molecule table is computed as desired
+and classified (if necessary): see <code class="xref py py-func docutils literal notranslate"><span class="pre">compute_bonds()</span></code>
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">classify()</span></code>.</p>
+<dl class="py function">
+<dt id="exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom">
+<code class="sig-prename descclassname">exatomic.algorithms.neighbors.</code><code class="sig-name descname">periodic_nearest_neighbors_by_atom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">sizes</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/neighbors.html#periodic_nearest_neighbors_by_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine nearest neighbor molecules to a given source (or sources) and
+return the data as a dataframe.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For universes with more than about 250 atoms, consider using the
+slower but more memory efficient
+<a class="reference internal" href="#exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom_large" title="exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom_large"><code class="xref py py-func docutils literal notranslate"><span class="pre">periodic_nearest_neighbors_by_atom_large()</span></code></a>.</p>
+</div>
+<p>For a simple cubic periodic system with unit cell dimension <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+clusters can be generated as follows. In the example below, additional
+keyword arguments have been included as they are almost always required
+in order to correctly identify molecular units semi-empirically.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">periodic_nearest_neighbors_by_atom</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">40.0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
+                                   <span class="n">dmax</span><span class="o">=</span><span class="mf">40.0</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">O</span><span class="o">=</span><span class="mf">1.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Argument descriptions can be found below. The additional keyword arguments,
+<code class="docutils literal notranslate"><span class="pre">dmax</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">O</span></code>, are passed directly to the two body computation used
+to determine (semi-empirically) molecular units. Note that although molecules
+are computed, neighboring molecular units are determine by an atom to atom
+criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni</strong> (<a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a>) – Universe</p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – Integer label or string symbol of source atom</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Cubic unit cell dimension</p></li>
+<li><p><strong>sizes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – List of slices to create</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to be passed to atom two body calculation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>dct (dict)</em> – Dictionary of sliced universes and nearest neighbor table</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Sliced universe construction can be facilitated by
+<code class="xref py py-func docutils literal notranslate"><span class="pre">construct()</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom_large">
+<code class="sig-prename descclassname">exatomic.algorithms.neighbors.</code><code class="sig-name descname">periodic_nearest_neighbors_by_atom_large</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uni</span></em>, <em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">sizes</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/exatomic/algorithms/neighbors.html#periodic_nearest_neighbors_by_atom_large"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom_large" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine nearest neighbor molecules to a given source (or sources) and
+return the data as a dataframe.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This function performs the same operation as
+<a class="reference internal" href="#exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom" title="exatomic.algorithms.neighbors.periodic_nearest_neighbors_by_atom"><code class="xref py py-func docutils literal notranslate"><span class="pre">periodic_nearest_neighbors_by_atom()</span></code></a>,
+but is meant for universes containing more than about 250 atoms
+per frame (the referenced function will be faster for smaller universes).</p>
+</div>
+<p>For a simple cubic periodic system with unit cell dimension <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+clusters can be generated as follows. In the example below, additional
+keyword arguments have been included as they are almost always required
+in order to correctly identify molecular units semi-empirically.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">periodic_nearest_neighbors_by_atom_ooc</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">40.0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
+                                   <span class="n">dmax</span><span class="o">=</span><span class="mf">40.0</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">O</span><span class="o">=</span><span class="mf">1.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Argument descriptions can be found below. The additional keyword arguments,
+<code class="docutils literal notranslate"><span class="pre">dmax</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">O</span></code>, are passed directly to the two body computation used
+to determine (semi-empirically) molecular units. Note that although molecules
+are computed, neighboring molecular units are determine by an atom to atom
+criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uni</strong> (<a class="reference internal" href="exatomic.core.universe.html#exatomic.core.universe.Universe" title="exatomic.core.universe.Universe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Universe</span></code></a>) – Universe</p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – Integer label or string symbol of source atom</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Cubic unit cell dimension</p></li>
+<li><p><strong>sizes</strong> (<em>iterable</em>) – List of slices to create</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to be passed to atom two body calculation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>dct (dict)</em> – Dictionary of sliced universes and nearest neighbor table</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Sliced universe construction can be facilitated by
+<code class="xref py py-func docutils literal notranslate"><span class="pre">construct()</span></code>.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exatomic.algorithms.numerical.html" class="btn btn-neutral float-right" title="exatomic.algorithms.numerical module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exatomic.algorithms.interpolation.html" class="btn btn-neutral float-left" title="exatomic.algorithms.interpolation module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

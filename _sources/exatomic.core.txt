@@ -1,0 +1,27 @@
+exatomic.core package
+=====================
+
+.. automodule:: exatomic.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   exatomic.core.atom
+   exatomic.core.basis
+   exatomic.core.editor
+   exatomic.core.error
+   exatomic.core.field
+   exatomic.core.frame
+   exatomic.core.gradient
+   exatomic.core.matrices
+   exatomic.core.molecule
+   exatomic.core.orbital
+   exatomic.core.tensor
+   exatomic.core.two
+   exatomic.core.universe

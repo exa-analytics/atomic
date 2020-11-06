@@ -1,0 +1,7 @@
+exatomic.gaussian.editor module
+===============================
+
+.. automodule:: exatomic.gaussian.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:

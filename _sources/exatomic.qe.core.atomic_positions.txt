@@ -1,0 +1,7 @@
+exatomic.qe.core.atomic\_positions module
+=========================================
+
+.. automodule:: exatomic.qe.core.atomic_positions
+   :members:
+   :undoc-members:
+   :show-inheritance:

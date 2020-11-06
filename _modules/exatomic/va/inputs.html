@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exatomic.va.inputs &mdash; exatomic 0.5.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> exatomic
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sitemap</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../exatomic.html">exatomic package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">exatomic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../exatomic.html">exatomic</a> &raquo;</li>
+        
+      <li>exatomic.va.inputs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for exatomic.va.inputs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (c) 2015-2020, Exa Analytics Development Team</span>
+<span class="c1"># Distributed under the terms of the Apache License 2.0</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1">#from exa.util.utility import mkp</span>
+<span class="kn">from</span> <span class="nn">exa.util.units</span> <span class="kn">import</span> <span class="n">Length</span><span class="p">,</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">Mass</span>
+<span class="kn">from</span> <span class="nn">exatomic.core</span> <span class="kn">import</span> <span class="n">Atom</span>
+<span class="kn">from</span> <span class="nn">exa</span> <span class="kn">import</span> <span class="n">TypedMeta</span>
+
+<div class="viewcode-block" id="gen_delta"><a class="viewcode-back" href="../../../exatomic.va.inputs.html#exatomic.va.inputs.gen_delta">[docs]</a><span class="k">def</span> <span class="nf">gen_delta</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">delta_type</span><span class="p">,</span> <span class="n">disp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># TODO: we need better descriptions here</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute the delta parameter to be used for the maximum distortion</span>
+<span class="sd">    of the molecule along the normal mode.</span>
+
+<span class="sd">    When delta_type = 0 we normalize the displacments to have a maximum of 0.04 Bohr</span>
+<span class="sd">    on each normal mode.</span>
+
+<span class="sd">    When delta_type = 1 we normalize all atomic displacements along all normal modes</span>
+<span class="sd">    to have a global average displacement of 0.04 Bohr.</span>
+
+<span class="sd">    When delta_type = 2 we normalize each displacement so the maximum displacement</span>
+<span class="sd">    of any atom in the normal mode is 0.04 Bohr.</span>
+
+<span class="sd">    When delta_typ = 3 the user can select a delta parameter to use with the disp</span>
+<span class="sd">    keyword this will displace all normal modes by that delta parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        freq (:class:`exatomic.atom.Frequency`): Frequency dataframe</span>
+<span class="sd">        delta_type (int): Integer value to define the type of delta parameter to use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># average displacement of 0.04 bohr for each normal mode</span>
+    <span class="n">nat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+    <span class="n">nmode</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+    <span class="n">freqdx</span> <span class="o">=</span> <span class="n">freq</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="n">delta_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Code using for loops</span>
+        <span class="c1"># a = np.linalg.norm(freq[[&#39;dx&#39;, &#39;dy&#39;, &#39;dz&#39;]].</span>
+        <span class="c1">#                                    values, axis=1, ord=2)</span>
+        <span class="c1"># vec_sum = []</span>
+        <span class="c1"># for i in range(0,len(a),3):</span>
+        <span class="c1">#     vec_sum.append([0])</span>
+        <span class="c1">#     for j in range(i,i+3):</span>
+        <span class="c1">#         vec_sum[-1] += a[j]</span>
+        <span class="c1"># print(a)</span>
+        <span class="c1"># print(vec_sum)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;freqdx&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="o">*</span> <span class="n">nat</span> <span class="o">/</span> <span class="n">d</span>
+    <span class="c1">#    delta = np.repeat(delta, nat)</span>
+
+    <span class="c1"># global avrage displacement of 0.04 bohr for all atom displacements</span>
+    <span class="k">elif</span> <span class="n">delta_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">freq</span><span class="p">[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="o">*</span> <span class="n">nat</span> <span class="o">*</span> <span class="n">nmode</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">nmode</span><span class="p">)</span>
+    <span class="c1">#    delta = np.repeat(delta, nat*nmode)</span>
+
+    <span class="c1"># maximum displacement of 0.04 bohr for any atom in each normal mode</span>
+    <span class="k">elif</span> <span class="n">delta_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;freqdx&#39;</span><span class="p">,</span> <span class="s1">&#39;frame&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))))</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="o">/</span> <span class="n">d</span>
+    <span class="c1">#    delta = np.repeat(delta, nat)</span>
+    <span class="k">elif</span> <span class="n">delta_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">disp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span> <span class="n">nmode</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must provide a displacement value through the disp variable for delta_type = 3&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;delta&#39;</span><span class="p">:</span> <span class="n">delta</span><span class="p">,</span> <span class="s1">&#39;freqdx&#39;</span><span class="p">:</span> <span class="n">freqdx</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="GenMeta"><a class="viewcode-back" href="../../../exatomic.va.inputs.html#exatomic.va.inputs.GenMeta">[docs]</a><span class="k">class</span> <span class="nc">GenMeta</span><span class="p">(</span><span class="n">TypedMeta</span><span class="p">):</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">Atom</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="n">Atom</span></div>
+
+<div class="viewcode-block" id="GenInput"><a class="viewcode-back" href="../../../exatomic.va.inputs.html#exatomic.va.inputs.GenInput">[docs]</a><span class="k">class</span> <span class="nc">GenInput</span><span class="p">(</span><span class="n">metaclass</span> <span class="o">=</span> <span class="n">GenMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Supporting class for Vibrational Averaging that will generate input files</span>
+<span class="sd">    for a selected program under a certain displacement parameter.</span>
+
+<span class="sd">    Computes displaced coordinates for all available normal modes from the equilibrium</span>
+<span class="sd">    position by using the displacement vector components contained in the</span>
+<span class="sd">    :class:`~exatomic.atom.Frequency` dataframe. It will scale these displacements to a</span>
+<span class="sd">    desired type defined by the user with the delta_type keyword. For more information</span>
+<span class="sd">    on this keyword see the documentation on the</span>
+<span class="sd">    :class:`~exatomic.va.gen_delta` function.</span>
+
+<span class="sd">    We can also define a specific normal mode or a list of normal modes that are of</span>
+<span class="sd">    interest and generate displaced coordinates along those specific modes rather</span>
+<span class="sd">    than all of the normal modes. This is highly recommended if applicable</span>
+<span class="sd">    as it may reduce number of computations and memory usage significantly.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uni (:class:`~exatomic.Universe`): Universe object containg pertinent data</span>
+<span class="sd">        delta_type (int): Integer value to define the type of delta parameter to use</span>
+<span class="sd">        fdx (int or list): Integer or list parameter to only displace along the</span>
+<span class="sd">                           selected normal modes</span>
+<span class="sd">        disp (float): Floating point value to set a specific displacement delta</span>
+<span class="sd">                      parameter. Must be used with delta_type=3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_tol</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+    <span class="k">def</span> <span class="nf">_gen_displaced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">fdx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to generate displaced coordinates for each selected normal mode.</span>
+<span class="sd">        We scale the displacements by the selected delta value in the positive and negative</span>
+<span class="sd">        directions. We generate an array of coordinates that are put into a dataframe to</span>
+<span class="sd">        write them to a file input for later evaluation.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The index 0 is reserved for the optimized coordinates, the equilibrium geometry.</span>
+<span class="sd">            The displaced coordinates in the positive direction are given an index from</span>
+<span class="sd">            1 to tnmodes (total number of normal modes).</span>
+<span class="sd">            The displaced coordinates in the negative direction are given an index from</span>
+<span class="sd">            tnmodes to 2*tnmodes.</span>
+<span class="sd">            In an example with 39 normal modes 0 is the equilibrium geometry, 1-39 are the</span>
+<span class="sd">            positive displacements and 40-78 are the negative displacements.</span>
+<span class="sd">            nmodes are the number of normal modes that are selected. tnmodes are the total</span>
+<span class="sd">            number of normal modes for the system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            freq (:class:`exatomic.atom.Frequency`): Frequency dataframe</span>
+<span class="sd">            atom (:class:`exatomic.atom.Atom`): Atom dataframe</span>
+<span class="sd">            fdx (int or list): Integer or list parameter to only displace along the</span>
+<span class="sd">                               selected normal modes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get needed data from dataframes</span>
+        <span class="c1"># atom coordinates should be in Bohr</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">last_frame</span>
+        <span class="n">eqcoord</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># gaussian Fchk class uses Zeff where the Output class uses Z</span>
+        <span class="c1"># add try block to account for the possible exception</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">znums</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;Zeff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">znums</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">fdx</span><span class="p">:</span>
+            <span class="n">freq_g</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">freq_g</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">fdx</span> <span class="ow">in</span>
+                                                    <span class="n">x</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">freq_g</span><span class="p">[[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span><span class="s1">&#39;dy&#39;</span><span class="p">,</span><span class="s1">&#39;dz&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">mdx</span> <span class="o">=</span> <span class="n">freq_g</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">freq_g</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mdx</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">nat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">)</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="n">freq_g</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">tnmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span>
+        <span class="n">nmodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">freqdx</span><span class="p">)</span>
+        <span class="c1"># chop all values less than 1e-6</span>
+        <span class="n">eqcoord</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tol</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="c1"># get delta values for wanted frequencies</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">fdx</span><span class="p">:</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="k">elif</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fdx</span><span class="p">:</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                                      <span class="n">fdx</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;fdx must be a list of integers or a single integer&quot;</span><span class="p">)</span>
+            <span class="c1">#if len(delta) != tnmodes:</span>
+            <span class="c1">#    raise ValueError(&quot;Inappropriate length of delta. Passed a length of {} &quot;+</span>
+            <span class="c1">#                     &quot;when it should have a length of {}. One value for each &quot;+</span>
+            <span class="c1">#                     &quot;normal mode.&quot;.format(len(delta), tnmodes))</span>
+            <span class="c1">#else:</span>
+            <span class="c1">#    delta = np.repeat(delta, nat)</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">nat</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Please compute self.delta first&quot;</span><span class="p">)</span>
+        <span class="c1"># calculate displaced coordinates in positive and negative directions</span>
+        <span class="n">disp_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">),</span> <span class="n">nmodes</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">disp_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">eqcoord</span><span class="p">),</span> <span class="n">nmodes</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">disp</span><span class="p">),</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">eqcoord</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">disp_pos</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">disp_neg</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># generate frequency index labels</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">tnmodes</span><span class="o">*</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">freqdx</span><span class="p">]</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">freqdx</span><span class="p">))</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">freqdx</span><span class="p">,</span> <span class="n">nat</span><span class="p">)</span>
+        <span class="c1"># generate the modes column</span>
+        <span class="c1"># useful if the frequency indexing is confusing</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">modes</span><span class="p">,</span><span class="n">modes</span><span class="p">)),</span> <span class="n">nat</span><span class="p">)</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">znums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">znums</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nmodes</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">znums</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="c1"># create dataframe</span>
+        <span class="c1"># coordinates are in units of Bohr as we use the coordinates from the atom dataframe</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">freqdx</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">znums</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbols</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;modes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modes</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+<div class="viewcode-block" id="GenInput.gen_inputs"><a class="viewcode-back" href="../../../exatomic.va.inputs.html#exatomic.va.inputs.GenInput.gen_inputs">[docs]</a>    <span class="k">def</span> <span class="nf">gen_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">soft</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to write the displaced coordinates as an input for the quantum code program</span>
+<span class="sd">        of choice. Currently only the following input generators have been tested with this</span>
+<span class="sd">        generalized input generator:</span>
+
+<span class="sd">        - :class:`exatomic.nwchem.Input.from_universe`</span>
+<span class="sd">        - :class:`exatomic.gaussian.Input.from_universe`</span>
+
+<span class="sd">        More to come as the need is met.</span>
+
+<span class="sd">        This code will use the software input and iterate over all available frequency</span>
+<span class="sd">        indexes sending the data to the specified input generator. We have designed the code</span>
+<span class="sd">        to create the self.atom attribute as it gets called by input generators.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            comm is currently supported as a single dictionary, i.e. the gradient and property</span>
+<span class="sd">            claculation will happen within the same script. The hope is that we can extend this</span>
+<span class="sd">            so a user can calculate the property and gradient separately. One case that this is</span>
+<span class="sd">            applicable to is if the user must use a different functional/basis for one of the</span>
+<span class="sd">            calculations.</span>
+<span class="sd">            The format is:</span>
+
+<span class="sd">            - {[keys of specified software]: [values]}</span>
+
+<span class="sd">            As an example this would be the comm input for a SP calculation at the</span>
+<span class="sd">            B3LYP/6-31G* level of theory with NProc=4 and Chk=test.chk for</span>
+<span class="sd">            exatomic.gaussian.Input.from_universe</span>
+
+<span class="sd">            - {&#39;link0&#39;: {&#39;NProc&#39;: 4, &#39;Chk&#39;: &#39;test.chk&#39;}, &#39;route&#39;: &#39;#P B3LYP/6-31G* SP&#39;,</span>
+<span class="sd">            &#39;writedir&#39;: dir_path, &#39;name&#39;: &#39;filename&#39;}</span>
+
+<span class="sd">            For questions regarding the inputs needed for each input generator please refer</span>
+<span class="sd">            to the docs of the specific input generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comm (dict): Dictionary containing all of the pertinent commands for the input</span>
+<span class="sd">            soft (class instance): Software of choice for the input generation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;freqdx&#39;</span><span class="p">)</span>
+        <span class="n">freqdx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disp</span><span class="p">[</span><span class="s1">&#39;freqdx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">freqdx</span><span class="p">)))</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">comm</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">fdx</span> <span class="ow">in</span> <span class="n">freqdx</span><span class="p">:</span>
+            <span class="n">comm</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">fdx</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.inp&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atom</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">fdx</span><span class="p">)</span>
+            <span class="n">soft</span><span class="p">(</span><span class="n">uni</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">comm</span><span class="p">)</span></div>
+
+<span class="c1"># leaving this here for now as it may become useful later on to automatically generate job arrays</span>
+<span class="c1"># as they are needed for this code</span>
+<span class="c1">#    def gen_slurm_inputs(self, path, sbatch, module, end_com=&#39;&#39;):</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        Method to write slurm scripts to execute gradients and property calculations given</span>
+<span class="c1">#        the displaced coordinates.</span>
+<span class="c1">#</span>
+<span class="c1">#        Method generates separate directories containing the slurm script for each calculation.</span>
+<span class="c1">#        Will need to submit with some external shell script.</span>
+<span class="c1">#</span>
+<span class="c1">#        Need to define the module and sbatch variables to what is needed by each user. It was</span>
+<span class="c1">#        built like this to make it the most general and applicable to more than one type of</span>
+<span class="c1">#        quantum chemistry code.</span>
+<span class="c1">#</span>
+<span class="c1">#        Args:</span>
+<span class="c1">#            path (str): path to where the directories will be generated and the inputs will</span>
+<span class="c1">#                        will be read from</span>
+<span class="c1">#            sbatch (dict): sbatch commands that are to be used for batch script execution</span>
+<span class="c1">#            module (str): multiline string that will contain the module loading and other</span>
+<span class="c1">#                          user specific variables</span>
+<span class="c1">#            end_com (str): commands to be placed at the end of the slurm script</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        _name = &quot;{job}{int}.dir&quot;</span>
+<span class="c1">#        _sbatch = &quot;#SBATCH --{key}={value}&quot;</span>
+<span class="c1">#        files = os.listdir(path)</span>
+<span class="c1">#        for file in files:</span>
+<span class="c1">#            if file.endswith(&quot;.inp&quot;) and file.startswith(&quot;confo&quot;):</span>
+<span class="c1">#                fdx = file.replace(&quot;confo&quot;, &quot;&quot;).replace(&quot;.inp&quot;, &quot;&quot;)</span>
+<span class="c1">#                job = &quot;jobo&quot;</span>
+<span class="c1">#            elif file.endswith(&quot;.inp&quot;) and file.startswith(&quot;confg&quot;):</span>
+<span class="c1">#                fdx = file.replace(&quot;confg&quot;, &quot;&quot;).replace(&quot;.inp&quot;, &quot;&quot;)</span>
+<span class="c1">#                job = &quot;jobg&quot;</span>
+<span class="c1">#            else:</span>
+<span class="c1">#                continue</span>
+<span class="c1">#            try:</span>
+<span class="c1">#                os.mkdir(path+_name.format(job=job, int=fdx))</span>
+<span class="c1">#                j_path = path+_name.format(job=job, int=fdx)</span>
+<span class="c1">#            except OSError:</span>
+<span class="c1">#                raise OSError(&quot;Failed to create directory {}&quot;.format(path+_name.format(</span>
+<span class="c1">#                                                                                job=job, int=fdx)))</span>
+<span class="c1">#            slurm = file.replace(&quot;.inp&quot;, &quot;.slurm&quot;)</span>
+<span class="c1">#            with open(path+file, &#39;r&#39;) as f:</span>
+<span class="c1">#                with open(mkp(j_path, slurm), &#39;w&#39;) as j:</span>
+<span class="c1">#                    j.write(&quot;#!/bin/bash\n&quot;)</span>
+<span class="c1">#                    for key in sbatch.keys():</span>
+<span class="c1">#                        j.write(_sbatch.format(key=key, value=sbatch[key])+&#39;\n&#39;)</span>
+<span class="c1">#                    j.write(_sbatch.format(key=&quot;job-name&quot;, value=file.replace(&quot;.inp&quot;, &quot;&quot;)))</span>
+<span class="c1">#                    j.write(_sbatch.format(key=&quot;output&quot;, value=file.replace(&quot;.inp&quot;, &quot;.out&quot;)))</span>
+<span class="c1">#                    j.write(module)</span>
+<span class="c1">#                    for line in f:</span>
+<span class="c1">#                        j.write(line)</span>
+<span class="c1">#                    j.write(end_com+&#39;\n&#39;)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uni</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Frequency dataframe cannot be found in universe&quot;</span><span class="p">)</span>
+        <span class="n">delta_type</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;delta_type&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">fdx</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fdx&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fdx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">fdx</span> <span class="o">=</span> <span class="p">[</span><span class="n">fdx</span><span class="p">]</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">atom</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">gen_delta</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">delta_type</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_displaced</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">fdx</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+      <span class="lastupdated">
+        Last updated on Nov 06, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
